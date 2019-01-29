@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
@@ -30,6 +31,7 @@ const appRoutes: Routes = [
         AppComponent
     ],
     imports     : [
+        MDBBootstrapModule.forRoot(),
         BrowserModule,
         BrowserAnimationsModule,
         HttpClientModule,

@@ -1,4 +1,34 @@
-<mat-toolbar class="p-0 mat-elevation-z1 blue-400-bg fuse-white-500-fg">
+<nav class="navbar navbar-expand-md navbar-light bg-pimary col-12">
+    <span class="navbar-brand mb-0 h1">Ermes</span>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <button mat-button  fxHide fxShow.gt-xs
+            class="pull-right"
+            [matMenuTriggerFor]="moreMenu">
+        <div>
+            <mat-icon>more_vert</mat-icon>
+        </div>
+    </button>
+    <mat-menu #moreMenu="matMenu" [overlapTrigger]="false">
+
+        <button mat-menu-item>
+            <span>
+                <span>...</span>
+            </span>
+        </button>
+
+    </mat-menu>
+</nav>
+
+
+
+
+
+
+
+<!-- <mat-toolbar class="p-0 mat-elevation-z1 blue-400-bg fuse-white-500-fg">
 
     <div fxFlex fxFill fxLayout="row" fxLayoutAlign="start center">
 
@@ -16,7 +46,7 @@
 
         <div class="" fxFlex="0 1 auto" fxLayout="row" fxLayoutAlign="start center">
 
-            <!-- <button mat-button [matMenuTriggerFor]="userMenu"
+            <button mat-button [matMenuTriggerFor]="userMenu"
                     class="user-button">
                 <div fxLayout="row" fxLayoutAlign="center center">
                     <img class="avatar mr-0 mr-sm-16" src="assets/images/avatars/Velazquez.jpg">
@@ -45,7 +75,7 @@
             </mat-menu> -->
 
            
-            <!-- <div class="toolbar-separator"></div> -->
+            <!-- <div class="toolbar-separator"></div>
 
             <button mat-button fxHide fxShow.gt-xs
                     class="more-button"
@@ -69,4 +99,4 @@
 
     </div>
 
-</mat-toolbar>
+</mat-toolbar> -->
