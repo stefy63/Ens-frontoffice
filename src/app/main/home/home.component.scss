@@ -1,0 +1,78 @@
+:host {
+    mat-grid-tile {
+    }
+    mat-card {
+       
+    }
+    .chat-card {
+        & mat-card-header {
+
+        }
+        & mat-card-content {
+
+        }
+        & mat-card-actions {
+            background-color: #cc5b49;
+        }
+    }
+    .video-card {
+        & mat-card-header {
+
+        }
+        & mat-card-content {
+
+        }
+        & mat-card-actions {
+            background-color: #c7c7c7;
+        }
+        
+    }
+    .sms-card {
+        & mat-card-header {
+
+        }
+        & mat-card-content {
+
+        }
+        & mat-card-actions {
+            background-color: #e19d3e;
+        }
+        
+    }
+    .email-card {
+        & mat-card-header {
+
+        }
+        & mat-card-content {
+
+        }
+        & mat-card-actions {
+            background-color: #2f684a;
+        }
+        
+    }
+    .telegram-card {
+        & mat-card-header {
+
+        }
+        & mat-card-content {
+
+        }
+        & mat-card-actions {
+            background-color: #73b4e3;
+        }
+        
+    }
+    .tutorial-card {
+        & mat-card-header {
+
+        }
+        & mat-card-content {
+
+        }
+        & mat-card-actions {
+            background-color: white;
+        }
+        
+    }
+}
