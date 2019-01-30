@@ -2,12 +2,22 @@
 
 toolbar {
     position: relative;
-    display: flex;
-    flex: 0 0 auto;
-    z-index: 4;
+    // display: flex;
+    // flex: 0 0 auto;
+    // z-index: 4;
 
-    &.below {
-        z-index: 2;
+    // &.below {
+    //     z-index: 2;
+    // }
+
+    .bg-ermes-nav {
+        background-color: #6195CC;
     }
-
+    .more-button {
+        display: block !important;
+    }
+    .navbar-brand {
+        font-size: 2.5em;
+        margin-right: 1em;
+    }
 }

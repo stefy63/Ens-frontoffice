@@ -1,25 +1,38 @@
-<nav class="navbar navbar-expand-md navbar-light bg-pimary col-12">
-    <span class="navbar-brand mb-0 h1">Ermes</span>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <button mat-button  fxHide fxShow.gt-xs
-            class="pull-right"
-            [matMenuTriggerFor]="moreMenu">
+<nav class="navbar navbar-expand-lg navbar-dark bg-ermes-nav fixed-top">
         <div>
-            <mat-icon>more_vert</mat-icon>
+            <span class="navbar-brand">Ermes</span>
         </div>
-    </button>
-    <mat-menu #moreMenu="matMenu" [overlapTrigger]="false">
 
-        <button mat-menu-item>
-            <span>
-                <span>...</span>
-            </span>
+        <button class="navbar-toggler order-first" type="button" data-toggle="collapse" data-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
         </button>
 
-    </mat-menu>
+        <div class="collapse navbar-collapse" id="navbarMenu">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+            </ul>
+        </div>
+
+        <div class="pull-right">
+            <button mat-button fxHide fxShow.gt-xs
+                    class="more-button pull-right"
+                    [matMenuTriggerFor]="moreMenu">
+                <div>
+                    <mat-icon>more_vert</mat-icon>
+                </div>
+            </button>
+            <mat-menu #moreMenu="matMenu" [overlapTrigger]="false">
+                <button mat-menu-item fxLayout="row" fxLayoutAlign="center center">
+                    <span>
+                        <span>...</span><br>
+                        <span>...</span><br>
+                        <span>...</span><br>
+                    </span>
+                </button>
+
+            </mat-menu>
+        </div>
+   
 </nav>
 
 

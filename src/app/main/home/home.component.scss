@@ -1,78 +1,68 @@
 :host {
-    mat-grid-tile {
+    margin-top: 8vh;
+   .card {
+        padding: 0;
+        margin-left: 4em;
+        margin-bottom: 2em;
+        overflow: hidden;
+        border-radius: 0.9rem !important;
+        // box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
     }
-    mat-card {
-       
+    .card-header {
+        border-bottom: none;
+        background-color: white;
+        overflow: hidden;
     }
-    .chat-card {
-        & mat-card-header {
-
+    .card-body {
+        text-align: center;
+        font-size: 4em;
+        font-weight: bold;
+    }
+    .card-footer {
+        color: white !important;
+        text-align: center;
+        overflow: hidden;
+    }
+    .chat {
+        .card-footer {
+            background-color: #CC5B49;
         }
-        & mat-card-content {
-
-        }
-        & mat-card-actions {
-            background-color: #cc5b49;
+        .card-body {
+            color:  #CC5B49;
         }
     }
-    .video-card {
-        & mat-card-header {
-
+    .videochat {
+        .card-footer {
+            background-color: #365FA5 !important;
         }
-        & mat-card-content {
-
-        }
-        & mat-card-actions {
-            background-color: #c7c7c7;
-        }
-        
     }
-    .sms-card {
-        & mat-card-header {
-
+    .sms {
+        .card-footer {
+            background-color: #E19D3E !important;
         }
-        & mat-card-content {
-
-        }
-        & mat-card-actions {
-            background-color: #e19d3e;
-        }
-        
     }
-    .email-card {
-        & mat-card-header {
-
+    .email {
+        .card-footer {
+            background-color: #2F684A !important;
         }
-        & mat-card-content {
-
-        }
-        & mat-card-actions {
-            background-color: #2f684a;
-        }
-        
     }
-    .telegram-card {
-        & mat-card-header {
-
+    .telegram {
+        .card-footer {
+            background-color: #73B4E3 !important;
         }
-        & mat-card-content {
-
-        }
-        & mat-card-actions {
-            background-color: #73b4e3;
-        }
-        
     }
-    .tutorial-card {
-        & mat-card-header {
-
+    .tutorial {
+        .card-footer {
+            background-color: white !important;
         }
-        & mat-card-content {
-
+        .card-footer {
+            color: black !important;
         }
-        & mat-card-actions {
-            background-color: white;
-        }
-        
+    }
+    .telegram-svg {
+        height: 20px;
+        width: 20px;
+        /* Other styles here */
     }
 }
+
