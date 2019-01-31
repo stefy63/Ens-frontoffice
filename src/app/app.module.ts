@@ -5,13 +5,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
-import { MatButtonModule, MatIconModule } from '@angular/material';
 import { TranslateModule } from '@ngx-translate/core';
 import 'hammerjs';
 
 import { FuseModule } from '@fuse/fuse.module';
-import { FuseSharedModule } from '@fuse/shared.module';
-import { FuseProgressBarModule, FuseSidebarModule, FuseThemeOptionsModule } from '@fuse/components';
+import { FuseProgressBarModule } from '@fuse/components';
 
 import { fuseConfig } from 'app/fuse-config';
 
@@ -42,7 +40,6 @@ const appRoutes: Routes = [
         // Fuse modules
         FuseModule.forRoot(fuseConfig),
         FuseProgressBarModule,
-        FuseSharedModule,
         // App modules
         CageModule,
         HomeModule
