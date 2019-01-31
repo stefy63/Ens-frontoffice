@@ -1,3 +1,20 @@
-navbar {
+@import "src/@fuse/scss/fuse";
 
+navbar {
+    position: relative;
+    color: white;
+
+    .bg-ermes-nav {
+        background-color: #6195CC;
+    }
+    .more-button {
+        display: block !important;
+        background: transparent;
+        color: white;
+        outline: none;
+    }
+    .navbar-brand {
+        font-size: 2.5em;
+        margin-right: 1em;
+    }
 }

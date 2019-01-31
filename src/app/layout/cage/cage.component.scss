@@ -1,0 +1,23 @@
+cage {
+    width: 100%;
+    height:100%;
+}
+
+.container__application {
+    width: 100%;
+    height:100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.container__application__body {
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.content__container {
+    flex-grow: 1;
+    padding: 1em;
+}
