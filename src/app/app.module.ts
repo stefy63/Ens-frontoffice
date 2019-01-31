@@ -16,8 +16,8 @@ import { FuseProgressBarModule, FuseSidebarModule, FuseThemeOptionsModule } from
 import { fuseConfig } from 'app/fuse-config';
 
 import { AppComponent } from 'app/app.component';
-import { LayoutModule } from 'app/layout/layout.module';
 import { HomeModule } from './main/home/home.module';
+import { CageModule } from './layout/cage/cage.module';
 
 const appRoutes: Routes = [
     {
@@ -36,25 +36,15 @@ const appRoutes: Routes = [
         BrowserAnimationsModule,
         HttpClientModule,
         RouterModule.forRoot(appRoutes),
-
         TranslateModule.forRoot(),
-
         // Material moment date module
         MatMomentDateModule,
-
-        // Material
-        MatButtonModule,
-        MatIconModule,
-
         // Fuse modules
         FuseModule.forRoot(fuseConfig),
         FuseProgressBarModule,
         FuseSharedModule,
-        FuseSidebarModule,
-        FuseThemeOptionsModule,
-
         // App modules
-        LayoutModule,
+        CageModule,
         HomeModule
     ],
     bootstrap   : [

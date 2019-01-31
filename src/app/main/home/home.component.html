@@ -1,99 +1,120 @@
-<div class="page-layout blank p-24 container">
+<div class="container-fluid">
     <div class="row">
-        <div class="card col-sm-5 chat ">
-            <div class="card-header">
-                <div *ngIf="chatActive; else chatElseBlock" class="is-open">Aperto</div>
-                <ng-template #chatElseBlock><div class="is-closed">Chiuso</div></ng-template>
-            </div>
-            <div class="card-body">
-                <mat-icon>forum</mat-icon>
-                <h1 class="card-title">Chat</h1>
-            </div>
-            <div class="card-footer text-muted" [ngClass]="{'service-close': !chatActive}">
-                <div class="">
-                    <a class="nav-link" (click)="clickService('chat')">Procedi</a>
+        <div class="col-md-6 mb-20">
+            <div class="card chat">
+                <div class="card-header">
+                    <div *ngIf="chatActive; else chatElseBlock" class="is-open">Aperto</div>
+                    <ng-template #chatElseBlock>
+                        <div class="is-closed">Chiuso</div>
+                    </ng-template>
+                </div>
+                <div class="card-body">
+                    <mat-icon>forum</mat-icon>
+                    <h1 class="card-title">Chat</h1>
+                </div>
+                <div class="card-footer text-muted" [ngClass]="{'service-close': !chatActive}">
+                    <div class="">
+                        <a class="nav-link" (click)="clickService('chat')">Procedi</a>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="card col-sm-5 videochat">
-            <div class="card-header">
-                <div *ngIf="videochatActive; else videochatElseBlock" class="is-open">Aperto</div>
-                <ng-template #videochatElseBlock><div class="is-closed">Chiuso</div></ng-template>
-            </div>
-            <div class="card-body">
-                    <mat-icon>videocam</mat-icon>
-                    <h1 class="card-title">Video Chat</h1>
-            </div>
-            <div class="card-footer text-muted" [ngClass]="{'service-close': !videochatActive}">
-                <div class="">
-                    <a class="nav-link" (click)="clickService('videochat')">Procedi</a>
-                </div>
+        <div class="col-md-6 mb-20">
+            <div class="card videochat">
+                <div class="card-header">
+                        <div *ngIf="videochatActive; else videochatElseBlock" class="is-open">Aperto</div>
+                        <ng-template #videochatElseBlock>
+                            <div class="is-closed">Chiuso</div>
+                        </ng-template>
+                    </div>
+                    <div class="card-body">
+                        <mat-icon>videocam</mat-icon>
+                        <h1 class="card-title">Video Chat</h1>
+                    </div>
+                    <div class="card-footer text-muted" [ngClass]="{'service-close': !videochatActive}">
+                        <div class="">
+                            <a class="nav-link" (click)="clickService('videochat')">Procedi</a>
+                        </div>
+                    </div>
             </div>
         </div>
     </div>
-
     <div class="row">
-        <div class="card col-sm-5 sms">
-            <div class="card-header">
-                <div *ngIf="smsActive; else smsElseBlock" class="is-open">Aperto</div>
-                <ng-template #smsElseBlock><div class="is-closed">Chiuso</div></ng-template>
-            </div>
-            <div class="card-body">
-                    <mat-icon>textsms</mat-icon>
-                    <h1 class="card-title">SMS</h1>
-            </div>
-            <div class="card-footer text-muted" [ngClass]="{'service-close': !smsActive}">
-                <div class="">
-                    <a class="nav-link" (click)="clickService('sms')">Procedi</a>
-                </div>
+        <div class="col-md-6 mb-20">
+            <div class="card sms">
+                <div class="card-header">
+                        <div *ngIf="smsActive; else smsElseBlock" class="is-open">Aperto</div>
+                        <ng-template #smsElseBlock>
+                            <div class="is-closed">Chiuso</div>
+                        </ng-template>
+                    </div>
+                    <div class="card-body">
+                        <mat-icon>textsms</mat-icon>
+                        <h1 class="card-title">SMS</h1>
+                    </div>
+                    <div class="card-footer text-muted" [ngClass]="{'service-close': !smsActive}">
+                        <div class="">
+                            <a class="nav-link" (click)="clickService('sms')">Procedi</a>
+                        </div>
+                    </div>
             </div>
         </div>
-        <div class="card col-sm-5 email">
-            <div class="card-header">
-                <div *ngIf="emilActive; else emailElseBlock" class="is-open">Aperto</div>
-                <ng-template #emailElseBlock><div class="is-closed">Chiuso</div></ng-template>
-            </div>
-            <div class="card-body">
+        <div class="col-md-6 mb-20 ">
+            <div class="card email">
+                <div class="card-header">
+                    <div *ngIf="emilActive; else emailElseBlock" class="is-open">Aperto</div>
+                    <ng-template #emailElseBlock>
+                        <div class="is-closed">Chiuso</div>
+                    </ng-template>
+                </div>
+                <div class="card-body">
                     <mat-icon>email</mat-icon>
                     <h1 class="card-title">E-mail</h1>
-            </div>
-            <div class="card-footer text-muted" [ngClass]="{'service-close': !emilActive}">
-                <div class="">
-                    <a class="nav-link" (click)="clickService('email')">Procedi</a>
+                </div>
+                <div class="card-footer text-muted" [ngClass]="{'service-close': !emilActive}">
+                    <div class="">
+                        <a class="nav-link" (click)="clickService('email')">Procedi</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="row">
-        <div class="card col-sm-5 telegram">
-            <div class="card-header">
-                <div *ngIf="telegramActive; else telegramElseBlock" class="is-open">Aperto</div>
-                <ng-template #telegramElseBlock><div class="is-closed">Chiuso</div></ng-template>
-            </div>
-            <div class="card-body">
-                <div class="text-center">
-                    <img src="assets/icons/telegram.svg" class="telegram-svg" />
-                    <h1 class="card-title">Telegram</h1>
+        <div class="col-md-6 mb-20 ">
+            <div class="card telegram">
+                <div class="card-header">
+                    <div *ngIf="telegramActive; else telegramElseBlock" class="is-open">Aperto</div>
+                    <ng-template #telegramElseBlock>
+                        <div class="is-closed">Chiuso</div>
+                    </ng-template>
                 </div>
-            </div>
-            <div class="card-footer text-muted" [ngClass]="{'service-close': !telegramActive}">
-                <div class="">
-                    <a class="nav-link" (click)="clickService('telegram')">Procedi</a>
+                <div class="card-body">
+                    <div class="text-center">
+                        <img src="assets/icons/telegram.svg" class="telegram-svg" />
+                        <h1 class="card-title">Telegram</h1>
+                    </div>
+                </div>
+                <div class="card-footer text-muted" [ngClass]="{'service-close': !telegramActive}">
+                    <div class="">
+                        <a class="nav-link" (click)="clickService('telegram')">Procedi</a>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="card col-sm-5 tutorial">
-            <div class="card-header">
-                Featured
-            </div>
-            <div class="card-body">
-                <h5 class="card-title">Special title treatment</h5>
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            </div>
-            <div class="card-footer text-muted">
-                <div class="">
-                    <a class="nav-link" (click)="clickService('tutorial')">Procedi con il tutorial</a>
+        <div class="col-md-6 mb-20">
+            <div class="card tutorial">
+                <div class="card-header">
+                        Featured
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Special title treatment</h5>
+                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                </div>
+                <div class="card-footer text-muted">
+                    <div class="">
+                        <a class="nav-link" (click)="clickService('tutorial')">Procedi con il tutorial</a>
+                    </div>
                 </div>
             </div>
         </div>

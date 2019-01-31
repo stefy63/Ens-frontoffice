@@ -1,4 +1,13 @@
-import { Component, ElementRef, Input, Renderer2, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { TranslateService } from '@ngx-translate/core';
+import * as _ from 'lodash';
+
+import { FuseConfigService } from '@fuse/services/config.service';
+import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
+
+import { navigation } from 'app/navigation/navigation';
 
 @Component({
     selector     : 'navbar',
@@ -6,48 +15,149 @@ import { Component, ElementRef, Input, Renderer2, ViewEncapsulation } from '@ang
     styleUrls    : ['./navbar.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class NavbarComponent
+
+export class NavbarComponent implements OnInit, OnDestroy
 {
+    horizontalNavbar: boolean;
+    rightNavbar: boolean;
+    hiddenNavbar: boolean;
+    languages: any;
+    navigation: any;
+    selectedLanguage: any;
+    userStatusOptions: any[];
+
     // Private
-    _variant: string;
+    private _unsubscribeAll: Subject<any>;
 
     /**
      * Constructor
      *
-     * @param {ElementRef} _elementRef
-     * @param {Renderer2} _renderer
+     * @param {FuseConfigService} _fuseConfigService
+     * @param {FuseSidebarService} _fuseSidebarService
+     * @param {TranslateService} _translateService
      */
     constructor(
-        private _elementRef: ElementRef,
-        private _renderer: Renderer2
+        private _fuseConfigService: FuseConfigService,
+        private _fuseSidebarService: FuseSidebarService,
+        private _translateService: TranslateService
     )
     {
+        // Set the defaults
+        this.userStatusOptions = [
+            {
+                'title': 'Online',
+                'icon' : 'icon-checkbox-marked-circle',
+                'color': '#4CAF50'
+            },
+            {
+                'title': 'Away',
+                'icon' : 'icon-clock',
+                'color': '#FFC107'
+            },
+            {
+                'title': 'Do not Disturb',
+                'icon' : 'icon-minus-circle',
+                'color': '#F44336'
+            },
+            {
+                'title': 'Invisible',
+                'icon' : 'icon-checkbox-blank-circle-outline',
+                'color': '#BDBDBD'
+            },
+            {
+                'title': 'Offline',
+                'icon' : 'icon-checkbox-blank-circle-outline',
+                'color': '#616161'
+            }
+        ];
+
+        this.languages = [
+            {
+                id   : 'en',
+                title: 'English',
+                flag : 'us'
+            },
+            {
+                id   : 'tr',
+                title: 'Turkish',
+                flag : 'tr'
+            }
+        ];
+
+        this.navigation = navigation;
+
         // Set the private defaults
-        this._variant = 'vertical-style-1';
+        this._unsubscribeAll = new Subject();
     }
 
     // -----------------------------------------------------------------------------------------------------
-    // @ Accessors
+    // @ Lifecycle hooks
     // -----------------------------------------------------------------------------------------------------
 
     /**
-     * Variant
+     * On init
      */
-    get variant(): string
+    ngOnInit(): void
     {
-        return this._variant;
+        // Subscribe to the config changes
+        this._fuseConfigService.config
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((settings) => {
+                this.horizontalNavbar = settings.layout.navbar.position === 'top';
+                this.rightNavbar = settings.layout.navbar.position === 'right';
+                this.hiddenNavbar = settings.layout.navbar.hidden === true;
+            });
+
+        // Set the selected language from default languages
+        this.selectedLanguage = _.find(this.languages, {'id': this._translateService.currentLang});
     }
 
-    @Input()
-    set variant(value: string)
+    /**
+     * On destroy
+     */
+    ngOnDestroy(): void
     {
-        // Remove the old class name
-        this._renderer.removeClass(this._elementRef.nativeElement, this.variant);
+        // Unsubscribe from all subscriptions
+        this._unsubscribeAll.next();
+        this._unsubscribeAll.complete();
+    }
 
-        // Store the variant value
-        this._variant = value;
+    // -----------------------------------------------------------------------------------------------------
+    // @ Public methods
+    // -----------------------------------------------------------------------------------------------------
 
-        // Add the new class name
-        this._renderer.addClass(this._elementRef.nativeElement, value);
+    /**
+     * Toggle sidebar open
+     *
+     * @param key
+     */
+    toggleSidebarOpen(key): void
+    {
+        this._fuseSidebarService.getSidebar(key).toggleOpen();
+    }
+
+    /**
+     * Search
+     *
+     * @param value
+     */
+    search(value): void
+    {
+        // Do your search here...
+        console.log(value);
+    }
+
+    /**
+     * Set the language
+     *
+     * @param lang
+     */
+    setLanguage(lang): void
+    {
+        // Set the selected language for the toolbar
+        this.selectedLanguage = lang;
+
+        // Use the selected language for translations
+        this._translateService.use(lang.id);
     }
 }
