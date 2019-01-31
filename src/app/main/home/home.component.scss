@@ -2,8 +2,9 @@
     margin-top: 8vh;
    .card {
         padding: 0;
-        margin-left: 4em;
-        margin-bottom: 2em;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 1em;
         overflow: hidden;
         border-radius: 0.9rem !important;
         // box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
@@ -12,16 +13,33 @@
         border-bottom: none;
         background-color: white;
         overflow: hidden;
+        .is-open {
+            color: green;
+        }
+        .is-closed {
+            color: red;
+        }
     }
     .card-body {
+        padding: 0;
         text-align: center;
-        font-size: 4em;
+        // font-size: 4em;
         font-weight: bold;
+        mat-icon {
+            font-size: 4em !important;
+            display: inline-table !important;
+        }
+        .card-title {
+            font-weight: 700;
+        }
     }
     .card-footer {
         color: white !important;
         text-align: center;
         overflow: hidden;
+        a {
+            font-size: 1.5em;
+        }
     }
     .chat {
         .card-footer {
@@ -33,36 +51,52 @@
     }
     .videochat {
         .card-footer {
-            background-color: #365FA5 !important;
+            background-color: #365FA5;
+        }
+        .card-body {
+            color:  #365FA5;
         }
     }
     .sms {
         .card-footer {
-            background-color: #E19D3E !important;
+            background-color: #E19D3E;
+        }
+        .card-body {
+            color:  #E19D3E;
         }
     }
     .email {
         .card-footer {
-            background-color: #2F684A !important;
+            background-color: #2F684A;
+        }
+        .card-body {
+            color:  #2F684A;
         }
     }
     .telegram {
         .card-footer {
-            background-color: #73B4E3 !important;
+            background-color: #73B4E3;
+        }
+        .card-body {
+            color: #73B4E3;
+        }
+        img {
+            width: 4em;
+            margin-bottom: 10px;
+            display: inline-table;
         }
     }
     .tutorial {
         .card-footer {
-            background-color: white !important;
-        }
-        .card-footer {
-            color: black !important;
+            background-color: white;
+            a {
+                color: black !important;
+            }
         }
     }
-    .telegram-svg {
-        height: 20px;
-        width: 20px;
-        /* Other styles here */
+    .service-close {
+        background-color: #C7C7C7 !important;
+        font-weight: 100;
     }
 }
 
