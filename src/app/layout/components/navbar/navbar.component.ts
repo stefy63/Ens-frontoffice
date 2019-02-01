@@ -103,9 +103,9 @@ export class NavbarComponent implements OnInit, OnDestroy
         this._fuseConfigService.config
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((settings) => {
-                this.horizontalNavbar = settings.layout.navbar.position === 'top';
-                this.rightNavbar = settings.layout.navbar.position === 'right';
-                this.hiddenNavbar = settings.layout.navbar.hidden === true;
+                // this.horizontalNavbar = settings.layout.navbar.position === 'top';
+                // this.rightNavbar = settings.layout.navbar.position === 'right';
+                // this.hiddenNavbar = settings.layout.navbar.hidden === true;
             });
 
         // Set the selected language from default languages

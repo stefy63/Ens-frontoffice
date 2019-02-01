@@ -3,6 +3,7 @@
 navbar {
     position: relative;
     color: white;
+    padding: 0;
 
     .bg-ermes-nav {
         background-color: #6195CC;
@@ -12,6 +13,8 @@ navbar {
         background: transparent;
         color: white;
         outline: none;
+        min-width: 35px;
+        padding-right: 0px;
     }
     .navbar-brand {
         font-size: 2.5em;

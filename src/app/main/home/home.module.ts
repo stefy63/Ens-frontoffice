@@ -26,7 +26,7 @@ const routes = [
         FuseSharedModule,
         MatGridListModule,
         MatCardModule,
-        MatIconModule
+        MatIconModule,
     ],
     exports     : [
         HomeComponent

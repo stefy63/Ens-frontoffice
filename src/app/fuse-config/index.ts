@@ -12,3 +12,4 @@ export const fuseConfig: FuseConfig = {
     // Color themes can be defined in src/app/app.theme.scss
     colorTheme      : 'theme-default'
 };
+

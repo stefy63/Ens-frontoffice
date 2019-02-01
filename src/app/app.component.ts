@@ -128,12 +128,12 @@ export class AppComponent implements OnInit, OnDestroy {
                 this.fuseConfig = config;
 
                 // Boxed
-                if (this.fuseConfig.layout.width === 'boxed') {
-                    this.document.body.classList.add('boxed');
-                }
-                else {
-                    this.document.body.classList.remove('boxed');
-                }
+                // if (this.fuseConfig.layout.width === 'boxed') {
+                //     this.document.body.classList.add('boxed');
+                // }
+                // else {
+                //     this.document.body.classList.remove('boxed');
+                // }
 
                 // Color theme - Use normal for loop for IE11 compatibility
                 for (let i = 0; i < this.document.body.classList.length; i++) {

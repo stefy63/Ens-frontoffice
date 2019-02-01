@@ -3,7 +3,7 @@
         <div class="col-md-6 mb-20">
             <div class="card chat">
                 <div class="card-header">
-                    <div *ngIf="chatActive; else chatElseBlock" class="is-open">Aperto</div>
+                    <div *ngIf="isOpen('CHAT'); else chatElseBlock" class="is-open">Aperto</div>
                     <ng-template #chatElseBlock>
                         <div class="is-closed">Chiuso</div>
                     </ng-template>
@@ -12,7 +12,7 @@
                     <mat-icon>forum</mat-icon>
                     <h1 class="card-title">Chat</h1>
                 </div>
-                <div class="card-footer text-muted" [ngClass]="{'service-close': !chatActive}">
+                <div class="card-footer text-muted" [ngClass]="{'service-close': !isOpen('CHAT')}">
                     <div class="">
                         <a class="nav-link" (click)="clickService('chat')">Procedi</a>
                     </div>
@@ -22,7 +22,7 @@
         <div class="col-md-6 mb-20">
             <div class="card videochat">
                 <div class="card-header">
-                        <div *ngIf="videochatActive; else videochatElseBlock" class="is-open">Aperto</div>
+                        <div *ngIf="isOpen('VIDEOCHAT'); else videochatElseBlock" class="is-open">Aperto</div>
                         <ng-template #videochatElseBlock>
                             <div class="is-closed">Chiuso</div>
                         </ng-template>
@@ -31,7 +31,7 @@
                         <mat-icon>videocam</mat-icon>
                         <h1 class="card-title">Video Chat</h1>
                     </div>
-                    <div class="card-footer text-muted" [ngClass]="{'service-close': !videochatActive}">
+                    <div class="card-footer text-muted" [ngClass]="{'service-close': !isOpen('VIDEOCHAT')}">
                         <div class="">
                             <a class="nav-link" (click)="clickService('videochat')">Procedi</a>
                         </div>
@@ -43,7 +43,7 @@
         <div class="col-md-6 mb-20">
             <div class="card sms">
                 <div class="card-header">
-                        <div *ngIf="smsActive; else smsElseBlock" class="is-open">Aperto</div>
+                        <div *ngIf="isOpen('SMS'); else smsElseBlock" class="is-open">Aperto</div>
                         <ng-template #smsElseBlock>
                             <div class="is-closed">Chiuso</div>
                         </ng-template>
@@ -52,7 +52,7 @@
                         <mat-icon>textsms</mat-icon>
                         <h1 class="card-title">SMS</h1>
                     </div>
-                    <div class="card-footer text-muted" [ngClass]="{'service-close': !smsActive}">
+                    <div class="card-footer text-muted" [ngClass]="{'service-close': !isOpen('SMS')}">
                         <div class="">
                             <a class="nav-link" (click)="clickService('sms')">Procedi</a>
                         </div>
@@ -62,7 +62,7 @@
         <div class="col-md-6 mb-20 ">
             <div class="card email">
                 <div class="card-header">
-                    <div *ngIf="emilActive; else emailElseBlock" class="is-open">Aperto</div>
+                    <div *ngIf="isOpen('MAIL'); else emailElseBlock" class="is-open">Aperto</div>
                     <ng-template #emailElseBlock>
                         <div class="is-closed">Chiuso</div>
                     </ng-template>
@@ -71,7 +71,7 @@
                     <mat-icon>email</mat-icon>
                     <h1 class="card-title">E-mail</h1>
                 </div>
-                <div class="card-footer text-muted" [ngClass]="{'service-close': !emilActive}">
+                <div class="card-footer text-muted" [ngClass]="{'service-close': !isOpen('MAIL')}">
                     <div class="">
                         <a class="nav-link" (click)="clickService('email')">Procedi</a>
                     </div>
@@ -84,18 +84,19 @@
         <div class="col-md-6 mb-20 ">
             <div class="card telegram">
                 <div class="card-header">
-                    <div *ngIf="telegramActive; else telegramElseBlock" class="is-open">Aperto</div>
+                    <div *ngIf="isOpen('TELEGRAM'); else telegramElseBlock" class="is-open">Aperto</div>
                     <ng-template #telegramElseBlock>
                         <div class="is-closed">Chiuso</div>
                     </ng-template>
                 </div>
                 <div class="card-body">
                     <div class="text-center">
-                        <img src="assets/icons/telegram.svg" class="telegram-svg" />
+                        <!-- <img src="assets/icons/telegram.svg" class="telegram-svg" /> -->
+                        <span class="icon-ermes-telegram"></span>
                         <h1 class="card-title">Telegram</h1>
                     </div>
                 </div>
-                <div class="card-footer text-muted" [ngClass]="{'service-close': !telegramActive}">
+                <div class="card-footer text-muted" [ngClass]="{'service-close': !isOpen('TELEGRAM')}">
                     <div class="">
                         <a class="nav-link" (click)="clickService('telegram')">Procedi</a>
                     </div>
