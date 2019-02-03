@@ -1,13 +1,10 @@
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { TranslateModule } from '@ngx-translate/core';
-// import 'hammerjs';
-
 import { FuseModule } from '@fuse/fuse.module';
 import { FuseProgressBarModule } from '@fuse/components';
 
@@ -32,7 +29,6 @@ const appRoutes: Routes = [
         AppComponent
     ],
     imports     : [
-        MDBBootstrapModule.forRoot(),
         BrowserModule,
         BrowserAnimationsModule,
         HttpClientModule,
