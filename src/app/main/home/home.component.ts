@@ -2,56 +2,44 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ApiCalendarService } from 'app/services/api/api-calendar-service';
 import { ApiTicketServiceService } from 'app/services/api/api-ticket-service-service';
 import { LocalStorageService } from 'app/services/local-storage/local-storage.service';
-import { tap, map, flatMap } from 'rxjs/operators';
+import { keyBy } from 'lodash';
 import { Observable, from } from 'rxjs';
+import { tap, flatMap, map } from 'rxjs/operators';
 
 
 @Component({
-    selector   : 'home',
+    selector: 'home',
     templateUrl: './home.component.html',
-    styleUrls  : ['./home.component.scss']
+    styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit
-{
-    public ticketService;
+export class HomeComponent implements OnInit {
+    public ticketServices;
 
     constructor(
         private apiCalendarService: ApiCalendarService,
         private apiTicketServiceService: ApiTicketServiceService,
         private storage: LocalStorageService
-    )
-    { }
+    ) { }
 
     ngOnInit(): void {
-        this.getService().then(data => {
-            console.log(data);
-            this.storage.setItem('ticketService', data);
-            this.ticketService = data;
-        });
+        this.apiTicketServiceService.getAll().pipe(
+            tap((services) => this.ticketServices = keyBy(services, (serviceItem) => serviceItem.service)),
+            flatMap((data) => from(data)),
+            flatMap((service: any) => this.apiCalendarService.apiIsActive(service.id).pipe(map((status) => ({
+                'service': service.service,
+                'status': status
+            }))),
+            )).subscribe((data) => {
+                this.ticketServices[data.service].isOpen = data.status;
+            });
     }
 
 
-
     public isOpen(service: string): boolean {
-        if (this.ticketService) {
-            const find = this.ticketService.find( val => val.service === service);
-            return find.isOpen;
-        }
-        return false;        
+        return (this.ticketServices) ? this.ticketServices[service].isOpen : false;
     }
 
     public clickService(service: string): void {
         return;
     }
-
-    private async getService(): Promise<any> {
-        const ret =  this.apiTicketServiceService.getAll().toPromise()
-            .then(res => res.forEach(async e => {
-                console.log(e);
-                e.isOpen = await this.apiCalendarService.apiIsActive(e.id).toPromise();
-            })
-        );
-        return ret;
-    }
-
 }
