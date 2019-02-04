@@ -12,11 +12,14 @@
     <div>
         <mat-icon [matMenuTriggerFor]="moreMenu" class="more_vert__button">more_vert</mat-icon>
         <mat-menu #moreMenu="matMenu" [overlapTrigger]="false">
-        <button mat-menu-item fxLayout="row" fxLayoutAlign="center center">
-            <span>
-                <span>...</span>
-            </span>
-        </button>
-        </mat-menu>
+                <button mat-menu-item fxLayout="row" fxLayoutAlign="center center">
+                    <mat-icon>chrome_reader_mode</mat-icon>
+                    <span>Termini e condizioni d'uso</span>
+                </button>
+                <button mat-menu-item fxLayout="row" fxLayoutAlign="center center">
+                        <mat-icon>remove_red_eye</mat-icon>
+                        <span>Privacy</span>
+                </button>
+            </mat-menu>
     </div>
 </nav>
