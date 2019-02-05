@@ -6,6 +6,7 @@ import { FuseSharedModule } from '@fuse/shared.module';
 
 import { MatGridListModule, MatCardModule, MatIconModule } from '@angular/material';
 import { HomeComponent } from './home.component';
+import { DialogLogin } from './dialog-component/login/dialog-login.component';
 
 const routes = [
     {
@@ -16,7 +17,8 @@ const routes = [
 
 @NgModule({
     declarations: [
-        HomeComponent
+        HomeComponent,
+        DialogLogin
     ],
     imports     : [
         RouterModule.forChild(routes),
@@ -27,6 +29,9 @@ const routes = [
         MatGridListModule,
         MatCardModule,
         MatIconModule,
+    ],
+    entryComponents: [
+        DialogLogin
     ],
     exports     : [
         HomeComponent

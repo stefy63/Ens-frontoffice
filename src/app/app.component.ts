@@ -14,6 +14,7 @@ import { FuseTranslationLoaderService } from '@fuse/services/translation-loader.
 import { navigation } from 'app/navigation/navigation';
 import { locale as navigationEnglish } from 'app/navigation/i18n/en';
 import { locale as navigationTurkish } from 'app/navigation/i18n/tr';
+import { AlertToasterOptions } from './class/alert-toaster-options';
 
 @Component({
     selector: 'app',
@@ -26,6 +27,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     // Private
     private _unsubscribeAll: Subject<any>;
+    public options = new AlertToasterOptions();
 
     /**
      * Constructor

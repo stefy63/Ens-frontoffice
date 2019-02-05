@@ -12,10 +12,8 @@
                     <mat-icon>forum</mat-icon>
                     <h1 class="card-title">Chat</h1>
                 </div>
-                <div class="card-footer text-muted" [ngClass]="{'service-close': !isOpen('CHAT')}">
-                    <div class="">
-                        <a class="nav-link" (click)="clickService('chat')">Procedi</a>
-                    </div>
+                <div class="card-footer text-muted" [ngClass]="{'service-close': !isOpen('CHAT')}" (click)="clickService('CHAT')">
+                    <span>Procedi</span>
                 </div>
             </div>
         </div>
@@ -29,12 +27,10 @@
                     </div>
                     <div class="card-body">
                         <mat-icon>videocam</mat-icon>
-                        <h1 class="card-title">Video Chat</h1>
+                        <h1 class="card-title">Video Chatsss</h1>
                     </div>
-                    <div class="card-footer text-muted" [ngClass]="{'service-close': !isOpen('VIDEOCHAT')}">
-                        <div class="">
-                            <a class="nav-link" (click)="clickService('videochat')">Procedi</a>
-                        </div>
+                    <div class="card-footer text-muted" [ngClass]="{'service-close': !isOpen('VIDEOCHAT')}" (click)="clickService('VIDEOCHAT')">
+                        <span>Procedi</span>
                     </div>
             </div>
         </div>
@@ -53,9 +49,9 @@
                         <h1 class="card-title">SMS</h1>
                     </div>
                     <div class="card-footer text-muted" [ngClass]="{'service-close': !isOpen('SMS')}">
-                        <div class="">
-                            <a class="nav-link" (click)="clickService('sms')">Procedi</a>
-                        </div>
+                            <div class="card-footer text-muted" [ngClass]="{'service-close': !isOpen('SMS')}" (click)="clickService('SMS')">
+                                <span>Procedi</span>
+                            </div>
                     </div>
             </div>
         </div>
@@ -72,9 +68,9 @@
                     <h1 class="card-title">E-mail</h1>
                 </div>
                 <div class="card-footer text-muted" [ngClass]="{'service-close': !isOpen('MAIL')}">
-                    <div class="">
-                        <a class="nav-link" (click)="clickService('email')">Procedi</a>
-                    </div>
+                        <div class="card-footer text-muted" [ngClass]="{'service-close': !isOpen('MAIL')}" (click)="clickService('MAIL')">
+                            <span>Procedi</span>
+                        </div>
                 </div>
             </div>
         </div>
@@ -96,9 +92,9 @@
                     </div>
                 </div>
                 <div class="card-footer text-muted" [ngClass]="{'service-close': !isOpen('TELEGRAM')}">
-                    <div class="">
-                        <a class="nav-link" (click)="clickService('telegram')">Procedi</a>
-                    </div>
+                        <div class="card-footer text-muted" [ngClass]="{'service-close': !isOpen('TELEGRAM')}" (click)="clickService('TELEGRAM')">
+                            <span>Procedi</span>
+                        </div>
                 </div>
             </div>
         </div>
@@ -112,3 +108,4 @@
     </div>
 
 </div>
+

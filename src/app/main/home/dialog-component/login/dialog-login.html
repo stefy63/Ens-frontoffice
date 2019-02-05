@@ -1,0 +1,31 @@
+<div class="dialog-header" >
+  <h1 class="modal-title" >Accedi</h1>
+  <button mat-button mat-dialog-close class="close-dialog"><mat-icon>close</mat-icon></button>
+</div>
+<form (ngSubmit)="onYesClick()" [formGroup]="formGroup">
+    <div class="form__body">
+      <mat-form-field class="mb-3"  appearance="outline" >
+        <input matInput class="dialog-input form-control" type="text" placeholder="Username" formControlName="username" required>
+        <mat-icon matSuffix>perm_identity</mat-icon>
+        <mat-error class="error-message" *ngIf="formGroup.controls['username'].hasError('required')">Lo username è obbligatoria</mat-error>
+      </mat-form-field>
+      <mat-form-field class="mb-3"  appearance="outline" >
+        <input matInput class="dialog-input" type="password" placeholder="Password" formControlName="password" required>
+        <mat-icon matSuffix>vpn_key</mat-icon>
+        <mat-error class="error-message" *ngIf="formGroup.controls['password'].hasError('required')">La password è obbligatoria</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="text-right">
+        <a href="" class="forgot">Hai dimenticato la password?</a>
+    </div>
+    <br>
+    <div class="form__footer">
+      <button mat-raised-button class="col-6" type="submit" color="accent" [disabled]="!formGroup.valid">
+          Salva
+      </button>
+    </div>
+    <br>
+    <div class="text-right">
+        Non hai un account? <a href="" >Registrati</a>
+    </div>
+</form>

@@ -4,7 +4,13 @@ import { ApiTicketServiceService } from 'app/services/api/api-ticket-service-ser
 import { LocalStorageService } from 'app/services/local-storage/local-storage.service';
 import { keyBy } from 'lodash';
 import { Observable, from } from 'rxjs';
-import { tap, flatMap, map } from 'rxjs/operators';
+import { tap, flatMap, map, filter } from 'rxjs/operators';
+import { MatDialog } from '@angular/material';
+import { DialogLogin } from './dialog-component/login/dialog-login.component';
+import { ApiLoginService } from 'app/services/api/api-login.service';
+import { NotificationsService } from 'angular2-notifications';
+import { AlertToasterOptions } from 'app/class/alert-toaster-options';
+
 
 
 @Component({
@@ -13,12 +19,17 @@ import { tap, flatMap, map } from 'rxjs/operators';
     styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+    
     public ticketServices;
-
+    public options = AlertToasterOptions;
+    
     constructor(
+        public dialog: MatDialog,
         private apiCalendarService: ApiCalendarService,
         private apiTicketServiceService: ApiTicketServiceService,
-        private storage: LocalStorageService
+        private storage: LocalStorageService,
+        private apiLoginService: ApiLoginService,
+        private toast: NotificationsService
     ) { }
 
     ngOnInit(): void {
@@ -40,6 +51,27 @@ export class HomeComponent implements OnInit {
     }
 
     public clickService(service: string): void {
+        if (!this.isOpen(service)){
+            return;
+        }
+
+        this.apiLoginService.apiGetToken().subscribe(data => {
+            this.openNewTicketModal(service);
+        }, (error) => {
+            this.openLoginModal(service);
+        });
+    }
+
+    private openLoginModal(service: string): void {
+        this.dialog.open(DialogLogin)
+        .afterClosed()
+        .subscribe(data => {
+            this.openNewTicketModal(service);
+        });
+    }
+
+    private openNewTicketModal(service: string): void {
+        console.log('SERVICE ---> ', service);
         return;
     }
 }
