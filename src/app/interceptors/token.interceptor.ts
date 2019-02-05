@@ -11,7 +11,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import { Router } from '@angular/router';
 import { LocalStorageService } from 'app/services/local-storage/local-storage.service';
-import { AuthService } from 'app/auth/auth.service';
+import { AuthService } from 'app/services/auth/auth.service';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {

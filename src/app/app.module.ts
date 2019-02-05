@@ -16,11 +16,11 @@ import { CageModule } from './layout/cage/cage.module';
 import { ApiCalendarService } from './services/api/api-calendar-service';
 import { ApiTicketServiceService } from './services/api/api-ticket-service-service';
 import { LocalStorageService } from './services/local-storage/local-storage.service';
-import { AuthService } from './auth/auth.service';
 import { SocketService } from './services/socket/socket.service';
 import { TokenInterceptor } from './interceptors/token.interceptor';
 import { ApiLoginService } from './services/api/api-login.service';
 import { SimpleNotificationsModule } from 'angular2-notifications';
+import { AuthService } from './services/auth/auth.service';
 
 const appRoutes: Routes = [
     {
