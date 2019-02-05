@@ -81,16 +81,18 @@
         }
     }
     .tutorial {
-        .card-footer {
-            background-color: white;
-            a {
-                color: black !important;
-            }
+        .card-body {
+            background-color: black;
         }
     }
     .service-close {
         background-color: #C7C7C7 !important;
         font-weight: 100;
+    }
+
+    .video__tutorial {
+        width: 100%;
+        height: 216px;
     }
 }
 
