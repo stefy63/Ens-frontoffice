@@ -5,6 +5,7 @@ import { ITokenSession } from 'app/interfaces/i-token-session';
 import { Observable, ReplaySubject, Subject, BehaviorSubject } from 'rxjs';
 import { IUser } from 'app/interfaces/i-user';
 import { ApiLoginService } from '../api/api-login.service';
+import { tap } from 'rxjs/operators';
 
 @Injectable()
 export class AuthService {
@@ -31,7 +32,7 @@ export class AuthService {
               /// next su replaySubject
               // save sul localStorage
           })
-      )
+      );
   }
 
   public logout(): any {
@@ -39,10 +40,11 @@ export class AuthService {
         tap((data) => {
             /// next su replaySubject (undefined)
             // remove dal localstorage
-        });
+        })
+    );
   }
 
-  public change(): Observable<IUser | undefined> {
+  public change(): Subject<ITokenSession | undefined> {
       return this.replaySubject;
   }
 }
