@@ -11,8 +11,10 @@ import { tap } from 'rxjs/operators';
 export class AuthService {
   private replaySubject: Subject<ITokenSession | undefined>;
 
-  constructor(private storage: LocalStorageService,
-    private apiLoginService: ApiLoginService) { 
+  constructor(
+        private storage: LocalStorageService,
+        private apiLoginService: ApiLoginService
+    ) { 
         this.replaySubject = new BehaviorSubject<any>(this.getToken());
     }
 
@@ -26,20 +28,24 @@ export class AuthService {
     return (!!token && moment().isSameOrBefore(token.token_expire_date));
   }
 
-  public login(dataLogin): any {
-      this.apiLoginService.apiLogin(dataLogin).pipe(
+  public login(dataLogin): Observable<any> {
+      return this.apiLoginService.apiLogin(dataLogin).pipe(
           tap((data) => {
               /// next su replaySubject
+              this.replaySubject.next(data);
               // save sul localStorage
+            this.storage.setItem('data', data);
           })
       );
   }
 
-  public logout(): any {
-    this.apiLoginService.apiLogout().pipe(
+  public logout(): Observable<any> {
+    return this.apiLoginService.apiLogout().pipe(
         tap((data) => {
             /// next su replaySubject (undefined)
+              this.replaySubject.next(undefined);
             // remove dal localstorage
+            this.storage.clear();
         })
     );
   }
