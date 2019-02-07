@@ -1,4 +1,4 @@
-import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -21,6 +21,9 @@ import { TokenInterceptor } from './interceptors/token.interceptor';
 import { ApiLoginService } from './services/api/api-login.service';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { AuthService } from './services/auth/auth.service';
+import { ApiUserService } from './services/api/api-user.service';
+import { ApiItalyGeoService } from './services/api/api-italy-geo.service';
+import { FuseSharedModule } from '@fuse/shared.module';
 
 const appRoutes: Routes = [
     {
@@ -34,6 +37,7 @@ const appRoutes: Routes = [
         AppComponent
     ],
     imports     : [
+        FuseSharedModule,
         BrowserModule,
         BrowserAnimationsModule,
         HttpClientModule,
@@ -60,12 +64,16 @@ const appRoutes: Routes = [
             useClass: TokenInterceptor,
             multi: true
         },
-        ApiLoginService
+        ApiLoginService,
+        ApiUserService,
+        ApiItalyGeoService
     ],
     bootstrap   : [
         AppComponent
     ],
-    schemas: [ NO_ERRORS_SCHEMA ]
+    schemas: [ 
+        NO_ERRORS_SCHEMA
+    ]
 })
 export class AppModule
 {

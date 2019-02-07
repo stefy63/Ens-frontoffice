@@ -31,9 +31,9 @@ export class AuthService {
   public login(dataLogin): Observable<any> {
       return this.apiLoginService.apiLogin(dataLogin).pipe(
           tap((data) => {
-              /// next su replaySubject
-              this.replaySubject.next(data);
-              // save sul localStorage
+            /// next su replaySubject
+            this.replaySubject.next(data);
+            // save sul localStorage
             this.storage.setItem('data', data);
           })
       );
@@ -43,7 +43,7 @@ export class AuthService {
     return this.apiLoginService.apiLogout().pipe(
         tap((data) => {
             /// next su replaySubject (undefined)
-              this.replaySubject.next(undefined);
+            this.replaySubject.next(undefined);
             // remove dal localstorage
             this.storage.clear();
         })
