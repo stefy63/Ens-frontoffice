@@ -201,8 +201,6 @@ export class NavbarComponent implements OnInit, OnDestroy
     edit_profile(): void{
 
         const dialogRef = this.dialog.open(DialogProfileComponent, {
-            // maxWidth: '850px',
-            // maxHeight: '600px',
             hasBackdrop: true,
             data: {
                 modalData: this.user
