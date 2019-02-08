@@ -31,10 +31,10 @@ export class AuthService {
   public login(dataLogin): Observable<any> {
       return this.apiLoginService.apiLogin(dataLogin).pipe(
           tap((data) => {
-            /// next su replaySubject
-            this.replaySubject.next(data);
             // save sul localStorage
             this.storage.setItem('data', data);
+            /// next su replaySubject
+            this.replaySubject.next(data);
           })
       );
   }
@@ -42,10 +42,10 @@ export class AuthService {
   public logout(): Observable<any> {
     return this.apiLoginService.apiLogout().pipe(
         tap((data) => {
-            /// next su replaySubject (undefined)
-            this.replaySubject.next(undefined);
             // remove dal localstorage
             this.storage.clear();
+            /// next su replaySubject (undefined)
+            this.replaySubject.next(undefined);
         })
     );
   }

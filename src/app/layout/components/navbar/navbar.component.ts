@@ -131,6 +131,7 @@ export class NavbarComponent implements OnInit, OnDestroy
 
         this.authService.change()
             .subscribe(data => {
+                this.user = this.storage.getItem('user');
                 if (!!data) {
                     this.userLogged = true;
                 } else {
@@ -227,7 +228,7 @@ export class NavbarComponent implements OnInit, OnDestroy
     change_password(): void{
         const dialogRef = this.dialog.open(DialogChangePassword, {
             data: {
-                modalData: this.user.id
+                modalData: this.user
             }
         });
     }

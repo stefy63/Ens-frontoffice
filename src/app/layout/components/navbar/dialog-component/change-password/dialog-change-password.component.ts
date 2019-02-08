@@ -37,11 +37,12 @@ export class DialogChangePassword implements OnInit {
   }
 
   onYesClick(): void {
+      console.log(this.data);
     this.apiUserService.apiChangePassword({
-        user_id: this.data.modalData,
+        user_id: this.data.modalData.id,
         old_password: this.formGroup.controls['old_password'].value,
         new_password: this.formGroup.controls['new_password'].value,
-    })
+    } as IChangePassword)
     .subscribe(() => {
         this.toast.success('Cambio Password', 'Password modificata con successo');
         this.dialogRef.close();
