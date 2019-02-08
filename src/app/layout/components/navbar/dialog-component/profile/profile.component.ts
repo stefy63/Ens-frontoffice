@@ -4,13 +4,12 @@ import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { AlertToasterOptions } from 'app/class/alert-toaster-options';
-import { IUser } from 'app/interfaces/i-user';
 import { ApiItalyGeoService } from 'app/services/api/api-italy-geo.service';
 import { AlphabeticOnlyValidator } from 'app/services/MaterialValidator/AlphabeticOnlyValidator';
-import { DateValidator } from 'app/services/MaterialValidator/DateValidator';
 import { EmailCustomValidator } from 'app/services/MaterialValidator/EmailCustomValidator';
 import { NumericOnlyValidator } from 'app/services/MaterialValidator/NumericOnlyValidator';
-import { FiscalCodeValidator } from 'app/services/MaterialValidator/FiscalCodeValidator';
+import { IUserData } from 'app/interfaces/i-userdata';
+import { map, assign } from 'lodash';
 
 
 export const MY_FORMATS = {
@@ -37,7 +36,7 @@ export const MY_FORMATS = {
 export class DialogProfileComponent implements OnInit {
 
   public options = AlertToasterOptions;
-  public modalData: IUser;
+  public modalData: IUserData;
   public formGroup: FormGroup;
   public provinces: any[];
   public gender = [
@@ -58,52 +57,34 @@ export class DialogProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.modalData = this.data.modalData;
-    this.modalData.userdata.privacyaccept = this.modalData.userdata.privacyaccept || true;
+    this.modalData = this.data.modalData.userdata as IUserData;
+    this.modalData.privacyaccept = this.modalData.privacyaccept || true;
     this.formGroup = new FormGroup({
-      'name': new FormControl('', [
+      'name': new FormControl(this.modalData.name, [
         Validators.required,
         AlphabeticOnlyValidator.alphabeticOnly
       ]),
-      'surname': new FormControl('', [
+      'surname': new FormControl(this.modalData.surname, [
         Validators.required,
         AlphabeticOnlyValidator.alphabeticOnly
       ]),
-      'born_date': new FormControl(this.modalData.userdata.born_date, [
-        // Validators.required,
-        DateValidator.date
-      ]),
-      'born_city': new FormControl('', [
-        Validators.required,
-        AlphabeticOnlyValidator.alphabeticOnly
-      ]),
-      'born_province': new FormControl('', [Validators.required]),
-      'email': new FormControl('', [
+      'email': new FormControl(this.modalData.email, [
         Validators.required, EmailCustomValidator.email_custom
       ]),
-      'gender': new FormControl('', [Validators.required]),
-      'city': new FormControl('', [
-        Validators.required,
-        AlphabeticOnlyValidator.alphabeticOnly
-      ]),
-      'address': new FormControl('', [Validators.required]),
-      'province': new FormControl('', [Validators.required]),
-      'phone': new FormControl('', [
+      'gender': new FormControl(this.modalData.gender, [Validators.required]),
+      'phone': new FormControl(this.modalData.phone, [
         Validators.required, NumericOnlyValidator.numericOnly
       ]),
-      'card_number': new FormControl('', []),
-      'fiscalcode': new FormControl('', [
-        Validators.required,
-        FiscalCodeValidator.fiscalCode
-      ]),
-      'privacyaccept': new FormControl(),
-      'newsletteraccept': new FormControl(),
-      'becontacted': new FormControl(),
+      'card_number': new FormControl(this.modalData.card_number, []),
+      'privacyaccept': new FormControl({value: this.modalData.privacyaccept, disabled: true}),
+      'newsletteraccept': new FormControl(this.modalData.newsletteraccept),
+      'becontacted': new FormControl(this.modalData.becontacted),
     });
   }
 
   onYesClick(): void {
-    this.dialogRef.close(this.modalData);
+    const updatedModalData = assign({}, this.modalData, ...map(this.formGroup.controls, (control, key) => ({[key] : control.value})));
+    this.dialogRef.close(updatedModalData);
   }
 
 }

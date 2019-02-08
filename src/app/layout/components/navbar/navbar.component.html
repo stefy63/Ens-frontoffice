@@ -11,7 +11,15 @@
     </div>
     <div>
         <div>
-            <mat-icon [matMenuTriggerFor]="moreMenu" class="more_vert__button">more_vert</mat-icon>
+            <button mat-icon-button [matMenuTriggerFor]="moreMenu">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+
+
+
+
+
+            <!-- <mat-icon [matMenuTriggerFor]="moreMenu" class="more_vert__button">more_vert</mat-icon> -->
             <mat-menu #moreMenu="matMenu" [overlapTrigger]="false">
                 <button mat-menu-item fxLayout="row" fxLayoutAlign="left center">
                     <mat-icon>chrome_reader_mode</mat-icon>

@@ -212,11 +212,13 @@ export class NavbarComponent implements OnInit, OnDestroy
         dialogRef
             .afterClosed().pipe(
                 filter((result) => !!result),
-                flatMap((result) => this.apiUserService.apiChangeProfile(result))
+                flatMap((result) => {
+                    this.user.userdata = result;
+                    return this.apiUserService.apiChangeProfile(this.user);
+                })
             )
-            
             .subscribe(user => {
-                this.storage.setItem('data.user', user);
+                this.storage.setKey('user', user);
                 this.toast.success('Aggiornamento Profilo', 'Profilo modificato con successo');
             },
             (err) => {
