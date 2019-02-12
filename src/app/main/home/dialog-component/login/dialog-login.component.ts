@@ -37,4 +37,11 @@ export class DialogLogin {
         this.toast.error('Errore', 'Autenticazione Falita.');
     });
   }
+
+  Registration(): void {
+    this.dialogRef.close({registration: true});
+  }
+  Forgot(): void {
+    this.dialogRef.close({forgot: true});
+  }
 }

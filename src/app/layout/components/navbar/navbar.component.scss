@@ -5,20 +5,18 @@ navbar {
     color: white;
     padding: 0;
 
+    .logged{
+        width: 100%;
+    }
+
     .navbar-nav {
         font-size: 1.2em;
     }
+
     .bg-ermes-nav {
         background-color: #6195CC;
     }
-    .more-button {
-        display: block !important;
-        background: transparent;
-        color: white;
-        outline: none;
-        min-width: 35px;
-        padding-right: 0px;
-    }
+
     .navbar-brand {
         font-size: 2.5em;
         margin-right: 1em;
@@ -43,7 +41,4 @@ navbar {
         border-color: white;
     }
 
-    .more_vert__button {
-        cursor: pointer;
-    }
 }

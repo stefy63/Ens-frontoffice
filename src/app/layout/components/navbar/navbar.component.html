@@ -11,16 +11,15 @@
     </div>
     <div>
         <div>
-            <button mat-icon-button [matMenuTriggerFor]="moreMenu">
-                <span>{{}}</span>
-                <mat-icon>more_vert</mat-icon>
+            <button mat-icon-button [matMenuTriggerFor]="moreMenu" [ngClass]="{'logged': userLogged}">
+                <div *ngIf="userLogged">
+                    <span>{{user.userdata.name + ' ' + user.userdata.surname}}</span>
+                    <mat-icon>arrow_drop_down</mat-icon>
+                </div>
+                <div *ngIf="!userLogged">
+                    <mat-icon *ngIf="!userLogged">more_vert</mat-icon>
+                </div>
             </button>
-
-
-
-
-
-            <!-- <mat-icon [matMenuTriggerFor]="moreMenu" class="more_vert__button">more_vert</mat-icon> -->
             <mat-menu #moreMenu="matMenu" [overlapTrigger]="false">
                 <button mat-menu-item fxLayout="row" fxLayoutAlign="left center">
                     <mat-icon>chrome_reader_mode</mat-icon>

@@ -25,4 +25,8 @@ export class ApiUserService {
   public apiChangeProfile(user: IUser): Observable<any> {
     return this.http.put(this.baseUrl + '/user', user);
   }
+
+  public apiCreateUser(user: IUser): Observable<any> {
+    return this.http.post(this.baseUrl + '/user', user);
+  }
 }

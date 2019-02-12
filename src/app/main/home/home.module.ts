@@ -5,6 +5,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { HomeComponent } from './home.component';
 import { DialogLogin } from './dialog-component/login/dialog-login.component';
 import { FuseSharedModule } from '@fuse/shared.module';
+import { DialogRegistrationComponent } from './dialog-component/registration/regstration.component';
 
 const routes = [
     {
@@ -16,7 +17,8 @@ const routes = [
 @NgModule({
     declarations: [
         HomeComponent,
-        DialogLogin
+        DialogLogin,
+        DialogRegistrationComponent
     ],
     imports     : [
         RouterModule.forChild(routes),
@@ -24,7 +26,8 @@ const routes = [
         TranslateModule,
     ],
     entryComponents: [
-        DialogLogin
+        DialogLogin,
+        DialogRegistrationComponent
     ],
     exports     : [
         HomeComponent

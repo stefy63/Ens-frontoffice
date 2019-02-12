@@ -3,13 +3,15 @@ import { ApiCalendarService } from 'app/services/api/api-calendar-service';
 import { ApiTicketServiceService } from 'app/services/api/api-ticket-service-service';
 import { LocalStorageService } from 'app/services/local-storage/local-storage.service';
 import { keyBy } from 'lodash';
-import { Observable, from } from 'rxjs';
-import { tap, flatMap, map, filter } from 'rxjs/operators';
+import { from } from 'rxjs';
+import { tap, flatMap, map } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
 import { DialogLogin } from './dialog-component/login/dialog-login.component';
 import { ApiLoginService } from 'app/services/api/api-login.service';
 import { NotificationsService } from 'angular2-notifications';
 import { AlertToasterOptions } from 'app/class/alert-toaster-options';
+import { DialogRegistrationComponent } from './dialog-component/registration/regstration.component';
+import { ApiUserService } from 'app/services/api/api-user.service';
 
 
 
@@ -27,9 +29,7 @@ export class HomeComponent implements OnInit {
         public dialog: MatDialog,
         private apiCalendarService: ApiCalendarService,
         private apiTicketServiceService: ApiTicketServiceService,
-        private storage: LocalStorageService,
         private apiLoginService: ApiLoginService,
-        private toast: NotificationsService
     ) { }
 
     ngOnInit(): void {
@@ -66,7 +66,15 @@ export class HomeComponent implements OnInit {
         this.dialog.open(DialogLogin)
         .afterClosed()
         .subscribe(data => {
-            this.openNewTicketModal(service);
+            console.log(data);
+            if (data && data.registration) {
+                this.dialog.open(DialogRegistrationComponent);
+            } else if (data && data.forgot) {
+                // TODO OPEN FORGOT PASSWORD
+                this.dialog.open(DialogRegistrationComponent);
+            } else {
+                this.openNewTicketModal(service);
+            }
         });
     }
 
@@ -74,4 +82,6 @@ export class HomeComponent implements OnInit {
         console.log('SERVICE ---> ', service);
         return;
     }
+
+
 }
