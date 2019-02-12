@@ -48,10 +48,11 @@
                         <mat-icon>textsms</mat-icon>
                         <h1 class="card-title">SMS</h1>
                     </div>
-                    <div class="card-footer text-muted" [ngClass]="{'service-close': !isOpen('SMS')}">
-                            <div class="card-footer text-muted" [ngClass]="{'service-close': !isOpen('SMS')}" (click)="clickService('SMS')">
+                    <div class="card-footer text-muted" [ngClass]="{'service-close': !isOpen('SMS'), 'userlogged': userLogged}">
+                            <div class="card-footer text-muted" [ngClass]="{'service-close': !isOpen('SMS')}" (click)="clickService('SMS')" *ngIf="!userLogged">
                                 <span>Procedi</span>
                             </div>
+                            <span *ngIf="userLogged">Invia un SMS al numero 320.20.41.209</span>
                     </div>
             </div>
         </div>
@@ -67,10 +68,11 @@
                     <mat-icon>email</mat-icon>
                     <h1 class="card-title">E-mail</h1>
                 </div>
-                <div class="card-footer text-muted" [ngClass]="{'service-close': !isOpen('MAIL')}">
-                        <div class="card-footer text-muted" [ngClass]="{'service-close': !isOpen('MAIL')}" (click)="clickService('MAIL')">
-                            <span>Procedi</span>
+                <div class="card-footer text-muted" [ngClass]="{'service-close': !isOpen('MAIL'), 'userlogged': userLogged}">
+                        <div class="card-footer text-muted" [ngClass]="{'service-close': !isOpen('MAIL')}" (click)="clickService('MAIL')" *ngIf="!userLogged">
+                                <span>Procedi</span>
                         </div>
+                        <span *ngIf="userLogged">Scrivi a email@comunicaens.it</span>
                 </div>
             </div>
         </div>
@@ -91,10 +93,11 @@
                         <h1 class="card-title">Telegram</h1>
                     </div>
                 </div>
-                <div class="card-footer text-muted" [ngClass]="{'service-close': !isOpen('TELEGRAM')}">
-                        <div class="card-footer text-muted" [ngClass]="{'service-close': !isOpen('TELEGRAM')}" (click)="clickService('TELEGRAM')">
-                            <span>Procedi</span>
+                <div class="card-footer text-muted" [ngClass]="{'service-close': !isOpen('TELEGRAM'), 'userlogged': userLogged}">
+                        <div class="card-footer text-muted" [ngClass]="{'service-close': !isOpen('TELEGRAM')}" (click)="clickService('TELEGRAM')" *ngIf="!userLogged">
+                                <span>Procedi</span>
                         </div>
+                        <span *ngIf="userLogged">Scrivi sul canale <em>@ComunicaEnsBot</em></span>
                 </div>
             </div>
         </div>

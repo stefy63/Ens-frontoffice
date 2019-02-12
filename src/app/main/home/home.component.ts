@@ -1,17 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiCalendarService } from 'app/services/api/api-calendar-service';
 import { ApiTicketServiceService } from 'app/services/api/api-ticket-service-service';
-import { LocalStorageService } from 'app/services/local-storage/local-storage.service';
 import { keyBy } from 'lodash';
 import { from } from 'rxjs';
 import { tap, flatMap, map } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
 import { DialogLogin } from './dialog-component/login/dialog-login.component';
 import { ApiLoginService } from 'app/services/api/api-login.service';
-import { NotificationsService } from 'angular2-notifications';
 import { AlertToasterOptions } from 'app/class/alert-toaster-options';
 import { DialogRegistrationComponent } from './dialog-component/registration/regstration.component';
-import { ApiUserService } from 'app/services/api/api-user.service';
+import { AuthService } from 'app/services/auth/auth.service';
 
 
 
@@ -24,12 +22,14 @@ export class HomeComponent implements OnInit {
     
     public ticketServices;
     public options = AlertToasterOptions;
+    userLogged: boolean;
     
     constructor(
         public dialog: MatDialog,
         private apiCalendarService: ApiCalendarService,
         private apiTicketServiceService: ApiTicketServiceService,
         private apiLoginService: ApiLoginService,
+        private authService: AuthService
     ) { }
 
     ngOnInit(): void {
@@ -42,6 +42,15 @@ export class HomeComponent implements OnInit {
             }))),
             )).subscribe((data) => {
                 this.ticketServices[data.service].isOpen = data.status;
+            });
+
+        this.authService.change()
+            .subscribe(data => {
+                if (!!data) {
+                    this.userLogged = true;
+                } else {
+                    this.userLogged = false;
+                }
             });
     }
 

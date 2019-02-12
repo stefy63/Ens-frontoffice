@@ -9,6 +9,11 @@ navbar {
         width: 100%;
     }
 
+    .icon_logged {
+        display: flex;
+        align-items: center;
+    }
+
     .navbar-nav {
         font-size: 1.2em;
     }
