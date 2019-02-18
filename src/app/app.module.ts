@@ -24,6 +24,8 @@ import { AuthService } from './services/auth/auth.service';
 import { ApiUserService } from './services/api/api-user.service';
 import { ApiItalyGeoService } from './services/api/api-italy-geo.service';
 import { FuseSharedModule } from '@fuse/shared.module';
+import { ApiTicketService } from './services/api/api-ticket.service';
+import { ApiTicketHistoryService } from './services/api/api-ticket-history.service';
 
 const appRoutes: Routes = [
     {
@@ -66,7 +68,9 @@ const appRoutes: Routes = [
         },
         ApiLoginService,
         ApiUserService,
-        ApiItalyGeoService
+        ApiItalyGeoService,
+        ApiTicketService,
+        ApiTicketHistoryService
     ],
     bootstrap   : [
         AppComponent

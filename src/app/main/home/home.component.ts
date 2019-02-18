@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiCalendarService } from 'app/services/api/api-calendar-service';
 import { ApiTicketServiceService } from 'app/services/api/api-ticket-service-service';
-import { keyBy } from 'lodash';
+import { keyBy, find } from 'lodash';
 import { from } from 'rxjs';
 import { tap, flatMap, map } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
@@ -10,6 +10,11 @@ import { ApiLoginService } from 'app/services/api/api-login.service';
 import { AlertToasterOptions } from 'app/class/alert-toaster-options';
 import { DialogRegistrationComponent } from './dialog-component/registration/regstration.component';
 import { AuthService } from 'app/services/auth/auth.service';
+import { DialogNewTicket } from './dialog-component/new-ticket/dialog-new-ticket.component';
+import { ApiTicketService } from 'app/services/api/api-ticket.service';
+import { ApiTicketHistoryService } from 'app/services/api/api-ticket-history.service';
+import { ITicketHistoryType } from 'app/interfaces/i-ticket-history-type';
+import { LocalStorageService } from 'app/services/local-storage/local-storage.service';
 
 
 
@@ -22,17 +27,23 @@ export class HomeComponent implements OnInit {
     
     public ticketServices;
     public options = AlertToasterOptions;
-    userLogged: boolean;
+    public userLogged: boolean;
+
+    private ticketHistoryType: ITicketHistoryType[];
     
     constructor(
         public dialog: MatDialog,
         private apiCalendarService: ApiCalendarService,
         private apiTicketServiceService: ApiTicketServiceService,
         private apiLoginService: ApiLoginService,
-        private authService: AuthService
+        private authService: AuthService,
+        private apiTickeService: ApiTicketService,
+        private apiTicketHistoryService: ApiTicketHistoryService,
+        private storage: LocalStorageService
     ) { }
 
     ngOnInit(): void {
+        this.ticketHistoryType = this.storage.getItem('ticket_history_type');
         this.apiTicketServiceService.getAll().pipe(
             tap((services) => this.ticketServices = keyBy(services, (serviceItem) => serviceItem.service)),
             flatMap((data) => from(data)),
@@ -88,7 +99,40 @@ export class HomeComponent implements OnInit {
     }
 
     private openNewTicketModal(service: string): void {
-        console.log('SERVICE ---> ', service);
+        this.dialog.open(DialogNewTicket, {
+            data: {
+                service: service,
+                color: (service === 'CHAT') ? ' #CC5B49' : '#365FA5'
+            }
+        })
+        .afterClosed()
+        .subscribe(data => {
+            const objService = find(this.ticketServices, ['service', service]);
+            const newTicketRequest = {
+                id_service: objService.id,
+                id_category: data.category,
+                phone: data.phone
+            };
+            this.apiTickeService.create(newTicketRequest).pipe(
+                flatMap((ret) => {
+                    console.log(ret);
+                    const actionType = find(this.ticketHistoryType, ['type', 'INITIAL']);
+                    const newTicketHistory = {
+                        id_ticket: ret.id,
+                        id_type: actionType.id,
+                        action: data.description
+                    };
+                    return this.apiTicketHistoryService.create(newTicketHistory);
+                })
+            )
+            .subscribe(set => console.log(set));
+
+
+
+
+            console.log('DATAAAAAA --> ', data, this.ticketServices, objService);
+            
+        });
         return;
     }
 
