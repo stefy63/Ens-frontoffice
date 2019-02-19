@@ -32,7 +32,7 @@ export class DialogLogin {
         username: this.formGroup.get('username').value,
         password: this.formGroup.get('password').value
     }).subscribe(data => {
-        this.dialogRef.close();
+        this.dialogRef.close(data);
     }, (err) => {
         this.toast.error('Errore', 'Autenticazione Falita.');
     });

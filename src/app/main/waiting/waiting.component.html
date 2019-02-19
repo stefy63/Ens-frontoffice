@@ -1,0 +1,22 @@
+
+<div class="col-lg-9 waiting-card__container">
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <h1 class="card-title" [ngStyle]="setMyStyles()">
+                    <mat-icon *ngIf="service === 'CHAT'">forum</mat-icon>
+                    <mat-icon *ngIf="service === 'VIDEOCHAT'">videocam</mat-icon>
+                    {{service | titlecase}}
+                </h1>
+            </div>
+            <button mat-button mat-dialog-close class="close-card"><mat-icon>close</mat-icon></button>
+        </div>
+        <div class="card-body">
+            {{ticketInWaiting}}
+        </div>
+        <hr>
+        <div class="card-footer text-muted" >
+                {{operatorOnline}}
+        </div>
+    </div>
+</div>

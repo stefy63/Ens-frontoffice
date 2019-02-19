@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ApiCalendarService } from 'app/services/api/api-calendar-service';
 import { ApiTicketServiceService } from 'app/services/api/api-ticket-service-service';
 import { keyBy, find } from 'lodash';
-import { from } from 'rxjs';
-import { tap, flatMap, map } from 'rxjs/operators';
+import { from, forkJoin, of } from 'rxjs';
+import { tap, flatMap, map, mergeMap } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
 import { DialogLogin } from './dialog-component/login/dialog-login.component';
 import { ApiLoginService } from 'app/services/api/api-login.service';
@@ -15,6 +15,10 @@ import { ApiTicketService } from 'app/services/api/api-ticket.service';
 import { ApiTicketHistoryService } from 'app/services/api/api-ticket-history.service';
 import { ITicketHistoryType } from 'app/interfaces/i-ticket-history-type';
 import { LocalStorageService } from 'app/services/local-storage/local-storage.service';
+import { NotificationsService } from 'angular2-notifications';
+import { SocketService } from 'app/services/socket/socket.service';
+import { DialogQueue } from './dialog-component/queue/dialog-queue.component';
+import { Router } from '@angular/router';
 
 
 
@@ -32,6 +36,7 @@ export class HomeComponent implements OnInit {
     private ticketHistoryType: ITicketHistoryType[];
     
     constructor(
+        private router: Router,
         public dialog: MatDialog,
         private apiCalendarService: ApiCalendarService,
         private apiTicketServiceService: ApiTicketServiceService,
@@ -39,7 +44,9 @@ export class HomeComponent implements OnInit {
         private authService: AuthService,
         private apiTickeService: ApiTicketService,
         private apiTicketHistoryService: ApiTicketHistoryService,
-        private storage: LocalStorageService
+        private storage: LocalStorageService,
+        private toast: NotificationsService,
+        private socketService: SocketService
     ) { }
 
     ngOnInit(): void {
@@ -86,13 +93,18 @@ export class HomeComponent implements OnInit {
         this.dialog.open(DialogLogin)
         .afterClosed()
         .subscribe(data => {
-            console.log(data);
             if (data && data.registration) {
                 this.dialog.open(DialogRegistrationComponent);
             } else if (data && data.forgot) {
                 // TODO OPEN FORGOT PASSWORD
                 this.dialog.open(DialogRegistrationComponent);
             } else {
+                this.socketService.sendMessage('welcome-message', {
+                    userToken: this.authService.getToken().token_session,
+                    idUser: data.user.id,
+                    status: 'READY',
+                    userType: 'USER'
+                  });
                 this.openNewTicketModal(service);
             }
         });
@@ -106,34 +118,39 @@ export class HomeComponent implements OnInit {
             }
         })
         .afterClosed()
-        .subscribe(data => {
-            const objService = find(this.ticketServices, ['service', service]);
-            const newTicketRequest = {
-                id_service: objService.id,
-                id_category: data.category,
-                phone: data.phone
-            };
-            this.apiTickeService.create(newTicketRequest).pipe(
-                flatMap((ret) => {
-                    console.log(ret);
+        .pipe(
+            mergeMap(fromModal => {
+                const objService = find(this.ticketServices, ['service', service]);
+                const newTicketRequest = {
+                    id_service: objService.id,
+                    id_category: fromModal.category,
+                    phone: fromModal.phone
+                };
+                return forkJoin(
+                    of(fromModal),
+                    this.apiTickeService.create(newTicketRequest)
+                );
+            }),
+            mergeMap(([dataModal, fromNewTicket]) => {
                     const actionType = find(this.ticketHistoryType, ['type', 'INITIAL']);
                     const newTicketHistory = {
-                        id_ticket: ret.id,
+                        id_ticket: fromNewTicket.id,
                         id_type: actionType.id,
-                        action: data.description
+                        action: dataModal.description
                     };
-                    return this.apiTicketHistoryService.create(newTicketHistory);
-                })
-            )
-            .subscribe(set => console.log(set));
-
-
-
-
-            console.log('DATAAAAAA --> ', data, this.ticketServices, objService);
-            
+                    return forkJoin(
+                        of(fromNewTicket),
+                        this.apiTicketHistoryService.create(newTicketHistory)
+                );
+            })
+        )
+        .subscribe(([newTicket, newHistory]) => {
+            this.router.navigate(['waiting', {
+                ticketID: newTicket.id,
+                service: service,
+                color: (service === 'CHAT') ? ' #CC5B49' : '#365FA5'
+            }]);
         });
-        return;
     }
 
 

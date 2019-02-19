@@ -1,13 +1,17 @@
 <div class="dialog-header" >
     <div>
-        <h1 class="modal-title" [ngStyle]="setMyStyles()"><mat-icon>forum</mat-icon>{{data.service | titlecase}}</h1>
+        <h1 class="modal-title" [ngStyle]="setMyStyles()">
+            <mat-icon *ngIf="data.service === 'CHAT'">forum</mat-icon>
+            <mat-icon *ngIf="data.service === 'VIDEOCHAT'">videocam</mat-icon>
+            {{data.service | titlecase}}
+        </h1>
     </div>
     <button mat-button mat-dialog-close class="close-dialog"><mat-icon>close</mat-icon></button>
 </div>
 <form (ngSubmit)="onYesClick()" [formGroup]="formGroup">
     <div class="form__body">
       <mat-form-field class="mb-3"  appearance="outline" >
-        <input matInput class="dialog-input form-control" type="text" placeholder="Numero da chiamare" formControlName="phone" required>
+        <input matInput class="dialog-input" type="text" placeholder="Numero da chiamare" formControlName="phone" required>
         <mat-icon matSuffix>local_phone</mat-icon>
         <mat-error class="error-message" *ngIf="formGroup.controls['phone'].hasError('required')">Campo obbligatorio</mat-error>
         <mat-error class="error-message" *ngIf="formGroup.controls['phone'].hasError('PhoneValidator')">Solo numeri</mat-error>
@@ -29,7 +33,7 @@
     </div>
     <div class="form__footer">
       <button mat-raised-button class="col-6" type="submit" color="accent" [disabled]="!formGroup.valid">
-          Login
+          Procedi
       </button>
     </div>
 </form>

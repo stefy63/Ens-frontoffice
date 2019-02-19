@@ -35,6 +35,7 @@ export class AuthService {
             this.storage.setItem('data', data);
             /// next su replaySubject
             this.replaySubject.next(data);
+            return data;
           })
       );
   }

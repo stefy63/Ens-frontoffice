@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Socket } from 'ng-socket-io';
+import { Socket } from 'ngx-socket-io';
 import { LocalStorageService } from '../local-storage/local-storage.service';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 
 @Injectable()
@@ -30,9 +31,9 @@ export class SocketService {
     this.socket.emit(messageName, msg);
   }
 
-  public getMessage<T = any>(event: string): Observable<T> {
+  public getMessage(event: string): Observable<any> {
     return this.socket
-      .fromEvent<T>(event);
+      .fromEvent(event);
   }
 
   public removeListener(event: string): void {

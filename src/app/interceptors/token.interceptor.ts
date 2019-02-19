@@ -12,6 +12,7 @@ import 'rxjs/add/observable/throw';
 import { Router } from '@angular/router';
 import { LocalStorageService } from 'app/services/local-storage/local-storage.service';
 import { AuthService } from 'app/services/auth/auth.service';
+import { throwError } from 'rxjs';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
@@ -34,9 +35,8 @@ export class TokenInterceptor implements HttpInterceptor {
               .catch(response => {
                 if (response.status === 401) {
                   this.storage.clear();
-                //   this.router.navigate(['pages/authentication/login-2']);
                 }
-                return Observable.throw(response);
+                return throwError(response);
               });
     }
     return next.handle(request);

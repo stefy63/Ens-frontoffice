@@ -26,6 +26,10 @@ import { ApiItalyGeoService } from './services/api/api-italy-geo.service';
 import { FuseSharedModule } from '@fuse/shared.module';
 import { ApiTicketService } from './services/api/api-ticket.service';
 import { ApiTicketHistoryService } from './services/api/api-ticket-history.service';
+import { ApiQueueService } from './services/api/api-queue.service';
+import { WaitingModule } from './main/waiting/waiting.module';
+import { environment } from 'environments/environment';
+import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 
 const appRoutes: Routes = [
     {
@@ -34,9 +38,22 @@ const appRoutes: Routes = [
     }
 ];
 
+const options = {
+    reconnection: true,
+    reconnectionDelay: 1000,
+    reconnectionDelayMax : 5000,
+    reconnectionAttempts: Infinity,
+    multiplex: false,
+    path: environment.ws_path,
+    transports: ['websocket']
+};
+
+const wssPort =  (environment.ws_port) ? ':' + environment.ws_port : '';
+const config: SocketIoConfig = { url: environment.ws_url + wssPort, options: options };
+
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
     ],
     imports     : [
         FuseSharedModule,
@@ -53,14 +70,17 @@ const appRoutes: Routes = [
         // App modules
         CageModule,
         HomeModule,
-        SimpleNotificationsModule.forRoot()
+        WaitingModule,
+        SimpleNotificationsModule.forRoot(),
+        SocketIoModule.forRoot(config),
     ],
     providers: [
+        SocketService,
+        ApiQueueService,
         ApiCalendarService,
         ApiTicketServiceService,
         AuthService,
         LocalStorageService,
-        SocketService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: TokenInterceptor,

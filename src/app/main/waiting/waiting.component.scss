@@ -1,0 +1,38 @@
+:host {
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    height: 100%;
+
+    .waiting-card__container {
+        margin: 0 auto;
+    }
+
+    .card {
+        .card-header {
+        position: relative;
+        text-align: center;
+        }
+    }
+    .card-title {
+      font-size: 3em;
+      font-weight: bold;
+      background-color: white;
+      padding-bottom: 20px;
+        mat-icon {
+            font-size: 3em;
+            display: contents;
+        }
+    }
+
+    .close-card {
+      position: absolute;
+      top: 0;
+      right: -10px;
+      outline: none;
+    }
+
+    .card-footer {
+      justify-content: center;
+    }
+}
