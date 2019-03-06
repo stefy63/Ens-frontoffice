@@ -17,7 +17,6 @@ import { ITicketHistoryType } from 'app/interfaces/i-ticket-history-type';
 import { LocalStorageService } from 'app/services/local-storage/local-storage.service';
 import { NotificationsService } from 'angular2-notifications';
 import { SocketService } from 'app/services/socket/socket.service';
-import { DialogQueue } from './dialog-component/queue/dialog-queue.component';
 import { Router } from '@angular/router';
 
 
@@ -105,6 +104,7 @@ export class HomeComponent implements OnInit {
                     status: 'READY',
                     userType: 'USER'
                   });
+                this.ticketHistoryType = this.storage.getItem('ticket_history_type');
                 this.openNewTicketModal(service);
             }
         });

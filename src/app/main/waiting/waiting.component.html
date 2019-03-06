@@ -6,17 +6,26 @@
                 <h1 class="card-title" [ngStyle]="setMyStyles()">
                     <mat-icon *ngIf="service === 'CHAT'">forum</mat-icon>
                     <mat-icon *ngIf="service === 'VIDEOCHAT'">videocam</mat-icon>
-                    {{service | titlecase}}
+                    <span>{{service | titlecase}}</span> 
                 </h1>
             </div>
-            <button mat-button mat-dialog-close class="close-card"><mat-icon>close</mat-icon></button>
+            <button mat-button class="close-card" (click)="exit()"><mat-icon>close</mat-icon></button>
         </div>
         <div class="card-body">
-            {{ticketInWaiting}}
+            <div class="queue" [ngClass]="{'next' : ticketInWaiting < 2}">{{ticketInWaiting}}</div>
+            <div class="info-queue">Persona sono in coda prima di te</div>
+            
         </div>
-        <hr>
         <div class="card-footer text-muted" >
-                {{operatorOnline}}
+            <mat-icon>alarm</mat-icon>
+            <div class="info-operator" *ngIf="ticketInWaiting > 1">
+                {{operatorOnline}} Operatori attivi
+            </div>
+            <div class="info-operator" *ngIf="ticketInWaiting < 2">
+                <span>Grazie per la pazienza.</span>
+                <span>Ti stiamo mettendo in contatto con un nostro operatore.</span>
+                
+            </div>
         </div>
     </div>
 </div>

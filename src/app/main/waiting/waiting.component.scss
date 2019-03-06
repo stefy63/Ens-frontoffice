@@ -10,18 +10,24 @@
 
     .card {
         .card-header {
-        position: relative;
-        text-align: center;
+            padding: 0;
+            background-color: white;
+            position: relative;
+            text-align: center;
         }
     }
     .card-title {
-      font-size: 3em;
-      font-weight: bold;
-      background-color: white;
-      padding-bottom: 20px;
+        font-size: 3rem;
+        font-weight: bold;
+        background-color: white;
+        border-bottom: 0;
         mat-icon {
             font-size: 3em;
             display: contents;
+        }
+        span {
+            font-size: 7rem;
+            margin-left: 15px;
         }
     }
 
@@ -32,7 +38,46 @@
       outline: none;
     }
 
+    .card-body {
+        padding: 0;
+        .queue {
+            text-align: center;
+            font-size: 8rem;
+            font-weight: 700;
+        }
+        .next {
+            color: green;
+            animation: blink-animation 1s steps(5, start) infinite;
+            -webkit-animation: blink-animation 1s steps(5, start) infinite;
+        }
+        .info-queue {
+            text-align: center;
+            font-size: 1.2rem;
+        }
+    }
+
     .card-footer {
-      justify-content: center;
+        text-align: center;
+        background-color: white;
+        mat-icon {
+            height: 40px;
+            width: 60px;
+            font-size: 5rem;
+        }
+        .info-operator {
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+    }
+}
+
+@keyframes blink-animation {
+    to {
+        visibility: hidden;
+    }
+}
+@-webkit-keyframes blink-animation {
+    to {
+        visibility: hidden;
     }
 }

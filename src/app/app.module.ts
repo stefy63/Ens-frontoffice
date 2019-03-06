@@ -30,6 +30,8 @@ import { ApiQueueService } from './services/api/api-queue.service';
 import { WaitingModule } from './main/waiting/waiting.module';
 import { environment } from 'environments/environment';
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
+import { AuthGuard } from './guard/auth.guard';
+import { DialogConfirm } from './main/dialog-confirm/dialog-confirm.component';
 
 const appRoutes: Routes = [
     {
@@ -54,6 +56,7 @@ const config: SocketIoConfig = { url: environment.ws_url + wssPort, options: opt
 @NgModule({
     declarations: [
         AppComponent,
+        DialogConfirm
     ],
     imports     : [
         FuseSharedModule,
@@ -90,13 +93,17 @@ const config: SocketIoConfig = { url: environment.ws_url + wssPort, options: opt
         ApiUserService,
         ApiItalyGeoService,
         ApiTicketService,
-        ApiTicketHistoryService
+        ApiTicketHistoryService,
+        AuthGuard
     ],
     bootstrap   : [
         AppComponent
     ],
     schemas: [ 
         NO_ERRORS_SCHEMA
+    ],
+    entryComponents: [
+        DialogConfirm
     ]
 })
 export class AppModule
