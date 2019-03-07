@@ -32,6 +32,7 @@ import { environment } from 'environments/environment';
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 import { AuthGuard } from './guard/auth.guard';
 import { DialogConfirm } from './main/dialog-confirm/dialog-confirm.component';
+import { ChatModule } from './main/chat/chat.module';
 
 const appRoutes: Routes = [
     {
@@ -74,6 +75,7 @@ const config: SocketIoConfig = { url: environment.ws_url + wssPort, options: opt
         CageModule,
         HomeModule,
         WaitingModule,
+        ChatModule,
         SimpleNotificationsModule.forRoot(),
         SocketIoModule.forRoot(config),
     ],

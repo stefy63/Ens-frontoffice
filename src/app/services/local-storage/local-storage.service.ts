@@ -18,7 +18,8 @@ export class LocalStorageService {
   public setKey(key: string, data: string): void {
     try {
         const dataValue = JSON.parse(this.storage.getItem('data'));
-        dataValue[key] = JSON.stringify(data);
+        dataValue[key] = data;
+        this.setItem('data', dataValue);
         return dataValue[key];
       } catch (err) {
         return undefined;

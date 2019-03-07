@@ -18,10 +18,7 @@ export class SocketService {
         this.sendMessage(
           'welcome-message',
           {
-            userToken: token.token_session,
-            idUser: token.id_user,
-            status: 'READY',
-            userType: 'OPERATOR'
+            userToken: token.token_session
           });  
       }
     });

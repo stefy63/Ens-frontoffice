@@ -18,7 +18,7 @@ import { LocalStorageService } from 'app/services/local-storage/local-storage.se
 import { NotificationsService } from 'angular2-notifications';
 import { SocketService } from 'app/services/socket/socket.service';
 import { Router } from '@angular/router';
-
+import { ServicesColor } from 'app/enums/TicketServicesColor.enum';
 
 
 @Component({
@@ -45,7 +45,7 @@ export class HomeComponent implements OnInit {
         private apiTicketHistoryService: ApiTicketHistoryService,
         private storage: LocalStorageService,
         private toast: NotificationsService,
-        private socketService: SocketService
+        private socketService: SocketService,
     ) { }
 
     ngOnInit(): void {
@@ -99,10 +99,7 @@ export class HomeComponent implements OnInit {
                 this.dialog.open(DialogRegistrationComponent);
             } else {
                 this.socketService.sendMessage('welcome-message', {
-                    userToken: this.authService.getToken().token_session,
-                    idUser: data.user.id,
-                    status: 'READY',
-                    userType: 'USER'
+                    userToken: this.authService.getToken().token_session
                   });
                 this.ticketHistoryType = this.storage.getItem('ticket_history_type');
                 this.openNewTicketModal(service);
@@ -114,7 +111,8 @@ export class HomeComponent implements OnInit {
         this.dialog.open(DialogNewTicket, {
             data: {
                 service: service,
-                color: (service === 'CHAT') ? ' #CC5B49' : '#365FA5'
+                color: ServicesColor[service]
+                // (service === 'CHAT') ? ' #CC5B49' : '#365FA5'
             }
         })
         .afterClosed()
@@ -145,11 +143,8 @@ export class HomeComponent implements OnInit {
             })
         )
         .subscribe(([newTicket, newHistory]) => {
-            this.router.navigate(['waiting', {
-                ticketID: newTicket.id,
-                service: service,
-                color: (service === 'CHAT') ? ' #CC5B49' : '#365FA5'
-            }]);
+            this.storage.setKey('newTicket', newTicket);
+            this.router.navigate(['waiting']);
         });
     }
 

@@ -43,7 +43,7 @@ export class ApiTicketService {
   }
 
   public update(ticket: ITicket): Observable<any> {
-    return this.http.put(this.baseUrl + '/ticket/', ticket);
+    return this.http.put(this.baseUrl + '/ticket/' + ticket.id, ticket);
   }
 
   public create(ticket: ITicketNew): Observable<any> {
