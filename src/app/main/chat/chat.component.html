@@ -1,3 +1,41 @@
-<p>
-  chat works!
-</p>
+<div class="chat" style="width: 100%;" fxFlex fxLayout="column">
+        <div id="chat-content" fusePerfectScrollbar>
+            <!-- CHAT MESSAGES -->
+            <div class="chat-messages" *ngFor="let message of ticketHistorys">
+                <!-- MESSAGE -->
+                <div fxLayout="row" class="message-row" [ngClass]="{'user': (message.type.type === 'OPERATOR')}"
+                    *ngIf="message.type.type === 'USER' || message.type.type === 'OPERATOR'">
+                    <img class="avatar" *ngIf="message.type.type === 'USER'" src="../../../../../../assets/images/avatars/alice.jpg" />
+                    <img class="avatar" *ngIf="message.type.type === 'OPERATOR'" src="../../../../../../assets/images/avatars/profile.jpg">
+                    <div class="bubble">
+                        <div class="message" innerHtml="{{message.action}}"></div>
+                        <div class="time secondary-text">{{message.date_time | date:'medium':'UTC'}}</div>
+                    </div>
+                </div>
+                <!-- / MESSAGE -->
+            </div>
+            <!-- CHAT MESSAGES -->
+        </div>
+        <!-- / CHAT CONTENT -->
+        <div #onWritingMsg class="on-writing">L'utente sta scrivendo........</div>
+        <!-- CHAT FOOTER -->
+        <div class="chat-footer" fxLayout="row" fxLayoutAlign="center center" [hidden]="!showReplyMessage">
+            <!-- <button mat-mini-fab color="accent" (click)="toglePuseScroll()" [ngClass]=" {'mat-button-pause-on' : !pause2scroll, 'mat-button-pause-off': pause2scroll}  ">
+                <mat-icon *ngIf="pause2scroll">pause</mat-icon>
+                <mat-icon *ngIf="!pause2scroll">play_arrow</mat-icon>
+            </button> -->
+            <!-- REPLY FORM -->
+            <form #replyForm="ngForm" (ngSubmit)="reply($event)" (keyup.enter)="reply($event)" (keydown)="typing($event)"
+                fxFlex class="reply-form" fxLayout="row" fxLayoutAlign="center center">
+                <mat-form-field style="flex-grow: 1" floatPlaceholder="never">
+                    <textarea matInput #replyInput placeholder="Scrivi il messaggio e premi Enter" ngModel name="message"></textarea>
+                </mat-form-field>
+                <button mat-mini-fab class="send__button" type="submit" aria-label="Send message">
+                    <mat-icon>send</mat-icon>
+                </button>
+            </form>
+            <!-- / REPLY FORM -->
+        </div>
+        <!-- / CHAT FOOTER-->
+    </div>
+ 

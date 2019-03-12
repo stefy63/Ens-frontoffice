@@ -26,7 +26,6 @@ export class WaitingComponent implements OnInit, OnDestroy {
 
     private service: string;
     private newTicket: ITicket;
-    private getQueueSubscription: Subscription;
     private updateQueueSubscription: Subscription;
     private updateTicketSubscription: Subscription;
 
@@ -41,12 +40,7 @@ export class WaitingComponent implements OnInit, OnDestroy {
   ) { 
     this.newTicket = this.storage.getItem('newTicket');
     this.service = find(this.storage.getItem('ticket_service'), ['id', this.newTicket.id_service]).service;
-    this.getQueueSubscription = this.queueService.apiGetQueueData(this.newTicket.id)
-    .subscribe(fromApiQueue => {
-        this.ticketInWaiting = fromApiQueue.ticketInWaiting;
-        this.operatorOnline = fromApiQueue.operatorActive;
-    });
-
+    
     this.updateTicketSubscription = this.socket.getMessage('onTicketUpdated')
             .subscribe(ticket => {
                 if (ticket.id === this.newTicket.id && ticket.id_status !== TicketStatuses.ONLINE && ticket.id_status !== TicketStatuses.ARCHIVED) {
@@ -77,7 +71,6 @@ export class WaitingComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-      this.getQueueSubscription.unsubscribe();
       this.updateQueueSubscription.unsubscribe();
       this.updateTicketSubscription.unsubscribe();
   }
@@ -98,13 +91,12 @@ export class WaitingComponent implements OnInit, OnDestroy {
               if (data) {
                 const ticket: ITicket = {
                     id: this.newTicket.id,
-                    id_status: 4,
+                    id_status: TicketStatuses.ARCHIVED,
                     id_service: this.newTicket.id_service
                 };
-                this.ticketService.update(ticket).subscribe(() => {
-                    this.router.navigate(['home']);
-                });
-                  
+                this.toast.error('Nuovo Ticket', 'Richiesta Annullata!');
+                this.ticketService.update(ticket).subscribe(() => this.router.navigate(['home']), 
+                err => this.router.navigate(['home']));
               }
           });
     }

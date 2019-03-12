@@ -5,6 +5,7 @@ import * as _ from 'lodash';
 import { GetBaseUrl } from 'app/helper/getBaseUrl';
 import { ITicket } from 'app/interfaces/i-ticket';
 import { ITicketNew } from 'app/interfaces/i-ticket-new';
+import { map } from 'rxjs/operators';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -42,12 +43,16 @@ export class ApiTicketService {
     });
   }
 
-  public update(ticket: ITicket): Observable<any> {
-    return this.http.put(this.baseUrl + '/ticket/' + ticket.id, ticket);
+  public update(ticket: ITicket): Observable<ITicket> {
+    return this.http.put(this.baseUrl + '/ticket/' + ticket.id, ticket).pipe(
+        map((data) => data as ITicket)
+    );
   }
 
-  public create(ticket: ITicketNew): Observable<any> {
-    return this.http.post(this.baseUrl + '/ticket/', ticket);
+  public create(ticket: ITicketNew): Observable<ITicket> {
+    return this.http.post(this.baseUrl + '/ticket/', ticket).pipe(
+        map((data) => data as ITicket)
+    );
   }
 
   public getNewedCount(): Observable<number> {

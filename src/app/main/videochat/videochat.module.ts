@@ -1,24 +1,26 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ChatComponent } from './chat.component';
+import { VideochatComponent } from './videochat.component';
 import { AuthGuard } from 'app/guard/auth.guard';
 import { RouterModule } from '@angular/router';
 import { FuseSharedModule } from '@fuse/shared.module';
 
+
 const routes = [
     {
-        path     : 'chat',
-        component: ChatComponent,
+        path     : 'videochat',
+        component: VideochatComponent,
         canActivate: [AuthGuard],
     }
 ];
 
+
 @NgModule({
-  declarations: [ChatComponent],
+  declarations: [VideochatComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
     FuseSharedModule,
   ]
 })
-export class ChatModule { }
+export class VideochatModule { }

@@ -33,6 +33,8 @@ import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 import { AuthGuard } from './guard/auth.guard';
 import { DialogConfirm } from './main/dialog-confirm/dialog-confirm.component';
 import { ChatModule } from './main/chat/chat.module';
+import { ChatService } from './services/api/chat-messages.service';
+import { VideochatModule } from './main/videochat/videochat.module';
 
 const appRoutes: Routes = [
     {
@@ -57,7 +59,7 @@ const config: SocketIoConfig = { url: environment.ws_url + wssPort, options: opt
 @NgModule({
     declarations: [
         AppComponent,
-        DialogConfirm
+        DialogConfirm,
     ],
     imports     : [
         FuseSharedModule,
@@ -76,6 +78,7 @@ const config: SocketIoConfig = { url: environment.ws_url + wssPort, options: opt
         HomeModule,
         WaitingModule,
         ChatModule,
+        VideochatModule,
         SimpleNotificationsModule.forRoot(),
         SocketIoModule.forRoot(config),
     ],
@@ -96,6 +99,7 @@ const config: SocketIoConfig = { url: environment.ws_url + wssPort, options: opt
         ApiItalyGeoService,
         ApiTicketService,
         ApiTicketHistoryService,
+        ChatService,
         AuthGuard
     ],
     bootstrap   : [

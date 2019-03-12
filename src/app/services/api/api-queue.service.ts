@@ -23,5 +23,9 @@ export class ApiQueueService {
     return this.http.get(this.baseUrl + '/queue/' + id_ticket);
   }
 
+  public apiGetActiveOperator(id_service: number): Observable<any> {
+    return this.http.get(this.baseUrl + '/queue/operator/' + id_service);
+  }
+
 
 }

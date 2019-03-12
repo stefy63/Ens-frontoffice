@@ -1,4 +1,5 @@
 import { ITicketHistoryType } from './i-ticket-history-type';
+import { ITicket } from './i-ticket';
 
 export class ITicketHistory {
 
@@ -9,4 +10,5 @@ export class ITicketHistory {
     date_time?: String;
     readed?: number;
     type?: ITicketHistoryType;
+    ticket?: ITicket;
 }

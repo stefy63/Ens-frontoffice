@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ApiCalendarService } from 'app/services/api/api-calendar-service';
 import { ApiTicketServiceService } from 'app/services/api/api-ticket-service-service';
 import { keyBy, find } from 'lodash';
-import { from, forkJoin, of } from 'rxjs';
-import { tap, flatMap, map, mergeMap } from 'rxjs/operators';
+import { from, forkJoin, of, Subscription, merge, Observable } from 'rxjs';
+import { tap, flatMap, map, mergeMap, filter } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
 import { DialogLogin } from './dialog-component/login/dialog-login.component';
 import { ApiLoginService } from 'app/services/api/api-login.service';
@@ -19,6 +19,11 @@ import { NotificationsService } from 'angular2-notifications';
 import { SocketService } from 'app/services/socket/socket.service';
 import { Router } from '@angular/router';
 import { ServicesColor } from 'app/enums/TicketServicesColor.enum';
+import { HistoryTypes } from 'app/enums/ticket-history-type.enum';
+import { ApiQueueService } from 'app/services/api/api-queue.service';
+import { TicketServices } from 'app/enums/ticket-services.enum';
+import { ITicket } from 'app/interfaces/i-ticket';
+import { ITicketHistory } from 'app/interfaces/i-ticket-history';
 
 
 @Component({
@@ -28,12 +33,13 @@ import { ServicesColor } from 'app/enums/TicketServicesColor.enum';
 })
 export class HomeComponent implements OnInit {
     
+
     public ticketServices;
     public options = AlertToasterOptions;
     public userLogged: boolean;
 
-    private ticketHistoryType: ITicketHistoryType[];
-    
+    private dataModal: any;
+
     constructor(
         private router: Router,
         public dialog: MatDialog,
@@ -46,10 +52,10 @@ export class HomeComponent implements OnInit {
         private storage: LocalStorageService,
         private toast: NotificationsService,
         private socketService: SocketService,
+        private apiQueueService: ApiQueueService
     ) { }
 
     ngOnInit(): void {
-        this.ticketHistoryType = this.storage.getItem('ticket_history_type');
         this.apiTicketServiceService.getAll().pipe(
             tap((services) => this.ticketServices = keyBy(services, (serviceItem) => serviceItem.service)),
             flatMap((data) => from(data)),
@@ -70,7 +76,6 @@ export class HomeComponent implements OnInit {
                 }
             });
     }
-
 
     public isOpen(service: string): boolean {
         return (this.ticketServices) ? this.ticketServices[service].isOpen : false;
@@ -101,52 +106,49 @@ export class HomeComponent implements OnInit {
                 this.socketService.sendMessage('welcome-message', {
                     userToken: this.authService.getToken().token_session
                   });
-                this.ticketHistoryType = this.storage.getItem('ticket_history_type');
                 this.openNewTicketModal(service);
             }
         });
     }
 
     private openNewTicketModal(service: string): void {
-        this.dialog.open(DialogNewTicket, {
-            data: {
-                service: service,
-                color: ServicesColor[service]
-                // (service === 'CHAT') ? ' #CC5B49' : '#365FA5'
+        this.apiQueueService.apiGetActiveOperator(TicketServices[service])
+            .pipe(
+                tap((data) => {
+                    if (data.operatorActive < 1){
+                        this.toast.error('Richiesta Nuovo Ticket', 'Nessun Operatore attivo per questo servizio!');
+                    }
+                }),
+                filter((data) => data.operatorActive > 0),
+                mergeMap(() => this.dialog.open(DialogNewTicket, {
+                        data: {
+                            service: service,
+                            color: ServicesColor[service]
+                        }
+                    }).afterClosed()
+                ),
+                filter((dataFromModal) => !!dataFromModal),
+                mergeMap((dataFromModal) => this.createTicketAndFirstHistory(dataFromModal, service))
+            ).subscribe((ticketHistory: ITicketHistory) => {
+                    this.router.navigate(['waiting']);
+                });
             }
-        })
-        .afterClosed()
-        .pipe(
-            mergeMap(fromModal => {
-                const objService = find(this.ticketServices, ['service', service]);
-                const newTicketRequest = {
-                    id_service: objService.id,
-                    id_category: fromModal.category,
-                    phone: fromModal.phone
-                };
-                return forkJoin(
-                    of(fromModal),
-                    this.apiTickeService.create(newTicketRequest)
-                );
-            }),
-            mergeMap(([dataModal, fromNewTicket]) => {
-                    const actionType = find(this.ticketHistoryType, ['type', 'INITIAL']);
-                    const newTicketHistory = {
-                        id_ticket: fromNewTicket.id,
-                        id_type: actionType.id,
-                        action: dataModal.description
-                    };
-                    return forkJoin(
-                        of(fromNewTicket),
-                        this.apiTicketHistoryService.create(newTicketHistory)
-                );
-            })
-        )
-        .subscribe(([newTicket, newHistory]) => {
-            this.storage.setKey('newTicket', newTicket);
-            this.router.navigate(['waiting']);
-        });
-    }
+
+            private createTicketAndFirstHistory(dataModal, service: string): Observable<ITicketHistory> {
+                            return this.apiTickeService.create({
+                                id_service: TicketServices[service],
+                                id_category: dataModal.category,
+                                phone: dataModal.phone
+                        })
+                        .pipe(
+                            tap((data) => this.storage.setKey('newTicket', data)),
+                            mergeMap((fromNewTicket: ITicket) => this.apiTicketHistoryService.create({
+                                id_ticket: fromNewTicket.id,
+                                id_type: HistoryTypes.INITIAL,
+                                action: dataModal.description
+                            }))
+                        );
+              }
 
 
 }
