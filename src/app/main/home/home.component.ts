@@ -131,6 +131,9 @@ export class HomeComponent implements OnInit {
                 mergeMap((dataFromModal) => this.createTicketAndFirstHistory(dataFromModal, service))
             ).subscribe((ticketHistory: ITicketHistory) => {
                     this.router.navigate(['waiting']);
+                }, (err) => {
+                    console.error(err);
+                    this.toast.error('Nuovo Tichet', 'Hai appena richiesto una assistenza, aspetta un minuto prima di richiederne un\'altra');
                 });
             }
 

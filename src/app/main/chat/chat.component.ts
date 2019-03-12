@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild, ViewChildren, ElementRef, ChangeDetectorRef } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, merge } from 'rxjs';
 import { FusePerfectScrollbarDirective } from '@fuse/directives/fuse-perfect-scrollbar/fuse-perfect-scrollbar.directive';
 import { NgForm } from '@angular/forms';
 import { LocalStorageService } from 'app/services/local-storage/local-storage.service';
@@ -39,7 +39,6 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
     @ViewChild('onWritingMsg') onWritingMsg: ElementRef;
   
     private ticketSubscription: Subscription;
-    private ticketHistorySubscription: Subscription;
     private replyEventSubscription: Subscription;
     private timeoutFunction;
   
@@ -54,45 +53,24 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
     ) {  }
   
     ngOnInit(): void {
-    //   this.spinner.show();
-    //   this.ticketSubscription = this.data.subscribe((item: ITicket) => {
-    //     this.ticket = item;
-    //     if (_.find(item.historys, (history) => history.readed === 0)) {
-    //       this.chatService.markMessagesReaded(item.id).subscribe();
-    //     }
-    //     this.ticketHistorys = _.orderBy(this.ticket.historys, 'date_time', 'asc');
-    //     this.spinner.hide();
-    //     this.scrollToBottom();
-    //     this.cd.markForCheck();
-    //     this.showReplyMessage = !_.includes([TicketStatuses.REFUSED, TicketStatuses.CLOSED], this.ticket.id_status);
-    //   }, (err) => {
-    //     console.log(err);
-    //   });
-
-
       this.spinner.show();
       const newTicket = this.storage.getItem('newTicket');
-      this.ticketSubscription = this.ticketService.getFromId(newTicket.id)
-            .subscribe((item: ITicket) => {
-                    this.ticket = item;
-                    if (find(item.historys, (history) => history.readed === 0)) {
-                      this.chatService.markMessagesReaded(item.id).subscribe();
-                    }
-                    this.ticketHistorys = orderBy(this.ticket.historys, 'date_time', 'asc');
-                    this.spinner.hide();
-                    this.scrollToBottom();
-                    this.cd.markForCheck();
-                    this.showReplyMessage = !includes([TicketStatuses.REFUSED, TicketStatuses.CLOSED], this.ticket.id_status);
-                  }, (err) => {
-                    console.log(err);
-                  });
-
-      this.ticketHistorySubscription = this.socketService.getMessage('onTicketHistoryCreate')
-        .subscribe((ticket) => {
-            this.ticket = ticket;
-            this.ticketHistorys = orderBy(ticket.historys, 'date_time', 'asc');
+      this.ticketSubscription = merge(
+          this.ticketService.getFromId(newTicket.id),
+          this.socketService.getMessage('onTicketHistoryCreate'),
+          this.socketService.getMessage('onTicketUpdated')
+      ).subscribe((item: ITicket) => {
+            this.ticket = item;
+            if (find(item.historys, (history) => history.readed === 0)) {
+                this.chatService.markMessagesReaded(item.id).subscribe();
+            }
+            this.ticketHistorys = orderBy(this.ticket.historys, 'date_time', 'asc');
+            this.spinner.hide();
             this.scrollToBottom();
             this.cd.markForCheck();
+            this.showReplyMessage = !includes([TicketStatuses.REFUSED, TicketStatuses.CLOSED], this.ticket.id_status);
+            }, (err) => {
+            console.log(err);
         });
 
   
@@ -114,9 +92,6 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       if (this.replyEventSubscription) {
         this.replyEventSubscription.unsubscribe();
-      }
-      if (this.replyEventSubscription) {
-        this.ticketHistorySubscription.unsubscribe();
       }
     }
   
