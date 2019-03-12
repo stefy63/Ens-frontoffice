@@ -1,29 +1,28 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ApiCalendarService } from 'app/services/api/api-calendar-service';
-import { ApiTicketServiceService } from 'app/services/api/api-ticket-service-service';
-import { keyBy, find } from 'lodash';
-import { from, forkJoin, of, Subscription, merge, Observable } from 'rxjs';
-import { tap, flatMap, map, mergeMap, filter } from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { DialogLogin } from './dialog-component/login/dialog-login.component';
-import { ApiLoginService } from 'app/services/api/api-login.service';
-import { AlertToasterOptions } from 'app/class/alert-toaster-options';
-import { DialogRegistrationComponent } from './dialog-component/registration/regstration.component';
-import { AuthService } from 'app/services/auth/auth.service';
-import { DialogNewTicket } from './dialog-component/new-ticket/dialog-new-ticket.component';
-import { ApiTicketService } from 'app/services/api/api-ticket.service';
-import { ApiTicketHistoryService } from 'app/services/api/api-ticket-history.service';
-import { ITicketHistoryType } from 'app/interfaces/i-ticket-history-type';
-import { LocalStorageService } from 'app/services/local-storage/local-storage.service';
-import { NotificationsService } from 'angular2-notifications';
-import { SocketService } from 'app/services/socket/socket.service';
 import { Router } from '@angular/router';
-import { ServicesColor } from 'app/enums/TicketServicesColor.enum';
+import { NotificationsService } from 'angular2-notifications';
+import { AlertToasterOptions } from 'app/class/alert-toaster-options';
 import { HistoryTypes } from 'app/enums/ticket-history-type.enum';
-import { ApiQueueService } from 'app/services/api/api-queue.service';
 import { TicketServices } from 'app/enums/ticket-services.enum';
+import { ServicesColor } from 'app/enums/TicketServicesColor.enum';
 import { ITicket } from 'app/interfaces/i-ticket';
 import { ITicketHistory } from 'app/interfaces/i-ticket-history';
+import { ApiCalendarService } from 'app/services/api/api-calendar-service';
+import { ApiLoginService } from 'app/services/api/api-login.service';
+import { ApiQueueService } from 'app/services/api/api-queue.service';
+import { ApiTicketHistoryService } from 'app/services/api/api-ticket-history.service';
+import { ApiTicketServiceService } from 'app/services/api/api-ticket-service-service';
+import { ApiTicketService } from 'app/services/api/api-ticket.service';
+import { AuthService } from 'app/services/auth/auth.service';
+import { LocalStorageService } from 'app/services/local-storage/local-storage.service';
+import { SocketService } from 'app/services/socket/socket.service';
+import { keyBy } from 'lodash';
+import { from, Observable } from 'rxjs';
+import { filter, flatMap, map, mergeMap, tap } from 'rxjs/operators';
+import { DialogLogin } from './dialog-component/login/dialog-login.component';
+import { DialogNewTicket } from './dialog-component/new-ticket/dialog-new-ticket.component';
+import { DialogRegistrationComponent } from './dialog-component/registration/regstration.component';
 
 
 @Component({
@@ -105,7 +104,7 @@ export class HomeComponent implements OnInit {
             } else {
                 this.socketService.sendMessage('welcome-message', {
                     userToken: this.authService.getToken().token_session
-                  });
+                });
                 this.openNewTicketModal(service);
             }
         });
@@ -120,7 +119,8 @@ export class HomeComponent implements OnInit {
                     }
                 }),
                 filter((data) => data.operatorActive > 0),
-                mergeMap(() => this.dialog.open(DialogNewTicket, {
+                mergeMap(() => 
+                    this.dialog.open(DialogNewTicket, {
                         data: {
                             service: service,
                             color: ServicesColor[service]
@@ -138,20 +138,20 @@ export class HomeComponent implements OnInit {
             }
 
             private createTicketAndFirstHistory(dataModal, service: string): Observable<ITicketHistory> {
-                            return this.apiTickeService.create({
-                                id_service: TicketServices[service],
-                                id_category: dataModal.category,
-                                phone: dataModal.phone
-                        })
-                        .pipe(
-                            tap((data) => this.storage.setKey('newTicket', data)),
-                            mergeMap((fromNewTicket: ITicket) => this.apiTicketHistoryService.create({
-                                id_ticket: fromNewTicket.id,
-                                id_type: HistoryTypes.INITIAL,
-                                action: dataModal.description
-                            }))
-                        );
-              }
+                return this.apiTickeService.create({
+                    id_service: TicketServices[service],
+                    id_category: dataModal.category,
+                    phone: dataModal.phone
+                })
+                .pipe(
+                    tap((data) => this.storage.setKey('newTicket', data)),
+                    mergeMap((fromNewTicket: ITicket) => this.apiTicketHistoryService.create({
+                        id_ticket: fromNewTicket.id,
+                        id_type: HistoryTypes.INITIAL,
+                        action: dataModal.description
+                    }))
+                );
+            }
 
 
 }
