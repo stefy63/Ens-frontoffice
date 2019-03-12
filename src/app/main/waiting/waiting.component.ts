@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { ApiQueueService } from 'app/services/api/api-queue.service';
-import { flatMap, filter, tap, mergeMap } from 'rxjs/operators';
+import { flatMap, filter, mergeMap } from 'rxjs/operators';
 import { merge, of, Subscription } from 'rxjs';
 import { SocketService } from 'app/services/socket/socket.service';
 import { MatDialog } from '@angular/material';

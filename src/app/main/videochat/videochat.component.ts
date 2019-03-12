@@ -6,6 +6,7 @@ import { LocalStorageService } from 'app/services/local-storage/local-storage.se
 import { ApiTicketService } from 'app/services/api/api-ticket.service';
 import { Router } from '@angular/router';
 import { NotificationsService } from 'angular2-notifications';
+import { includes } from 'lodash';
 
 @Component({
   selector: 'app-videochat',
@@ -32,7 +33,7 @@ export class VideochatComponent implements OnInit, OnDestroy {
       this.ticketSubscription = this.ticketService.getFromId(newTicket.id)
         .subscribe((item: ITicket) => {
             this.ticket = item;
-            this.videochatRunnable = !_.includes([TicketStatuses.REFUSED, TicketStatuses.CLOSED], this.ticket.id_status);
+            this.videochatRunnable = !includes([TicketStatuses.REFUSED, TicketStatuses.CLOSED], this.ticket.id_status);
             window.open('https://appear.in/comunicaens_op' + item.id_operator, '_blank');
             this.router.navigate(['home']);
         }, (err) => {
