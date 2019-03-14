@@ -1,12 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ITicket } from 'app/interfaces/i-ticket';
-import { TicketStatuses } from 'app/enums/TicketStatuses.enum';
-import { Subscription } from 'rxjs';
-import { LocalStorageService } from 'app/services/local-storage/local-storage.service';
-import { ApiTicketService } from 'app/services/api/api-ticket.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { NotificationsService } from 'angular2-notifications';
-import { includes } from 'lodash';
+import { TicketStatuses } from 'app/enums/TicketStatuses.enum';
+import { ITicket } from 'app/interfaces/i-ticket';
+import { ApiTicketService } from 'app/services/api/api-ticket.service';
+import { LocalStorageService } from 'app/services/local-storage/local-storage.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-videochat',
@@ -15,7 +13,6 @@ import { includes } from 'lodash';
 })
 export class VideochatComponent implements OnInit, OnDestroy {
     
-    // @Input('ticket') data: Observable<ITicket>;
     public ticket: ITicket;
     private ticketSubscription: Subscription;
     public videochatRunnable = false;
@@ -24,7 +21,6 @@ export class VideochatComponent implements OnInit, OnDestroy {
     constructor(
       private router: Router,
       private storage: LocalStorageService,
-      private toast: NotificationsService,
       private ticketService: ApiTicketService
     ) { }
   
@@ -33,14 +29,14 @@ export class VideochatComponent implements OnInit, OnDestroy {
       this.ticketSubscription = this.ticketService.getFromId(newTicket.id)
         .subscribe((item: ITicket) => {
             this.ticket = item;
-            this.videochatRunnable = !includes([TicketStatuses.REFUSED, TicketStatuses.CLOSED], this.ticket.id_status);
-            window.open('https://appear.in/comunicaens_op' + item.id_operator, '_blank');
+            if (this.ticket.id_status === TicketStatuses.ONLINE){
+              window.open('https://appear.in/comunicaens_op' + item.id_operator, '_blank');
+            }
             this.router.navigate(['home']);
         }, (err) => {
             console.error(err);
+            this.router.navigate(['home']);
         });
-
-        
     }
   
     ngOnDestroy(): void {
