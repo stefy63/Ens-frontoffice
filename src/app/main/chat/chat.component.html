@@ -1,20 +1,22 @@
 <div class="chat" style="width: 100%;" fxFlex fxLayout="column">
-        <div id="chat-content" fusePerfectScrollbar>
-            <!-- CHAT MESSAGES -->
-            <div class="chat-messages" *ngFor="let message of ticketHistorys">
-                <!-- MESSAGE -->
-                <div fxLayout="row" class="message-row" [ngClass]="{'user': (message.type.type === 'OPERATOR')}"
-                    *ngIf="message.type.type === 'USER' || message.type.type === 'OPERATOR'">
-                    <img class="avatar" *ngIf="message.type.type === 'USER'" src="../../../../../../assets/images/avatars/alice.jpg" />
-                    <img class="avatar" *ngIf="message.type.type === 'OPERATOR'" src="../../../../../../assets/images/avatars/profile.jpg">
-                    <div class="bubble">
-                        <div class="message" innerHtml="{{message.action}}"></div>
-                        <div class="time secondary-text">{{message.date_time | date:'medium':'UTC'}}</div>
+        <div fusePerfectScrollbar>
+            <div id="chat-content">
+                <!-- CHAT MESSAGES -->
+                <div class="chat-messages" *ngFor="let message of ticketHistorys">
+                    <!-- MESSAGE -->
+                    <div fxLayout="row" class="message-row" [ngClass]="{'user': (message.type.type === 'OPERATOR')}"
+                        *ngIf="message.type.type === 'USER' || message.type.type === 'OPERATOR'">
+                        <img class="avatar" *ngIf="message.type.type === 'USER'" src="../../../../../../assets/images/avatars/alice.jpg" />
+                        <img class="avatar" *ngIf="message.type.type === 'OPERATOR'" src="../../../../../../assets/images/avatars/profile.jpg">
+                        <div class="bubble">
+                            <div class="message" innerHtml="{{message.action}}"></div>
+                            <div class="time secondary-text">{{message.date_time | date:'medium':'UTC'}}</div>
+                        </div>
                     </div>
+                    <!-- / MESSAGE -->
                 </div>
-                <!-- / MESSAGE -->
+                <!-- CHAT MESSAGES -->
             </div>
-            <!-- CHAT MESSAGES -->
         </div>
         <!-- / CHAT CONTENT -->
         <div #onWritingMsg class="on-writing">L'utente sta scrivendo........</div>

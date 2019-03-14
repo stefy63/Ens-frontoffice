@@ -69,6 +69,9 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
             this.scrollToBottom();
             this.cd.markForCheck();
             this.showReplyMessage = !includes([TicketStatuses.REFUSED, TicketStatuses.CLOSED], this.ticket.id_status);
+            if (!this.showReplyMessage) {
+                this.toast.info('Servizio Chat', 'Tickey chiuso dall\'operatore');
+            }
             }, (err) => {
             console.log(err);
         });
