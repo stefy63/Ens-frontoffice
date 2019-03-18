@@ -65,7 +65,7 @@ export class WaitingComponent implements OnInit, OnDestroy {
             of(null)
         ).pipe(
             flatMap(() => {
-                return this.queueService.apiGetQueueData(this.newTicket.id);
+                return this.queueService.apiGetQueueData(this.storage.getItem('newTicket').id);
             })
         ).subscribe(fromApiQueue => {
             this.ticketInWaiting = fromApiQueue.ticketInWaiting;
@@ -90,7 +90,11 @@ export class WaitingComponent implements OnInit, OnDestroy {
     }
 
     exit(): void {
-        this.dialog.open(DialogConfirm)
+        this.dialog.open(DialogConfirm, {
+            data: {
+                msg: 'Sei sicuro di voler abbandonare la tua richiesta?'
+                }
+            })
             .afterClosed()
             .pipe(
                 filter((data) => !!data),

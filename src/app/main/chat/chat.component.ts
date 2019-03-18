@@ -14,6 +14,12 @@ import { find, orderBy, includes } from 'lodash';
 import { ITicket } from 'app/interfaces/i-ticket';
 import { ITicketHistory } from 'app/interfaces/i-ticket-history';
 import { HistoryTypes } from 'app/enums/ticket-history-type.enum';
+import { DialogConfirm } from '../dialog-confirm/dialog-confirm.component';
+import { filter, mergeMap } from 'rxjs/operators';
+import { MatDialog } from '@angular/material';
+import { assign } from 'lodash';
+import { Router } from '@angular/router';
+import * as moment from 'moment';
 
 
 @Component({
@@ -27,20 +33,24 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
     public ticketHistorys: ITicketHistory[] = [];
     public activeSpinner = false;
     public pause2scroll = true;
+    public opName: number;
+    public timer: string;
   
     private isTyping = false;
     private replyInput: any;
     private viewInitFinish = false;
     public showReplyMessage = false;
+    private ticketSubscription: Subscription;
+    private replyEventSubscription: Subscription;
+    private timeoutFunction;
+    private timerTimer: any;
+    private utcTime: moment.Moment;
+
   
     @ViewChild(FusePerfectScrollbarDirective) directiveScroll: FusePerfectScrollbarDirective;
     @ViewChildren('replyInput') replyInputField;
     @ViewChild('replyForm') replyForm: NgForm;
     @ViewChild('onWritingMsg') onWritingMsg: ElementRef;
-  
-    private ticketSubscription: Subscription;
-    private replyEventSubscription: Subscription;
-    private timeoutFunction;
   
     constructor(
       private cd: ChangeDetectorRef,
@@ -49,6 +59,8 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
       private toast: NotificationsService,
       private socketService: SocketService,
       private spinner: NgxSpinnerService,
+      public dialog: MatDialog,
+      private router: Router,
       private ticketService: ApiTicketService
     ) {  }
   
@@ -59,19 +71,21 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
           this.ticketService.getFromId(newTicket.id),
           this.socketService.getMessage('onTicketHistoryCreate'),
           this.socketService.getMessage('onTicketUpdated')
-      ).subscribe((item: ITicket) => {
-            this.ticket = item;
-            if (find(item.historys, (history) => history.readed === 0)) {
-                this.chatService.markMessagesReaded(item.id).subscribe();
-            }
-            this.ticketHistorys = orderBy(this.ticket.historys, 'date_time', 'asc');
-            this.spinner.hide();
-            this.scrollToBottom();
-            this.cd.markForCheck();
-            this.showReplyMessage = !includes([TicketStatuses.REFUSED, TicketStatuses.CLOSED], this.ticket.id_status);
-            if (!this.showReplyMessage) {
-                this.toast.info('Servizio Chat', 'Tickey chiuso dall\'operatore');
-            }
+        ).subscribe((item: ITicket) => {
+                this.ticket = item;
+                if (find(item.historys, (history) => history.readed === 0)) {
+                    this.chatService.markMessagesReaded(item.id).subscribe();
+                }
+                this.opName = this.ticket.id_operator;
+                this.ticketHistorys = orderBy(this.ticket.historys, 'date_time', 'asc');
+                this.spinner.hide();
+                this.scrollToBottom();
+                this.cd.markForCheck();
+                this.showReplyMessage = !includes([TicketStatuses.REFUSED, TicketStatuses.CLOSED, TicketStatuses.ARCHIVED], this.ticket.id_status);
+                if (!this.showReplyMessage) {
+                    this.toast.info('Servizio Chat', 'Ticket chiuso');
+                    clearInterval(this.timerTimer);
+                }
             }, (err) => {
             console.log(err);
         });
@@ -87,6 +101,13 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
           this.onWritingMsg.nativeElement.style.display = 'block';
         }
       });
+
+      this.utcTime = moment.utc(0);
+      this.timer = moment.utc(this.utcTime).format('HH:mm:ss');
+      this.timerTimer = setInterval(() => {
+          this.utcTime = moment.utc(this.utcTime).add(1, 's');
+          this.timer = moment.utc(this.utcTime).format('HH:mm:ss');
+      }, 1000);
     }
   
     ngOnDestroy(): void {
@@ -179,5 +200,28 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     }
   
+    exit(): void {
+        this.dialog.open(DialogConfirm, {
+            data: {
+                msg: 'Sei sicuro di voler chiudere la conversazione?'
+                }
+            })
+            .afterClosed()
+            .pipe(
+                filter((data) => !!data),
+                mergeMap(() => {
+                    const ticket: ITicket = assign({}, this.ticket, { id_status: TicketStatuses.ARCHIVED });
+                    return this.ticketService.update(ticket);
+                })
+            ).subscribe(data => {
+                this.showReplyMessage = false;
+            }, err => {
+                console.error(err);
+                this.toast.error('Nuovo Ticket', 'Richiesta di annullamento non è andata a buon fine!');
+            });
+    }
 
+    goHome(): void {
+        this.router.navigate(['home']);
+    }
 }

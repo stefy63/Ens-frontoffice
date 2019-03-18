@@ -1,7 +1,41 @@
 :host {
     height: 100%;
+    background-color: #fafafa;
     .chat {
-        background: url('/assets/images/patterns/telegram.jpg') repeat;
+        .chat-header {
+            overflow: hidden;
+            position: relative;
+            text-align: center;
+            display: flex;
+            background-color: #bdbdbd;
+            .chat-header-operator {
+                margin: 0;
+                font-size: 1.3em;
+                font-weight: bold;
+                color: black;
+                padding: 10px;
+            }
+            .chat-header-title {
+                margin: 0;
+                font-size: 1.7em;
+                font-weight: bold;
+                color: #6195CC;
+                padding: 10px;
+                flex-grow: 1;
+                &.close {
+                    color: red;
+                }
+            }
+            .chat-header-close {
+                position: absolute;
+                top: -5px;
+                right: -15px;
+                outline: none;
+                &.close {
+                    color: red;
+                }
+            }
+        }
         .chat-messages {
             padding: 5px 8px;
         }
@@ -10,12 +44,13 @@
             overflow: auto;
             height: 100%;
             .message-row {
+                color: white;
                 .bubble {
                     overflow: hidden;
                     position: relative;
                     padding: 6px 7px 8px 9px;
-                    background-color: white; // box-shadow: 1px 1px 5px rgba(0, 0, 0, .5);
-                    border-radius: 6px;
+                    background-color: #3c4252;
+                    border-radius: 20px;
                     font-size: 15px;
                     font-weight: bold;
                     &:before {
@@ -34,11 +69,13 @@
                         word-wrap: break-word;
                         white-space: pre-line;
                         overflow-wrap: break-word;
+                        color: white;
                     }
                     .time {
                         font-size: 11px;
                         margin-top: 8px;
                         text-align: right;
+                        color: white;
                     }
                 }
                 &.contact {
@@ -48,14 +85,14 @@
                 }
                 &.user {
                     align-items: flex-end;
+                    color: black;
                     .avatar {
                         order: 2;
                         margin: 0 0 0 16px;
                     }
                     .bubble {
                         margin-left: auto;
-                        background-color: #e8f5e9;
-                        border: 1px solid #e8f5e9;
+                        background-color: #e0e0e0;
                         order: 1;
                         font-size: 18px;
                         font-weight: bold;
@@ -64,6 +101,12 @@
                             right: -11px;
                             left: auto;
                             background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAmCAMAAADp2asXAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAD2UExURQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGRsXAAAANzwzNPmxNrtyau5oIWRedDkwNntyczgwdfpyJ+/n97wzsLWtNjsytvwzczfvtPmxau6nNjqxtrtyio1KtzwzNjryAAAANzwzgAAANzwzK7Aor/Us9Lnw8vevAAAAMzevtbpxrvMrX+IdwAAAEROOi45Lr3MrZGjf9LoxX+MctnqydLkwhgYGMzfv9vuyQAAANzwzNvuy9zxy7vMu7XGqNvtzKKykwAAANruzKq6nLnMriQkGMXXuL3PsNjsySgzKAAAANLkw83fvd3vy9z4xtzwzRpFmIEAAABQdFJOUwAXChEGBAMBAgwhDvJ7k0YqMc0Zmwj6apf2kjU0+dkw/swh/CP9j2Wr2gndvaYeBRoxQg6gUPt/FaHJGdTj9A9k7XQLeE6iFcN12xkSt9r4NKizowAAAMFJREFUKM+V0sdywlAMBVDbMX7PQCihQ+iQ0HsJvfem/P/PwBIzugu0PXNnNNJVyPmhsIPhhoB2COwIGuLdhAcl3AhCBoBoHUC6BCBbA0C/EkBFB5D/FjxQwQYg1RI8UKINgDoSAPUlAPqUAMgfAEBfXsEDBV0+Hogi4Zhg4THj9YwHoqEBYOrgYTI3GVgMNn8r+Qq94k9yZNosW/3Hy9VuTjWfHkOX6367bGZUU7de66ieHZrO1OGg8Z1WTgYAFLgD5S1PCkzo1B0AAAAASUVORK5CYII=);
+                        }
+                        .message {
+                            color: black;
+                        }
+                        .time {
+                            color: black;
                         }
                     }
                 }

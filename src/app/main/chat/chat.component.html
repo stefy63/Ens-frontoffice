@@ -1,13 +1,22 @@
 <div class="chat" style="width: 100%;" fxFlex fxLayout="column">
+    <div class="chat-header" >
+        <h1 class="chat-header-operator">OP{{opName}} - {{timer}}</h1>
+
+        <h1 class="chat-header-title"  *ngIf="showReplyMessage">CHAT IN CORSO</h1>
+        <button mat-button class="chat-header-close" (click)="exit()" *ngIf="showReplyMessage" ><mat-icon>close</mat-icon></button>
+
+        <h1 class="chat-header-title close" *ngIf="!showReplyMessage">CHAT TERMINATA</h1>
+        <button mat-button class="chat-header-close close" (click)="goHome()" *ngIf="!showReplyMessage"><mat-icon>home</mat-icon></button>
+
+      </div>
         <div fusePerfectScrollbar>
             <div id="chat-content">
                 <!-- CHAT MESSAGES -->
                 <div class="chat-messages" *ngFor="let message of ticketHistorys">
                     <!-- MESSAGE -->
+
                     <div fxLayout="row" class="message-row" [ngClass]="{'user': (message.type.type === 'OPERATOR')}"
                         *ngIf="message.type.type === 'USER' || message.type.type === 'OPERATOR'">
-                        <img class="avatar" *ngIf="message.type.type === 'USER'" src="../../../../../../assets/images/avatars/alice.jpg" />
-                        <img class="avatar" *ngIf="message.type.type === 'OPERATOR'" src="../../../../../../assets/images/avatars/profile.jpg">
                         <div class="bubble">
                             <div class="message" innerHtml="{{message.action}}"></div>
                             <div class="time secondary-text">{{message.date_time | date:'medium':'UTC'}}</div>
@@ -21,11 +30,7 @@
         <!-- / CHAT CONTENT -->
         <div #onWritingMsg class="on-writing">L'utente sta scrivendo........</div>
         <!-- CHAT FOOTER -->
-        <div class="chat-footer" fxLayout="row" fxLayoutAlign="center center" [hidden]="!showReplyMessage">
-            <!-- <button mat-mini-fab color="accent" (click)="toglePuseScroll()" [ngClass]=" {'mat-button-pause-on' : !pause2scroll, 'mat-button-pause-off': pause2scroll}  ">
-                <mat-icon *ngIf="pause2scroll">pause</mat-icon>
-                <mat-icon *ngIf="!pause2scroll">play_arrow</mat-icon>
-            </button> -->
+        <div class="chat-footer" [hidden]="!showReplyMessage">
             <!-- REPLY FORM -->
             <form #replyForm="ngForm" (ngSubmit)="reply($event)" (keyup.enter)="reply($event)" (keydown)="typing($event)"
                 fxFlex class="reply-form" fxLayout="row" fxLayoutAlign="center center">
