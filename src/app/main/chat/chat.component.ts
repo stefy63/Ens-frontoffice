@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild, ViewChildren, ElementRef, ChangeDetectorRef } from '@angular/core';
-import { Subscription, merge, interval } from 'rxjs';
+import { Subscription, merge, interval, Subject } from 'rxjs';
 import { NgForm } from '@angular/forms';
 import { LocalStorageService } from 'app/services/local-storage/local-storage.service';
 import { NotificationsService } from 'angular2-notifications';
@@ -14,7 +14,7 @@ import { ITicket } from 'app/interfaces/i-ticket';
 import { ITicketHistory } from 'app/interfaces/i-ticket-history';
 import { HistoryTypes } from 'app/enums/ticket-history-type.enum';
 import { DialogConfirm } from '../dialog-confirm/dialog-confirm.component';
-import { filter, mergeMap } from 'rxjs/operators';
+import { filter, mergeMap, debounceTime } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
 import { assign, filter as filterLodash } from 'lodash';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -46,7 +46,8 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
     private utcTime: moment.Moment;
     private keyTimerLocalStore;
     private ticketID: number;
-
+    private updateScrollbar: Subject<void>;
+    private updateScrollbarSubscription: Subscription;
   
     @ViewChild(NgScrollbar) directiveScroll: NgScrollbar;
     @ViewChildren('replyInput') replyInputField;
@@ -70,6 +71,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
       this.ticketID = +this.activeRoute.snapshot.paramMap.get('id');
       this.spinner.show();
 
+      this.updateScrollbar = new Subject<void>();
       this.keyTimerLocalStore = `utcChat__${this.ticketID}`;
       this.ticketSubscription = merge(
           this.ticketService.getFromId(this.ticketID),
@@ -87,7 +89,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
                 });
                 this.spinner.hide();
                 this.cd.markForCheck();
-                this.scrollToBottom();
+                this.updateScrollbar.next();
                 this.showReplyMessage = !includes([TicketStatuses.REFUSED, TicketStatuses.CLOSED, TicketStatuses.ARCHIVED], this.ticket.id_status);
                 if (!this.showReplyMessage) {
                     this.toast.info('Servizio Chat', 'Ticket chiuso');
@@ -109,6 +111,14 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
             }, (err) => {
             console.log(err);
         });
+
+      this.updateScrollbarSubscription = this.updateScrollbar
+      .pipe((
+        debounceTime(1000)
+      ))
+      .subscribe(() => {
+        setTimeout(() => this.directiveScroll.scrollToBottom(1000), 200);
+      });
 
   
       this.replyEventSubscription = this.socketService.getMessage('onUserWriting').subscribe((data: any) => {
@@ -133,6 +143,9 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
       if (this.timerSubscription) {
         this.timerSubscription.unsubscribe();
       }
+      if (this.updateScrollbarSubscription) {
+        this.updateScrollbarSubscription.unsubscribe();
+      }
     }
   
     ngAfterViewInit(): void {
@@ -146,16 +159,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
     focusReplyInput(): void {
       this.replyInput.focus();
     }
-  
-    scrollToBottom(speed?: number): void {
-      speed = speed || 1000;
-      if (this.viewInitFinish) {
-        setTimeout(() => {
-            this.directiveScroll.scrollToBottom(speed);
-        }, 200);     
-      }
-    }
-    
+      
     reply(event): void {
       if (this.replyForm.form.value.message && this.replyForm.form.value.message.trim()) {
         this.sendMessage(this.replyForm.form.value.message.trim(), true);
