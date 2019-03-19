@@ -25,7 +25,7 @@ export class WaitingComponent implements OnInit, OnDestroy {
     public ticketInWaiting: number;
     public operatorOnline: number;
 
-    private service: string;
+    public service: string;
     private newTicket: ITicket;
     private updateQueueSubscription: Subscription;
     private updateTicketSubscription: Subscription;
