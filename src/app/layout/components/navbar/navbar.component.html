@@ -13,7 +13,7 @@
         <div>
             <button mat-icon-button [matMenuTriggerFor]="moreMenu" [ngClass]="{'logged': userLogged}">
                 <div *ngIf="userLogged" class="icon_logged">
-                    <span>{{user.userdata.name + ' ' + user.userdata.surname}}</span>
+                    <span>{{user.userdata.name}}</span>
                     <mat-icon>arrow_drop_down</mat-icon>
                 </div>
                 <div *ngIf="!userLogged" >

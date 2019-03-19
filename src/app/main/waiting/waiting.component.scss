@@ -21,6 +21,12 @@
         font-weight: bold;
         background-color: white;
         border-bottom: 0;
+        margin: 0 !important;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+        display: flex;
+
         mat-icon {
             font-size: 3em;
             display: contents;
@@ -32,9 +38,6 @@
     }
 
     .close-card {
-      position: absolute;
-      top: 0;
-      right: -10px;
       outline: none;
     }
 
@@ -59,14 +62,13 @@
     .card-footer {
         text-align: center;
         background-color: white;
+        margin-bottom: 15px;
+        font-size: 1.2rem;
+
         mat-icon {
             height: 40px;
             width: 60px;
             font-size: 5rem;
-        }
-        .info-operator {
-            margin-bottom: 15px;
-            font-size: 1rem;
         }
     }
 }

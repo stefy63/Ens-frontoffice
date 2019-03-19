@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { TicketStatuses } from 'app/enums/TicketStatuses.enum';
 import { ITicket } from 'app/interfaces/i-ticket';
 import { ApiTicketService } from 'app/services/api/api-ticket.service';
@@ -17,20 +17,22 @@ export class VideochatComponent implements OnInit, OnDestroy {
     private ticketSubscription: Subscription;
     public videochatRunnable = false;
     public showRoom: String = '';
+    private ticketID: number;
   
     constructor(
       private router: Router,
       private storage: LocalStorageService,
-      private ticketService: ApiTicketService
+      private ticketService: ApiTicketService,
+      private activeRoute: ActivatedRoute
     ) { }
   
     ngOnInit(): void {
-      const newTicket = this.storage.getItem('newTicket');
-      this.ticketSubscription = this.ticketService.getFromId(newTicket.id)
+        this.ticketID = +this.activeRoute.snapshot.paramMap.get('id');
+        this.ticketSubscription = this.ticketService.getFromId(this.ticketID)
         .subscribe((item: ITicket) => {
             this.ticket = item;
             if (this.ticket.id_status === TicketStatuses.ONLINE){
-              window.open('https://appear.in/comunicaens_op' + item.id_operator, '_blank');
+                window.open('https://appear.in/comunicaens_op' + item.id_operator, '_blank');
             }
             this.router.navigate(['home']);
         }, (err) => {

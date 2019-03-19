@@ -8,7 +8,7 @@ import { FuseSharedModule } from '@fuse/shared.module';
 
 const routes = [
     {
-        path     : 'videochat',
+        path     : 'videochat/:id',
         component: VideochatComponent,
         canActivate: [AuthGuard],
     }

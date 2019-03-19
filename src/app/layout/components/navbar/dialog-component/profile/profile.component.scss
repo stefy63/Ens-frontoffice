@@ -41,12 +41,12 @@
     color: #6195CC !important;
   }
 
-  .close-dialog {
-    position: absolute;
-    top: 0;
-    right: -10px;
-    outline: none;
-  }
+    .close-dialog {
+        text-align: right;
+    }
+    .button-close--outlined {
+        outline: 0;
+    }
 
   .form__container {
     // height: 100%;

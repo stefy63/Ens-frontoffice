@@ -1,13 +1,18 @@
 <div class="dialog-header">
+    <div class="close-dialog">
+        <button mat-icon-button mat-dialog-close class="button-close--outlined" color="primary">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>  
     <h1 mat-dialog-title class="accent modal-title">Modifica Profilo</h1>
-    <button mat-button mat-dialog-close class="close-dialog">
+    <!-- <button mat-button mat-dialog-close class="close-dialog">
         <mat-icon>close</mat-icon>
-    </button>
+    </button> -->
 </div>
 <form [formGroup]="formGroup" (ngSubmit)="onYesClick()">
     <mat-dialog-content>
         <div class="row">
-            <mat-form-field class="col-md-6" appearance="outline">
+            <mat-form-field class="col-md-6"  >
                 <input matInput class="dialog-input form-control" type="text" placeholder="Nome" formControlName="name"  required>
                 <mat-icon matSuffix>face</mat-icon>
                 <mat-error class="error-message" *ngIf="formGroup.controls['name'].hasError('required')">Campo
@@ -15,7 +20,7 @@
                 <mat-error class="error-message" *ngIf="formGroup.controls['name'].hasError('alphabeticOnly')">Numeri
                     non permessi</mat-error>
             </mat-form-field>
-            <mat-form-field class="col-md-6" appearance="outline">
+            <mat-form-field class="col-md-6"  >
                 <input matInput class="dialog-input form-control" type="text" placeholder="Cognome"  formControlName="surname"  required>
                 <mat-icon matSuffix>face</mat-icon>
                 <mat-error class="error-message" *ngIf="formGroup.controls['surname'].hasError('required')">Campo
@@ -26,13 +31,13 @@
         </div>
 
         <div class="row">
-            <mat-form-field class="col-md-6" appearance="outline">
+            <mat-form-field class="col-md-6"  >
                 <input matInput class="dialog-input form-control" type="text" placeholder="Indirizzo e-mail"  formControlName="email" required>
                 <mat-icon matSuffix>mail_outline</mat-icon>
                 <mat-error class="error-message" *ngIf="formGroup.controls['email'].hasError('required')">Campo obbligatorio</mat-error>
                 <mat-error class="error-message" *ngIf="formGroup.controls['email'].hasError('email_custom')">Formato Mail errato</mat-error>
             </mat-form-field>
-            <mat-form-field class="col-md-6" appearance="outline">
+            <mat-form-field class="col-md-6"  >
                 <input matInput class="dialog-input form-control" type="text" placeholder="Telefono"  formControlName="phone" required>
                 <mat-icon matSuffix>local_phone</mat-icon>
                 <mat-error class="error-message" *ngIf="formGroup.controls['phone'].hasError('required')">Campo  obbligatorio</mat-error>
@@ -41,7 +46,7 @@
         </div>
 
         <div class="row">
-            <mat-form-field class="col-md-6" placeholder="Sesso"  appearance="outline">
+            <mat-form-field class="col-md-6" placeholder="Sesso"   >
                 <mat-select formControlName="gender" required>
                     <mat-option *ngFor="let sex of gender" [value]="sex.id">
                         {{sex.name}}
@@ -49,7 +54,7 @@
                 </mat-select>
                 <mat-error class="error-message" *ngIf="formGroup.controls['gender'].hasError('required')">Campo obbligatorio</mat-error>
             </mat-form-field>
-            <mat-form-field class="col-md-6"  placeholder="Numero di Carta ENS" appearance="outline">
+            <mat-form-field class="col-md-6"  placeholder="Numero di Carta ENS"  >
                 <input matInput class="dialog-input form-control" type="text" formControlName="card_number">
                 <mat-icon matSuffix>card_membership</mat-icon>
             </mat-form-field>

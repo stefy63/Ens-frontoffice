@@ -7,7 +7,7 @@ import { AuthGuard } from 'app/guard/auth.guard';
 
 const routes = [
     {
-        path     : 'waiting',
+        path     : 'waiting/:id',
         component: WaitingComponent,
         canActivate: [AuthGuard],
     }

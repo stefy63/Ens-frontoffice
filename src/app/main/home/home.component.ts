@@ -130,7 +130,7 @@ export class HomeComponent implements OnInit {
                 filter((dataFromModal) => !!dataFromModal),
                 mergeMap((dataFromModal) => this.createTicketAndFirstHistory(dataFromModal, service))
             ).subscribe((ticketHistory: ITicketHistory) => {
-                    this.router.navigate(['waiting']);
+                    this.router.navigate(['/waiting', ticketHistory.id_ticket]);
                 }, (err) => {
                     console.error(err);
                     this.toast.error('Nuovo Tichet', 'Hai appena richiesto una assistenza, aspetta un minuto prima di richiederne un\'altra');
@@ -144,7 +144,6 @@ export class HomeComponent implements OnInit {
                     phone: dataModal.phone
                 })
                 .pipe(
-                    tap((data) => this.storage.setKey('newTicket', data)),
                     mergeMap((fromNewTicket: ITicket) => this.apiTicketHistoryService.create({
                         id_ticket: fromNewTicket.id,
                         id_type: HistoryTypes.INITIAL,

@@ -8,7 +8,7 @@ import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
 
 const routes = [
     {
-        path     : 'chat',
+        path     : 'chat/:id',
         component: ChatComponent,
         canActivate: [AuthGuard],
     }

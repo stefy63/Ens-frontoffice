@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ApiQueueService } from 'app/services/api/api-queue.service';
 import { flatMap, filter, mergeMap } from 'rxjs/operators';
 import { merge, of, Subscription } from 'rxjs';
@@ -29,9 +29,11 @@ export class WaitingComponent implements OnInit, OnDestroy {
     private newTicket: ITicket;
     private updateQueueSubscription: Subscription;
     private updateTicketSubscription: Subscription;
+    private ticketID: number;
 
     constructor(
         private router: Router,
+        private activeRoute: ActivatedRoute,
         private queueService: ApiQueueService,
         private socket: SocketService,
         private ticketService: ApiTicketService,
@@ -39,11 +41,12 @@ export class WaitingComponent implements OnInit, OnDestroy {
         private storage: LocalStorageService,
         public toast: NotificationsService
     ) {
+        this.ticketID = +this.activeRoute.snapshot.paramMap.get('id');
         this.updateTicketSubscription = merge(
-            this.ticketService.getFromId(this.storage.getItem('newTicket').id),
+            this.ticketService.getFromId(this.ticketID),
             this.socket.getMessage('onTicketUpdated')
         ).pipe(
-            filter((ticket) => ticket.id === this.storage.getItem('newTicket').id)
+            filter((ticket) => ticket.id === this.ticketID)
         ).subscribe(ticket => {
             this.newTicket = ticket;
             this.service = find(this.storage.getItem('ticket_service'), ['id', this.newTicket.id_service]).service;
@@ -52,9 +55,9 @@ export class WaitingComponent implements OnInit, OnDestroy {
                 this.router.navigate(['home']);
             } else if (ticket.id_status === TicketStatuses.ONLINE) {
                 if (this.newTicket.id_service === TicketServices.CHAT) {
-                    this.router.navigate(['chat']);
+                    this.router.navigate(['chat', this.ticketID]);
                 } else {
-                    this.router.navigate(['videochat']);
+                    this.router.navigate(['videochat', this.ticketID]);
                 }
             }
         });
@@ -65,7 +68,7 @@ export class WaitingComponent implements OnInit, OnDestroy {
             of(null)
         ).pipe(
             flatMap(() => {
-                return this.queueService.apiGetQueueData(this.storage.getItem('newTicket').id);
+                return this.queueService.apiGetQueueData(this.ticketID);
             })
         ).subscribe(fromApiQueue => {
             this.ticketInWaiting = fromApiQueue.ticketInWaiting;

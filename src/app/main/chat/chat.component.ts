@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild, ViewChildren, ElementRef, ChangeDetectorRef } from '@angular/core';
-import { Subscription, merge } from 'rxjs';
+import { Subscription, merge, interval } from 'rxjs';
 import { FusePerfectScrollbarDirective } from '@fuse/directives/fuse-perfect-scrollbar/fuse-perfect-scrollbar.directive';
 import { NgForm } from '@angular/forms';
 import { LocalStorageService } from 'app/services/local-storage/local-storage.service';
@@ -10,7 +10,7 @@ import { TicketServices } from 'app/enums/ticket-services.enum';
 import { ChatService } from 'app/services/api/chat-messages.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ApiTicketService } from 'app/services/api/api-ticket.service';
-import { find, orderBy, includes } from 'lodash';
+import { orderBy, includes } from 'lodash';
 import { ITicket } from 'app/interfaces/i-ticket';
 import { ITicketHistory } from 'app/interfaces/i-ticket-history';
 import { HistoryTypes } from 'app/enums/ticket-history-type.enum';
@@ -18,7 +18,7 @@ import { DialogConfirm } from '../dialog-confirm/dialog-confirm.component';
 import { filter, mergeMap } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
 import { assign } from 'lodash';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
 
 
@@ -32,7 +32,6 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
     public ticket: ITicket;
     public ticketHistorys: ITicketHistory[] = [];
     public activeSpinner = false;
-    public pause2scroll = true;
     public opName: number;
     public timer: string;
   
@@ -43,8 +42,10 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
     private ticketSubscription: Subscription;
     private replyEventSubscription: Subscription;
     private timeoutFunction;
-    private timerTimer: any;
+    private timerSubscription: Subscription;
     private utcTime: moment.Moment;
+    private keyTimerLocalStore;
+    private ticketID: number;
 
   
     @ViewChild(FusePerfectScrollbarDirective) directiveScroll: FusePerfectScrollbarDirective;
@@ -61,22 +62,26 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
       private spinner: NgxSpinnerService,
       public dialog: MatDialog,
       private router: Router,
+      private activeRoute: ActivatedRoute,
       private ticketService: ApiTicketService
     ) {  }
   
     ngOnInit(): void {
+      this.ticketID = +this.activeRoute.snapshot.paramMap.get('id');
       this.spinner.show();
-      const newTicket = this.storage.getItem('newTicket');
+
+      this.keyTimerLocalStore = `utcChat__${this.ticketID}`;
       this.ticketSubscription = merge(
-          this.ticketService.getFromId(newTicket.id),
+          this.ticketService.getFromId(this.ticketID),
           this.socketService.getMessage('onTicketHistoryCreate'),
           this.socketService.getMessage('onTicketUpdated')
-        ).subscribe((item: ITicket) => {
+        )
+        .pipe(
+            filter(ticket => ticket.id === this.ticketID)
+        )
+        .subscribe((item: ITicket) => {
                 this.ticket = item;
-                if (find(item.historys, (history) => history.readed === 0)) {
-                    this.chatService.markMessagesReaded(item.id).subscribe();
-                }
-                this.opName = this.ticket.id_operator;
+                this.opName = this.elaborateFakeOperatorId(this.ticket.id_operator);
                 this.ticketHistorys = orderBy(this.ticket.historys, 'date_time', 'asc');
                 this.spinner.hide();
                 this.scrollToBottom();
@@ -84,7 +89,20 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
                 this.showReplyMessage = !includes([TicketStatuses.REFUSED, TicketStatuses.CLOSED, TicketStatuses.ARCHIVED], this.ticket.id_status);
                 if (!this.showReplyMessage) {
                     this.toast.info('Servizio Chat', 'Ticket chiuso');
-                    clearInterval(this.timerTimer);
+                    if (this.timerSubscription) {
+                      this.timerSubscription.unsubscribe();
+                    }
+                    this.storage.setKey(this.keyTimerLocalStore, undefined);
+                } else {
+                    this.utcTime = this.storage.getItem(this.keyTimerLocalStore) || moment.utc(0);
+                    this.timer = moment.utc(this.utcTime).format('HH:mm:ss');
+                    if (!this.timerSubscription) {
+                        this.timerSubscription = interval(1000).subscribe(() => {
+                            this.utcTime = moment.utc(this.utcTime).add(1, 's');
+                            this.timer = moment.utc(this.utcTime).format('HH:mm:ss');
+                            this.storage.setKey(this.keyTimerLocalStore, this.utcTime);
+                        });
+                    }
                 }
             }, (err) => {
             console.log(err);
@@ -101,13 +119,6 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
           this.onWritingMsg.nativeElement.style.display = 'block';
         }
       });
-
-      this.utcTime = moment.utc(0);
-      this.timer = moment.utc(this.utcTime).format('HH:mm:ss');
-      this.timerTimer = setInterval(() => {
-          this.utcTime = moment.utc(this.utcTime).add(1, 's');
-          this.timer = moment.utc(this.utcTime).format('HH:mm:ss');
-      }, 1000);
     }
   
     ngOnDestroy(): void {
@@ -116,6 +127,9 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       if (this.replyEventSubscription) {
         this.replyEventSubscription.unsubscribe();
+      }
+      if (this.timerSubscription) {
+        this.timerSubscription.unsubscribe();
       }
     }
   
@@ -134,19 +148,12 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
   
     scrollToBottom(speed?: number): void {
       speed = speed || 2000;
-      if (this.viewInitFinish && this.directiveScroll && this.directiveScroll.isInitialized && this.pause2scroll) {
+      if (this.viewInitFinish && this.directiveScroll) {
         this.directiveScroll.update();
         this.directiveScroll.scrollToBottom(0, speed);
       }
     }
-  
-    toglePuseScroll(): void {
-      this.pause2scroll = !this.pause2scroll;
-      if (this.pause2scroll) {
-        this.scrollToBottom();
-      }
-    }
-  
+    
     reply(event): void {
       if (this.replyForm.form.value.message && this.replyForm.form.value.message.trim()) {
         this.sendMessage(this.replyForm.form.value.message.trim(), true);
@@ -223,5 +230,11 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
 
     goHome(): void {
         this.router.navigate(['home']);
+    }
+
+    elaborateFakeOperatorId(id_operator): number {
+        const date = new Date();
+        // tslint:disable-next-line:radix
+        return Math.ceil(parseInt('' + date.getDate() + date.getMonth() + '' + date.getFullYear()) * 1000 / parseInt(id_operator)) + date.getMonth() * 10000;
     }
 }

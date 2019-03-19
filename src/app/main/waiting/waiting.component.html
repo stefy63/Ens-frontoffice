@@ -2,29 +2,28 @@
 <div class="col-lg-9 waiting-card__container">
     <div class="card">
         <div class="card-header">
-            <div>
-                <h1 class="card-title" [ngStyle]="setMyStyles()">
-                    <mat-icon *ngIf="service === 'CHAT'">forum</mat-icon>
-                    <mat-icon *ngIf="service === 'VIDEOCHAT'">videocam</mat-icon>
-                    <span>{{service | titlecase}}</span> 
-                </h1>
+            <div class="text-right">
+                    <button mat-button class="close-card" (click)="exit()"><mat-icon>close</mat-icon></button>
             </div>
-            <button mat-button class="close-card" (click)="exit()"><mat-icon>close</mat-icon></button>
+            <div class="card-title" [ngStyle]="setMyStyles()">
+                <mat-icon *ngIf="service === 'CHAT'">forum</mat-icon>
+                <mat-icon *ngIf="service === 'VIDEOCHAT'">videocam</mat-icon>
+                <span>{{service | titlecase}}</span> 
+            </div>
         </div>
         <div class="card-body">
             <div class="queue" [ngClass]="{'next' : ticketInWaiting < 2}">{{ticketInWaiting}}</div>
-            <div class="info-queue">Persona sono in coda prima di te</div>
+            <div class="info-queue">Persone sono in coda prima di te</div>
             
         </div>
-        <div class="card-footer text-muted" >
+        <div class="card-footer" >
             <mat-icon>alarm</mat-icon>
-            <div class="info-operator" *ngIf="ticketInWaiting > 1">
+            <div *ngIf="ticketInWaiting > 1">
                 {{operatorOnline}} Operatori attivi
             </div>
-            <div class="info-operator" *ngIf="ticketInWaiting < 2">
+            <div *ngIf="ticketInWaiting < 2">
                 <span>Grazie per la pazienza.</span>
                 <span>Ti stiamo mettendo in contatto con un nostro operatore.</span>
-                
             </div>
         </div>
     </div>
