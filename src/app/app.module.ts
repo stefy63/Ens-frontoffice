@@ -35,7 +35,6 @@ import { DialogConfirm } from './main/dialog-confirm/dialog-confirm.component';
 import { ChatModule } from './main/chat/chat.module';
 import { ChatService } from './services/api/chat-messages.service';
 import { VideochatModule } from './main/videochat/videochat.module';
-import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
 
 const appRoutes: Routes = [
     {
@@ -82,7 +81,6 @@ const config: SocketIoConfig = { url: environment.ws_url + wssPort, options: opt
         VideochatModule,
         SimpleNotificationsModule.forRoot(),
         SocketIoModule.forRoot(config),
-        SweetAlert2Module.forRoot()
     ],
     providers: [
         SocketService,
