@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild, ViewChildren, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { Subscription, merge, interval } from 'rxjs';
-import { FusePerfectScrollbarDirective } from '@fuse/directives/fuse-perfect-scrollbar/fuse-perfect-scrollbar.directive';
 import { NgForm } from '@angular/forms';
 import { LocalStorageService } from 'app/services/local-storage/local-storage.service';
 import { NotificationsService } from 'angular2-notifications';
@@ -17,9 +16,10 @@ import { HistoryTypes } from 'app/enums/ticket-history-type.enum';
 import { DialogConfirm } from '../dialog-confirm/dialog-confirm.component';
 import { filter, mergeMap } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
-import { assign } from 'lodash';
+import { assign, filter as filterLodash } from 'lodash';
 import { Router, ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
+import { NgScrollbar } from 'ngx-scrollbar';
 
 
 @Component({
@@ -48,7 +48,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
     private ticketID: number;
 
   
-    @ViewChild(FusePerfectScrollbarDirective) directiveScroll: FusePerfectScrollbarDirective;
+    @ViewChild(NgScrollbar) directiveScroll: NgScrollbar;
     @ViewChildren('replyInput') replyInputField;
     @ViewChild('replyForm') replyForm: NgForm;
     @ViewChild('onWritingMsg') onWritingMsg: ElementRef;
@@ -82,10 +82,12 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
         .subscribe((item: ITicket) => {
                 this.ticket = item;
                 this.opName = this.elaborateFakeOperatorId(this.ticket.id_operator);
-                this.ticketHistorys = orderBy(this.ticket.historys, 'date_time', 'asc');
+                this.ticketHistorys = filterLodash(orderBy(this.ticket.historys, 'date_time', 'asc'), (history) => {
+                    return history.type.id === HistoryTypes.USER || history.type.id === HistoryTypes.OPERATOR;
+                });
                 this.spinner.hide();
-                this.scrollToBottom();
                 this.cd.markForCheck();
+                this.scrollToBottom();
                 this.showReplyMessage = !includes([TicketStatuses.REFUSED, TicketStatuses.CLOSED, TicketStatuses.ARCHIVED], this.ticket.id_status);
                 if (!this.showReplyMessage) {
                     this.toast.info('Servizio Chat', 'Ticket chiuso');
@@ -138,7 +140,6 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
       this.replyInput = this.replyInputField.first.nativeElement;
       this.cd.detectChanges();
       this.resetForm();
-      this.scrollToBottom();
       this.onWritingMsg.nativeElement.style.display = 'none';
     }
   
@@ -147,10 +148,11 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   
     scrollToBottom(speed?: number): void {
-      speed = speed || 2000;
-      if (this.viewInitFinish && this.directiveScroll) {
-        this.directiveScroll.update();
-        this.directiveScroll.scrollToBottom(0, speed);
+      speed = speed || 1000;
+      if (this.viewInitFinish) {
+        setTimeout(() => {
+            this.directiveScroll.scrollToBottom(speed);
+        }, 200);     
       }
     }
     

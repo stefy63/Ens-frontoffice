@@ -11,27 +11,21 @@
         {{ timer }}
     </div>
 </div>
-<div fusePerfectScrollbar class="chat__container__messages" *ngIf="ticket">
-    <div id="chat-content">
-        <!-- CHAT MESSAGES -->
-        <div class="chat-messages" *ngFor="let message of ticketHistorys">
-            <!-- MESSAGE -->
-            <div class="message-row" [ngClass]="{'user': (message.type.type === 'OPERATOR')}"
-                *ngIf="message.type.type === 'USER' || message.type.type === 'OPERATOR'">
-                <div class="bubble">
-                    <div class="message" innerHtml="{{message.action}}"></div>
-                </div>
-                <div class="time text-muted">{{message.date_time | date:'dd/MM/yyyy, HH:mm':'UTC'}}</div>
+<ng-scrollbar trackX="false" class="message__container"> 
+    <div class="chat-messages" *ngFor="let message of ticketHistorys">
+        <!-- MESSAGE -->
+        <div class="message-row" [ngClass]="{'user': (message.type.type === 'OPERATOR')}">
+            <div class="bubble">
+                <div class="message" innerHtml="{{message.action}}"></div>
             </div>
-            <!-- / MESSAGE -->
+            <div class="time text-muted">{{message.date_time | date:'dd/MM/yyyy, HH:mm':'UTC'}}</div>
         </div>
-        <!-- CHAT MESSAGES -->
+        <!-- / MESSAGE -->
     </div>
-</div>
-<!-- / CHAT CONTENT -->
+</ng-scrollbar>            
 <div #onWritingMsg class="on-writing">L'operatore sta scrivendo........</div>
 <!-- CHAT FOOTER -->
-<div class="chat-footer">
+<div class="chat-footer" [hidden]="!ticket">
     <!-- REPLY FORM -->
     <form #replyForm="ngForm" (ngSubmit)="reply($event)" (keyup.enter)="reply($event)" (keydown)="typing($event)" fxFlex
         class="reply-form" fxLayout="row" fxLayoutAlign="center center">
