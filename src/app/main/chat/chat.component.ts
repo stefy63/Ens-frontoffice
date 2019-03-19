@@ -114,7 +114,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
 
       this.updateScrollbarSubscription = this.updateScrollbar
       .pipe((
-        debounceTime(1000)
+        debounceTime(500)
       ))
       .subscribe(() => {
         setTimeout(() => this.directiveScroll.scrollToBottom(1000), 200);
