@@ -6,29 +6,34 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { FuseDirectivesModule } from '@fuse/directives/directives';
 import { FusePipesModule } from '@fuse/pipes/pipes.module';
+import { MaterialModule } from './material.module';
+import { FuseMaterialColorPickerModule } from './components';
+
 
 @NgModule({
-    imports  : [
+    imports  :  [
+        FusePipesModule,
+        FlexLayoutModule,
+        MaterialModule,
         CommonModule,
         FormsModule,
+        FusePipesModule,
         ReactiveFormsModule,
-
-        FlexLayoutModule,
-
-        FuseDirectivesModule,
-        FusePipesModule
+        FuseMaterialColorPickerModule,
+        FuseDirectivesModule
     ],
+    
     exports  : [
+        FusePipesModule,
+        FlexLayoutModule,
+        MaterialModule,
         CommonModule,
         FormsModule,
+        FusePipesModule,
         ReactiveFormsModule,
-
-        FlexLayoutModule,
-
-        FuseDirectivesModule,
-        FusePipesModule
+        FuseMaterialColorPickerModule,
+        FuseDirectivesModule
     ]
 })
 export class FuseSharedModule
-{
-}
+{}

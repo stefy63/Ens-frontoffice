@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-
-import { FuseSharedModule } from '@fuse/shared.module';
-
-import { MatGridListModule, MatCardModule, MatIconModule } from '@angular/material';
 import { HomeComponent } from './home.component';
+import { DialogLogin } from './dialog-component/login/dialog-login.component';
+import { FuseSharedModule } from '@fuse/shared.module';
+import { DialogRegistrationComponent } from './dialog-component/registration/regstration.component';
+import { DialogNewTicket } from './dialog-component/new-ticket/dialog-new-ticket.component';
+import { DialogQueue } from './dialog-component/queue/dialog-queue.component';
 
 const routes = [
     {
@@ -14,19 +15,25 @@ const routes = [
     }
 ];
 
+
 @NgModule({
     declarations: [
-        HomeComponent
+        HomeComponent,
+        DialogLogin,
+        DialogRegistrationComponent,
+        DialogNewTicket,
+        DialogQueue
     ],
     imports     : [
         RouterModule.forChild(routes),
-
-        TranslateModule,
-
         FuseSharedModule,
-        MatGridListModule,
-        MatCardModule,
-        MatIconModule,
+        TranslateModule
+    ],
+    entryComponents: [
+        DialogLogin,
+        DialogRegistrationComponent,
+        DialogNewTicket,
+        DialogQueue
     ],
     exports     : [
         HomeComponent

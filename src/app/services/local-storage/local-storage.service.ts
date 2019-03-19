@@ -7,7 +7,7 @@ export class LocalStorageService {
 
   constructor() { }
 
-  public setItem(key: string, data: string): void {
+  public setItem(key: string, data: any): void {
     this.storage.setItem(key, JSON.stringify(data));
   }
 
@@ -15,13 +15,15 @@ export class LocalStorageService {
     this.storage.clear();
   }
 
-  public getKey(key: string): any {
+  public setKey(key: string, data: any): void {
     try {
-      const data = JSON.parse(this.storage.getItem(key));
-      return data;
-    } catch (err) {
-      return undefined;
-    }
+        const dataValue = JSON.parse(this.storage.getItem('data'));
+        dataValue[key] = data;
+        this.setItem('data', dataValue);
+        return dataValue[key];
+      } catch (err) {
+        return undefined;
+      }
   }
 
   public getItem(key: string): any {

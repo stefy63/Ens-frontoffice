@@ -1,0 +1,43 @@
+<div class="dialog-header" >
+    <div>
+        <div class="close-dialog">
+            <button mat-icon-button mat-dialog-close class="button-close--outlined" color="primary">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>  
+        <h1 class="modal-title" [ngStyle]="setMyStyles()">
+            <mat-icon *ngIf="data.service === 'CHAT'">forum</mat-icon>
+            <mat-icon *ngIf="data.service === 'VIDEOCHAT'">videocam</mat-icon>
+            {{data.service | titlecase}}
+        </h1>
+    </div>
+</div>
+<form (ngSubmit)="onYesClick()" [formGroup]="formGroup">
+    <div class="form__body">
+      <mat-form-field class="mb-3"    >
+        <input matInput class="dialog-input" type="text" placeholder="Numero da chiamare" formControlName="phone" required>
+        <mat-icon matSuffix>local_phone</mat-icon>
+        <mat-error class="error-message" *ngIf="formGroup.controls['phone'].hasError('required')">Campo obbligatorio</mat-error>
+        <mat-error class="error-message" *ngIf="formGroup.controls['phone'].hasError('PhoneValidator')">Solo numeri</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class=""  >
+            <mat-select formControlName="category" placeholder="Categoria" required>
+                <mat-option *ngFor="let cat of categories" [value]="cat.id" >
+                    {{cat.category}}
+                </mat-option>
+            </mat-select>
+            <mat-error class="error-message" *ngIf="formGroup.controls['category'].hasError('required')">Campo obbligatorio</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class=""  >
+            <textarea matInput matTextareaAutosize matAutosizeMinRows="4" matAutosizeMaxRows="4" type="text" placeholder="Descrizione"  formControlName="description" required></textarea>
+            <mat-error class="error-message" *ngIf="formGroup.controls['description'].hasError('required')">Campo obbligatorio</mat-error>
+        </mat-form-field>
+    </div>
+    <div class="form__footer">
+      <button mat-raised-button class="col-6" type="submit" color="accent" [disabled]="!formGroup.valid">
+          Procedi
+      </button>
+    </div>
+</form>

@@ -14,6 +14,10 @@ import { FuseTranslationLoaderService } from '@fuse/services/translation-loader.
 import { navigation } from 'app/navigation/navigation';
 import { locale as navigationEnglish } from 'app/navigation/i18n/en';
 import { locale as navigationTurkish } from 'app/navigation/i18n/tr';
+import { AlertToasterOptions } from './class/alert-toaster-options';
+import { AuthService } from './services/auth/auth.service';
+import { LocalStorageService } from './services/local-storage/local-storage.service';
+import { IUser } from './interfaces/i-user';
 
 @Component({
     selector: 'app',
@@ -26,6 +30,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     // Private
     private _unsubscribeAll: Subject<any>;
+    public options = new AlertToasterOptions();
 
     /**
      * Constructor
@@ -47,7 +52,9 @@ export class AppComponent implements OnInit, OnDestroy {
         private _fuseSplashScreenService: FuseSplashScreenService,
         private _fuseTranslationLoaderService: FuseTranslationLoaderService,
         private _translateService: TranslateService,
-        private _platform: Platform
+        private _platform: Platform,
+        private authService: AuthService,
+        private storage: LocalStorageService
     ) {
         // Get default navigation
         this.navigation = navigation;
@@ -146,6 +153,11 @@ export class AppComponent implements OnInit, OnDestroy {
 
                 this.document.body.classList.add(this.fuseConfig.colorTheme);
             });
+
+            if (!this.authService.isAuthenticated()) {
+                this.storage.clear();
+            }
+
     }
 
     /**

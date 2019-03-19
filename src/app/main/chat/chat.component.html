@@ -1,0 +1,48 @@
+<div class="chat-header" *ngIf="ticket">
+    <span class="chat-header-title" *ngIf="showReplyMessage">CHAT IN CORSO</span>
+    <span class="chat-header-title chat_close" *ngIf="!showReplyMessage">CHAT TERMINATA</span>
+
+    <mat-icon class="chat-header-close" (click)="exit()" *ngIf="showReplyMessage">close</mat-icon>
+    <mat-icon class="chat-header-close chat_close" (click)="goHome()" *ngIf="!showReplyMessage">home</mat-icon>
+</div>
+<div class="timer__container" *ngIf="ticket">
+    <span class="chat-header-operator">Operatore: {{opName}}</span>
+    <div class="text-right" *ngIf="showReplyMessage">
+        {{ timer }}
+    </div>
+</div>
+<div fusePerfectScrollbar class="chat__container__messages" *ngIf="ticket">
+    <div id="chat-content">
+        <!-- CHAT MESSAGES -->
+        <div class="chat-messages" *ngFor="let message of ticketHistorys">
+            <!-- MESSAGE -->
+            <div class="message-row" [ngClass]="{'user': (message.type.type === 'OPERATOR')}"
+                *ngIf="message.type.type === 'USER' || message.type.type === 'OPERATOR'">
+                <div class="bubble">
+                    <div class="message" innerHtml="{{message.action}}"></div>
+                </div>
+                <div class="time text-muted">{{message.date_time | date:'dd/MM/yyyy, HH:mm':'UTC'}}</div>
+            </div>
+            <!-- / MESSAGE -->
+        </div>
+        <!-- CHAT MESSAGES -->
+    </div>
+</div>
+<!-- / CHAT CONTENT -->
+<div #onWritingMsg class="on-writing">L'operatore sta scrivendo........</div>
+<!-- CHAT FOOTER -->
+<div class="chat-footer">
+    <!-- REPLY FORM -->
+    <form #replyForm="ngForm" (ngSubmit)="reply($event)" (keyup.enter)="reply($event)" (keydown)="typing($event)" fxFlex
+        class="reply-form" fxLayout="row" fxLayoutAlign="center center">
+        <mat-form-field style="flex-grow: 1" floatPlaceholder="never">
+            <textarea matInput #replyInput ngModel name="message" [disabled]="!showReplyMessage"></textarea>
+            <mat-placeholder [hidden]="!showReplyMessage">Scrivi il messaggio e premi Enter</mat-placeholder>
+            <mat-placeholder [hidden]="showReplyMessage">Chat terminata. Tornare alla Home Page, Grazie. </mat-placeholder>
+        </mat-form-field>
+        <button mat-mini-fab class="send__button" type="submit" aria-label="Send message" [hidden]="!showReplyMessage">
+            <mat-icon>send</mat-icon>
+        </button>
+    </form>
+    <!-- / REPLY FORM -->
+</div>

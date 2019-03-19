@@ -20,5 +20,6 @@ cage {
 
 .content__container {
     flex-grow: 1;
-    padding: 1em;
+    padding: 0;
+    overflow: auto;
 }

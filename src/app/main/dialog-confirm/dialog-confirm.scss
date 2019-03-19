@@ -1,0 +1,32 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    mat-form-field {
+      width: 100%;
+    }
+
+    .dialog-header {
+      position: relative;
+      text-align: center;
+    }
+    .modal-title {
+      font-size: 1.3em;
+      background-color: white;
+      padding-bottom: 20px;
+    //   color: #25b2f7;
+    }
+
+    .action {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        .btn {
+            margin: 0 20px;
+            padding: 10px 40px;
+            font-size: 1.5rem;
+        }
+    }
+}

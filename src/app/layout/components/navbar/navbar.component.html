@@ -10,16 +10,42 @@
         </ul>
     </div>
     <div>
-        <mat-icon [matMenuTriggerFor]="moreMenu" class="more_vert__button">more_vert</mat-icon>
-        <mat-menu #moreMenu="matMenu" [overlapTrigger]="false">
-                <button mat-menu-item fxLayout="row" fxLayoutAlign="center center">
+        <div>
+            <button mat-icon-button [matMenuTriggerFor]="moreMenu" [ngClass]="{'logged': userLogged}">
+                <div *ngIf="userLogged" class="icon_logged">
+                    <span>{{user.userdata.name}}</span>
+                    <mat-icon>arrow_drop_down</mat-icon>
+                </div>
+                <div *ngIf="!userLogged" >
+                    <mat-icon *ngIf="!userLogged">more_vert</mat-icon>
+                </div>
+            </button>
+            <mat-menu #moreMenu="matMenu" [overlapTrigger]="false">
+                <button mat-menu-item fxLayout="row" fxLayoutAlign="left center">
                     <mat-icon>chrome_reader_mode</mat-icon>
                     <span>Termini e condizioni d'uso</span>
                 </button>
-                <button mat-menu-item fxLayout="row" fxLayoutAlign="center center">
-                        <mat-icon>remove_red_eye</mat-icon>
-                        <span>Privacy</span>
+                <button mat-menu-item fxLayout="row" fxLayoutAlign="left center">
+                    <mat-icon>remove_red_eye</mat-icon>
+                    <span>Privacy</span>
                 </button>
+                <div *ngIf="userLogged">
+                    <button mat-menu-item fxLayout="row" fxLayoutAlign="left center" (click)="edit_profile()">
+                        <mat-icon>chrome_reader_mode</mat-icon>
+                        <span>Modifica Profilo</span>
+                    </button>
+                    <button mat-menu-item fxLayout="row" fxLayoutAlign="left center" (click)="change_password()">
+                        <mat-icon>remove_red_eye</mat-icon>
+                        <span>Cambia Password</span>
+                    </button>
+                    <button mat-menu-item fxLayout="row" fxLayoutAlign="left center" (click)="logout()">
+                        <mat-icon>remove_red_eye</mat-icon>
+                        <span>Logout</span>
+                    </button>
+                </div>
             </mat-menu>
+        </div>
+
     </div>
+
 </nav>
