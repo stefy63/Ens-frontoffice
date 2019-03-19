@@ -3,6 +3,7 @@ import { RouterModule } from '@angular/router';
 import { FooterModule } from 'app/layout/components/footer/footer.module';
 import { CageComponent } from './cage.component';
 import { NavbarModule } from 'app/layout/components/navbar/navbar.module';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
     declarations: [
@@ -11,7 +12,8 @@ import { NavbarModule } from 'app/layout/components/navbar/navbar.module';
     imports: [
         RouterModule,
         FooterModule,
-        NavbarModule
+        NavbarModule,
+        NgxSpinnerModule,
     ],
     exports: [
         CageComponent

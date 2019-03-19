@@ -5,6 +5,7 @@ import { AuthGuard } from 'app/guard/auth.guard';
 import { RouterModule } from '@angular/router';
 import { FuseSharedModule } from '@fuse/shared.module';
 import { NgScrollbarModule } from 'ngx-scrollbar';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 const routes = [
     {
@@ -20,7 +21,7 @@ const routes = [
     CommonModule,
     RouterModule.forChild(routes),
     FuseSharedModule,
-    NgScrollbarModule
+    NgScrollbarModule,
   ]
 })
 export class ChatModule { }

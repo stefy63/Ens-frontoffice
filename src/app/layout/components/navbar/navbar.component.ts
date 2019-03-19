@@ -59,51 +59,7 @@ export class NavbarComponent implements OnInit, OnDestroy
         private apiUserService: ApiUserService
     )
     {
-        // Set the defaults
-        this.userStatusOptions = [
-            {
-                'title': 'Online',
-                'icon' : 'icon-checkbox-marked-circle',
-                'color': '#4CAF50'
-            },
-            {
-                'title': 'Away',
-                'icon' : 'icon-clock',
-                'color': '#FFC107'
-            },
-            {
-                'title': 'Do not Disturb',
-                'icon' : 'icon-minus-circle',
-                'color': '#F44336'
-            },
-            {
-                'title': 'Invisible',
-                'icon' : 'icon-checkbox-blank-circle-outline',
-                'color': '#BDBDBD'
-            },
-            {
-                'title': 'Offline',
-                'icon' : 'icon-checkbox-blank-circle-outline',
-                'color': '#616161'
-            }
-        ];
-
-        this.languages = [
-            {
-                id   : 'en',
-                title: 'English',
-                flag : 'us'
-            },
-            {
-                id   : 'tr',
-                title: 'Turkish',
-                flag : 'tr'
-            }
-        ];
-
         this.navigation = navigation;
-
-        // Set the private defaults
         this._unsubscribeAll = new Subject();
     }
 
@@ -165,33 +121,7 @@ export class NavbarComponent implements OnInit, OnDestroy
         this._fuseSidebarService.getSidebar(key).toggleOpen();
     }
 
-    /**
-     * Search
-     *
-     * @param value
-     */
-    search(value): void
-    {
-        // Do your search here...
-        console.log(value);
-    }
-
-    /**
-     * Set the language
-     *
-     * @param lang
-     */
-    setLanguage(lang): void
-    {
-        // Set the selected language for the toolbar
-        this.selectedLanguage = lang;
-
-        // Use the selected language for translations
-        this._translateService.use(lang.id);
-    }
-
     useCondition(): void{
-
     }
 
     privacy(): void{
@@ -199,16 +129,12 @@ export class NavbarComponent implements OnInit, OnDestroy
     }
 
     edit_profile(): void{
-
-        const dialogRef = this.dialog.open(DialogProfileComponent, {
+        this.dialog.open(DialogProfileComponent, {
             hasBackdrop: true,
             data: {
                 modalData: this.user
             }
-        });
-
-        dialogRef
-            .afterClosed().pipe(
+        }).afterClosed().pipe(
                 filter((result) => !!result),
                 flatMap((result) => {
                     this.user.userdata = result;
@@ -226,7 +152,7 @@ export class NavbarComponent implements OnInit, OnDestroy
     }
 
     change_password(): void{
-        const dialogRef = this.dialog.open(DialogChangePassword, {
+        this.dialog.open(DialogChangePassword, {
             data: {
                 modalData: this.user
             }
