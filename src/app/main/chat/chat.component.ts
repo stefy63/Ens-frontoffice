@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild, ViewChildren, ElementRef, ChangeDetectorRef } from '@angular/core';
-import { Subscription, merge, interval, Subject } from 'rxjs';
+import { Subscription, merge, interval, Subject, Observable } from 'rxjs';
 import { NgForm } from '@angular/forms';
 import { LocalStorageService } from 'app/services/local-storage/local-storage.service';
 import { NotificationsService } from 'angular2-notifications';
@@ -20,6 +20,7 @@ import { assign, filter as filterLodash } from 'lodash';
 import { Router, ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
 import { NgScrollbar } from 'ngx-scrollbar';
+import { ApiTicketHistoryService } from 'app/services/api/api-ticket-history.service';
 
 
 @Component({
@@ -64,7 +65,8 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
       public dialog: MatDialog,
       private router: Router,
       private activeRoute: ActivatedRoute,
-      private ticketService: ApiTicketService
+      private ticketService: ApiTicketService,
+      private historyService: ApiTicketHistoryService
     ) {  }
   
     ngOnInit(): void {
@@ -73,6 +75,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
 
       this.updateScrollbar = new Subject<void>();
       this.keyTimerLocalStore = `utcChat__${this.ticketID}`;
+      this.sendHisotrySystem('Ticket chiuso dall\'utente');
       this.ticketSubscription = merge(
           this.ticketService.getFromId(this.ticketID),
           this.socketService.getMessage('onTicketHistoryCreate'),
@@ -223,7 +226,8 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
             .pipe(
                 filter((data) => !!data),
                 mergeMap(() => {
-                    const ticket: ITicket = assign({}, this.ticket, { id_status: TicketStatuses.ARCHIVED });
+                    this.sendHisotrySystem('Ticket chiuso dall\'utente');
+                    const ticket: ITicket = assign({}, this.ticket, { id_status: TicketStatuses.CLOSED });
                     return this.ticketService.update(ticket);
                 })
             ).subscribe(data => {
@@ -236,6 +240,17 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
 
     goHome(): void {
         this.router.navigate(['home']);
+    }
+
+    private sendHisotrySystem(msg: string): void {
+        const sysHistory = {
+            id: null,
+            id_type: HistoryTypes.SYSTEM, 
+            action: msg, 
+            id_ticket: this.ticket.id,
+            readed: 0
+        };
+        this.chatService.sendMessage(sysHistory).subscribe();
     }
 
     elaborateFakeOperatorId(id_operator): number {

@@ -34,7 +34,13 @@ export class DialogLogin {
     }).subscribe(data => {
         this.dialogRef.close(data);
     }, (err) => {
-        this.toast.error('Errore', 'Autenticazione Falita.');
+        if (err.status === 401 && err.error.message === 'USER_NOT_FOUND') {
+            this.toast.error('Errore', 'Utente non trovato!');
+        } else if (err.status === 401 && err.error.message === 'WRONG_PASSWORD') {
+            this.toast.error('Errore', 'Password errata!');
+        } else {
+            this.toast.error('Errore', 'Autenticazione Falita.');
+        }
     });
   }
 

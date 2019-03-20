@@ -96,16 +96,18 @@ export class HomeComponent implements OnInit {
         this.dialog.open(DialogLogin)
         .afterClosed()
         .subscribe(data => {
-            if (data && data.registration) {
-                this.dialog.open(DialogRegistrationComponent);
-            } else if (data && data.forgot) {
-                // TODO OPEN FORGOT PASSWORD
-                this.dialog.open(DialogRegistrationComponent);
-            } else {
-                this.socketService.sendMessage('welcome-message', {
-                    userToken: this.authService.getToken().token_session
-                });
-                this.openNewTicketModal(service);
+            if (data) {
+                if (data.registration) {
+                    this.dialog.open(DialogRegistrationComponent);
+                } else if (data.forgot) {
+                    // TODO OPEN FORGOT PASSWORD
+                    this.dialog.open(DialogRegistrationComponent);
+                } else {
+                    this.socketService.sendMessage('welcome-message', {
+                        userToken: this.authService.getToken().token_session
+                    });
+                    this.openNewTicketModal(service);
+                }
             }
         });
     }
@@ -115,7 +117,7 @@ export class HomeComponent implements OnInit {
             .pipe(
                 tap((data) => {
                     if (data.operatorActive < 1){
-                        this.toast.error('Richiesta Nuovo Ticket', 'Nessun Operatore attivo per questo servizio!');
+                        this.toast.error('Richiesta Nuovo Ticket', 'Non ci sono operatori attivi in questo momento. Riprova più tardi!');
                     }
                 }),
                 filter((data) => data.operatorActive > 0),
