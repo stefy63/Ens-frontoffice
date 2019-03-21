@@ -155,9 +155,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
       if (this.updateScrollbarSubscription) {
         this.updateScrollbarSubscription.unsubscribe();
       }
-      if (this.ticket.id_status === TicketStatuses.ONLINE) {
-            this.sendUserSessionActivity(false);
-        }
+      this.sendUserSessionActivity(false);
     }
   
     ngAfterViewInit(): void {
