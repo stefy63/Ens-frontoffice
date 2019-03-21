@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild, ViewChildren, ElementRef, ChangeDetectorRef } from '@angular/core';
-import { Subscription, merge, interval, Subject, Observable } from 'rxjs';
+import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild, ViewChildren, ElementRef, ChangeDetectorRef, HostListener} from '@angular/core';
+import { Subscription, merge, interval, Subject } from 'rxjs';
 import { NgForm } from '@angular/forms';
 import { LocalStorageService } from 'app/services/local-storage/local-storage.service';
 import { NotificationsService } from 'angular2-notifications';
@@ -14,13 +14,12 @@ import { ITicket } from 'app/interfaces/i-ticket';
 import { ITicketHistory } from 'app/interfaces/i-ticket-history';
 import { HistoryTypes } from 'app/enums/ticket-history-type.enum';
 import { DialogConfirm } from '../dialog-confirm/dialog-confirm.component';
-import { filter, mergeMap, debounceTime } from 'rxjs/operators';
+import { filter, mergeMap, debounceTime, tap } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
 import { assign, filter as filterLodash } from 'lodash';
 import { Router, ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
 import { NgScrollbar } from 'ngx-scrollbar';
-import { ApiTicketHistoryService } from 'app/services/api/api-ticket-history.service';
 
 
 @Component({
@@ -49,11 +48,19 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
     private ticketID: number;
     private updateScrollbar: Subject<void>;
     private updateScrollbarSubscription: Subscription;
+    private sysConnected = false;
   
     @ViewChild(NgScrollbar) directiveScroll: NgScrollbar;
     @ViewChildren('replyInput') replyInputField;
     @ViewChild('replyForm') replyForm: NgForm;
     @ViewChild('onWritingMsg') onWritingMsg: ElementRef;
+    @HostListener('window:beforeunload', ['$event'])
+    // tslint:disable-next-line:typedef
+    doSomething($event) {
+        if (this.ticket && this.ticket.id_status === TicketStatuses.ONLINE) {
+            this.sendHisotrySystem('Utente disconnesso.', this.ticket.id);
+        }
+    }
   
     constructor(
       private cd: ChangeDetectorRef,
@@ -66,7 +73,6 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
       private router: Router,
       private activeRoute: ActivatedRoute,
       private ticketService: ApiTicketService,
-      private historyService: ApiTicketHistoryService
     ) {  }
   
     ngOnInit(): void {
@@ -75,14 +81,20 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
 
       this.updateScrollbar = new Subject<void>();
       this.keyTimerLocalStore = `utcChat__${this.ticketID}`;
-      this.sendHisotrySystem('Ticket chiuso dall\'utente');
+      
       this.ticketSubscription = merge(
           this.ticketService.getFromId(this.ticketID),
           this.socketService.getMessage('onTicketHistoryCreate'),
           this.socketService.getMessage('onTicketUpdated')
         )
         .pipe(
-            filter(ticket => ticket.id === this.ticketID)
+            filter(ticket => ticket.id === this.ticketID),
+            tap(data => {
+                if (data.id_status === TicketStatuses.ONLINE && !this.sysConnected) {
+                    this.sysConnected = true;
+                    this.sendHisotrySystem('Utente connesso.', data.id);
+                }
+            })
         )
         .subscribe((item: ITicket) => {
                 this.ticket = item;
@@ -149,6 +161,9 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
       if (this.updateScrollbarSubscription) {
         this.updateScrollbarSubscription.unsubscribe();
       }
+      if (this.ticket.id_status === TicketStatuses.ONLINE) {
+            this.sendHisotrySystem('Utente disconnesso.', this.ticket.id);
+        }
     }
   
     ngAfterViewInit(): void {
@@ -226,7 +241,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
             .pipe(
                 filter((data) => !!data),
                 mergeMap(() => {
-                    this.sendHisotrySystem('Ticket chiuso dall\'utente');
+                    this.sendHisotrySystem('Ticket chiuso dall\'utente', this.ticket.id);
                     const ticket: ITicket = assign({}, this.ticket, { id_status: TicketStatuses.CLOSED });
                     return this.ticketService.update(ticket);
                 })
@@ -242,12 +257,12 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
         this.router.navigate(['home']);
     }
 
-    private sendHisotrySystem(msg: string): void {
+    private sendHisotrySystem(msg: string, ticket_id: number): void {
         const sysHistory = {
             id: null,
             id_type: HistoryTypes.SYSTEM, 
             action: msg, 
-            id_ticket: this.ticket.id,
+            id_ticket: ticket_id,
             readed: 0
         };
         this.chatService.sendMessage(sysHistory).subscribe();
