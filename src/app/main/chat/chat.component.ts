@@ -37,7 +37,6 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
   
     private isTyping = false;
     private replyInput: any;
-    private viewInitFinish = false;
     public showReplyMessage = false;
     private ticketSubscription: Subscription;
     private replyEventSubscription: Subscription;
@@ -58,7 +57,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
     // tslint:disable-next-line:typedef
     doSomething($event) {
         if (this.ticket && this.ticket.id_status === TicketStatuses.ONLINE) {
-            this.sendHisotrySystem('Utente disconnesso.', this.ticket.id);
+            this.sendHisotrySystem('Utente disconnesso.');
         }
     }
   
@@ -92,7 +91,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
             tap(data => {
                 if (data.id_status === TicketStatuses.ONLINE && !this.sysConnected) {
                     this.sysConnected = true;
-                    this.sendHisotrySystem('Utente connesso.', data.id);
+                    this.sendHisotrySystem('Utente connesso.');
                 }
             })
         )
@@ -162,12 +161,11 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
         this.updateScrollbarSubscription.unsubscribe();
       }
       if (this.ticket.id_status === TicketStatuses.ONLINE) {
-            this.sendHisotrySystem('Utente disconnesso.', this.ticket.id);
+            this.sendHisotrySystem('Utente disconnesso.');
         }
     }
   
     ngAfterViewInit(): void {
-      this.viewInitFinish = true;
       this.replyInput = this.replyInputField.first.nativeElement;
       this.cd.detectChanges();
       this.resetForm();
@@ -241,7 +239,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
             .pipe(
                 filter((data) => !!data),
                 mergeMap(() => {
-                    this.sendHisotrySystem('Ticket chiuso dall\'utente', this.ticket.id);
+                    this.sendHisotrySystem('Ticket chiuso dall\'utente');
                     const ticket: ITicket = assign({}, this.ticket, { id_status: TicketStatuses.CLOSED });
                     return this.ticketService.update(ticket);
                 })
@@ -257,12 +255,12 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
         this.router.navigate(['home']);
     }
 
-    private sendHisotrySystem(msg: string, ticket_id: number): void {
+    private sendHisotrySystem(msg: string): void {
         const sysHistory = {
             id: null,
             id_type: HistoryTypes.SYSTEM, 
             action: msg, 
-            id_ticket: ticket_id,
+            id_ticket: this.ticketID,
             readed: 0
         };
         this.chatService.sendMessage(sysHistory).subscribe();
