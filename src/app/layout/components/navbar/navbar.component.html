@@ -21,11 +21,11 @@
                 </div>
             </button>
             <mat-menu #moreMenu="matMenu" [overlapTrigger]="false">
-                <button mat-menu-item fxLayout="row" fxLayoutAlign="left center">
+                <button mat-menu-item fxLayout="row" fxLayoutAlign="left center" (click)="useCondition()">
                     <mat-icon>chrome_reader_mode</mat-icon>
                     <span>Termini e condizioni d'uso</span>
                 </button>
-                <button mat-menu-item fxLayout="row" fxLayoutAlign="left center">
+                <button mat-menu-item fxLayout="row" fxLayoutAlign="left center" (click)="privacy()">
                     <mat-icon>remove_red_eye</mat-icon>
                     <span>Privacy</span>
                 </button>

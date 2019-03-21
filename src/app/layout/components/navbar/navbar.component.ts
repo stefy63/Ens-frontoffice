@@ -17,6 +17,8 @@ import { IUser } from 'app/interfaces/i-user';
 import { DialogProfileComponent } from './dialog-component/profile/profile.component';
 import { ApiUserService } from 'app/services/api/api-user.service';
 import { NotificationsService } from 'angular2-notifications';
+import { DialogConditionComponent } from './dialog-component/condition/condition.component';
+import { DialogPrivacyComponent } from './dialog-component/privacy/privacy.component';
 
 @Component({
     selector     : 'navbar',
@@ -121,11 +123,12 @@ export class NavbarComponent implements OnInit, OnDestroy
         this._fuseSidebarService.getSidebar(key).toggleOpen();
     }
 
-    useCondition(): void{
+    useCondition(): void {
+        this.dialog.open(DialogConditionComponent);
     }
 
-    privacy(): void{
-        
+    privacy(): void {
+        this.dialog.open(DialogPrivacyComponent);
     }
 
     edit_profile(): void{
@@ -164,6 +167,5 @@ export class NavbarComponent implements OnInit, OnDestroy
             this.router.navigate(['home']);
         });
     }
-
 
 }

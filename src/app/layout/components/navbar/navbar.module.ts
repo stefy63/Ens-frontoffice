@@ -5,13 +5,17 @@ import { NavbarComponent } from './navbar.component';
 import { DialogChangePassword } from './dialog-component/change-password/dialog-change-password.component';
 import { DialogProfileComponent } from './dialog-component/profile/profile.component';
 import { FuseSharedModule } from '@fuse/shared.module';
+import { DialogPrivacyComponent } from './dialog-component/privacy/privacy.component';
+import { DialogConditionComponent } from './dialog-component/condition/condition.component';
 
 
 @NgModule({
     declarations: [
         NavbarComponent,
         DialogChangePassword,
-        DialogProfileComponent
+        DialogProfileComponent,
+        DialogPrivacyComponent,
+        DialogConditionComponent
     ],
     imports: [
         FuseSharedModule,
@@ -26,7 +30,9 @@ import { FuseSharedModule } from '@fuse/shared.module';
     ],
     entryComponents: [
         DialogChangePassword,
-        DialogProfileComponent
+        DialogProfileComponent,
+        DialogPrivacyComponent,
+        DialogConditionComponent
     ],
 })
 export class NavbarModule
