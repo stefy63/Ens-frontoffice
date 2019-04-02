@@ -1,0 +1,31 @@
+<div class="dialog-header" >
+  <div class="close-dialog">
+        <button mat-icon-button mat-dialog-close class="button-close--outlined" color="primary">
+            <mat-icon>close</mat-icon>
+        </button>
+  </div>  
+  <span class="modal-title" >Recupera Password</span>
+</div>
+<form (ngSubmit)="onYesClick()" [formGroup]="formGroup">
+    <div class="form__body">
+      <mat-form-field class="mb-3" >
+        <input matInput class="dialog-input" type="text" placeholder="Username" formControlName="username" required>
+        <mat-icon matSuffix>perm_identity</mat-icon>
+        <mat-error class="error-message" *ngIf="formGroup.controls['username'].hasError('required')">Lo username è obbligatoria</mat-error>
+      </mat-form-field>
+    </div>
+    <br>
+    <div class="form__footer">
+      <button mat-raised-button class="col-6" type="submit" color="accent" [disabled]="!formGroup.valid">
+          INVIA RESET MAIL
+      </button>
+    </div>
+    <div class="text-center resend-mail" >
+        <a (click)="resendMail()" *ngIf="formGroup.valid">Invia nuovamente mail</a>
+        <span *ngIf="!formGroup.valid">Invia nuovamente mail</span>
+    </div>
+    <br>
+    <div class="text-center" >
+         <a (click)="goLogin()">Torna al login</a>
+    </div>
+</form>

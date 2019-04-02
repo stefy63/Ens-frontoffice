@@ -35,6 +35,8 @@ import { DialogConfirm } from './main/dialog-confirm/dialog-confirm.component';
 import { ChatModule } from './main/chat/chat.module';
 import { ChatService } from './services/api/chat-messages.service';
 import { VideochatModule } from './main/videochat/videochat.module';
+import { ForgotPasswordModule } from './main/forgot-password/forgot-password.module';
+import { ApiForgotPasswordService } from './services/api/api-forgot-password.service';
 
 const appRoutes: Routes = [
     {
@@ -79,6 +81,7 @@ const config: SocketIoConfig = { url: environment.ws_url + wssPort, options: opt
         WaitingModule,
         ChatModule,
         VideochatModule,
+        ForgotPasswordModule,
         SimpleNotificationsModule.forRoot(),
         SocketIoModule.forRoot(config),
     ],
@@ -88,6 +91,7 @@ const config: SocketIoConfig = { url: environment.ws_url + wssPort, options: opt
         ApiCalendarService,
         ApiTicketServiceService,
         AuthService,
+        ApiForgotPasswordService,
         LocalStorageService,
         {
             provide: HTTP_INTERCEPTORS,

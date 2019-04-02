@@ -118,7 +118,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
                     }
                 }
             }, (err) => {
-            console.log(err);
+            console.log(err.error);
         });
 
       this.updateScrollbarSubscription = this.updateScrollbar
