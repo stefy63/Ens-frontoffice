@@ -27,15 +27,14 @@ export class DialogForgotPassword {
     }
 
     onYesClick(): void {
-        this.apiForgotPassword.apiForgotPassword({
-            username: this.formGroup.get('username').value
-        }).subscribe(data => {
-            this.toast.success('Attenzione', 'Tiabbiamo inviato una mail');
-        }, (err) => {
-            if (err.status === 404 && err.error.message === 'USER_OR_EMAIL_NOT_FOUND') {
-                this.toast.error('Attenzione', 'Utente non presente in archivio');
-            }
-        });
+        this.apiForgotPassword.apiForgotPassword(this.formGroup.get('username').value)
+            .subscribe(data => {
+                this.toast.success('Attenzione', 'Tiabbiamo inviato una mail');
+            }, (err) => {
+                if (err.status === 404 && err.error.message === 'USER_OR_EMAIL_NOT_FOUND') {
+                    this.toast.error('Attenzione', 'Utente non presente in archivio');
+                }
+            });
     }
 
     goLogin(): void {

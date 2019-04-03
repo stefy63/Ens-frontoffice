@@ -6,6 +6,7 @@ import { GetBaseUrl } from 'app/helper/getBaseUrl';
 import { IDataLogin } from 'app/interfaces/i-data-login';
 import { map } from 'rxjs/operators';
 import { IUser } from 'app/interfaces/i-user';
+import { IForgotChangePassword } from 'app/interfaces/i-forgot-change-password';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -19,15 +20,14 @@ export class ApiForgotPasswordService {
 
   constructor(
     private http: HttpClient,
-    private storage: LocalStorageService
   ) { }
 
-  public apiForgotPassword(dataLogin: IDataLogin): Observable<boolean> {
-    return this.http.post(this.baseUrl + '/forgot_password', dataLogin).pipe(map(data => data as boolean));
+  public apiForgotPassword(dataLogin: string): Observable<boolean> {
+    return this.http.post(this.baseUrl + '/forgot_password', {username: dataLogin}).pipe(map(data => data as boolean));
   }
 
-  public apiCangePassword(key: string): Observable<IUser> {
-    return this.http.put(this.baseUrl + '/forgot_password/' + key, null).pipe(map(data => data as IUser));
+  public apiCangePassword(key: string, body: IForgotChangePassword): Observable<IUser> {
+    return this.http.put(this.baseUrl + '/forgot_password/' + key, body).pipe(map(data => data as IUser));
   }
 
   public apiForgotPasswordTestKey(key: string): Observable<boolean> {

@@ -14,6 +14,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
         FooterModule,
         NavbarModule,
         NgxSpinnerModule,
+        RouterModule
     ],
     exports: [
         CageComponent
