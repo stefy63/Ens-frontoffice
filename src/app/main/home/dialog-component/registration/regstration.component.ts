@@ -98,6 +98,7 @@ export class DialogRegistrationComponent implements OnInit {
     const updatedModalData = assign(this.user, {
         username: this.formGroup.controls.username.value,
         password: this.formGroup.controls.password.value,
+        disabled: true,
         userdata: {
             name: this.formGroup.controls.name.value,
             surname: this.formGroup.controls.surname.value,
