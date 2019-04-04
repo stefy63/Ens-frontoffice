@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { LocalStorageService } from '../local-storage/local-storage.service';
 import { GetBaseUrl } from 'app/helper/getBaseUrl';
-import { IDataLogin } from 'app/interfaces/i-data-login';
 import { map } from 'rxjs/operators';
 import { IUser } from 'app/interfaces/i-user';
 import { IForgotChangePassword } from 'app/interfaces/i-forgot-change-password';

@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import * as moment from 'moment';
 import { LocalStorageService } from 'app/services/local-storage/local-storage.service';
 import { ITokenSession } from 'app/interfaces/i-token-session';
-import { Observable, ReplaySubject, Subject, BehaviorSubject } from 'rxjs';
-import { IUser } from 'app/interfaces/i-user';
+import { Observable, Subject, BehaviorSubject } from 'rxjs';
 import { ApiLoginService } from '../api/api-login.service';
 import { tap } from 'rxjs/operators';
 

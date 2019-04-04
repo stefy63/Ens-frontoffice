@@ -13,7 +13,6 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { DialogChangePassword } from './dialog-component/change-password/dialog-change-password.component';
 import { LocalStorageService } from 'app/services/local-storage/local-storage.service';
-import { IUser } from 'app/interfaces/i-user';
 import { DialogProfileComponent } from './dialog-component/profile/profile.component';
 import { ApiUserService } from 'app/services/api/api-user.service';
 import { NotificationsService } from 'angular2-notifications';
@@ -40,7 +39,7 @@ export class NavbarComponent implements OnInit, OnDestroy
 
     // Private
     private _unsubscribeAll: Subject<any>;
-    private user: IUser;
+    private user;
 
     /**
      * Constructor
@@ -140,7 +139,7 @@ export class NavbarComponent implements OnInit, OnDestroy
         }).afterClosed().pipe(
                 filter((result) => !!result),
                 flatMap((result) => {
-                    this.user.userdata = result;
+                    this.user.user_data = result;
                     return this.apiUserService.apiChangeProfile(this.user);
                 })
             )
