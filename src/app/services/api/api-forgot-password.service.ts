@@ -21,7 +21,7 @@ export class ApiForgotPasswordService {
   ) { }
 
   public apiForgotPassword(dataLogin: string): Observable<boolean> {
-    return this.http.post(this.baseUrl + '/forgot_password', {username: dataLogin}).pipe(map(data => data as boolean));
+    return this.http.post(this.baseUrl + '/forgot_password', {email: dataLogin}).pipe(map(data => data as boolean));
   }
 
   public apiCangePassword(key: string, body: IForgotChangePassword): Observable<IUser> {

@@ -22,17 +22,19 @@ export class DialogForgotPassword {
     private toast: NotificationsService,
     ) { 
     this.formGroup = new FormGroup({
-        'username': new FormControl('', [Validators.required]),
+        'email': new FormControl('', [Validators.required, Validators.email]),
     });
     }
 
     onYesClick(): void {
-        this.apiForgotPassword.apiForgotPassword(this.formGroup.get('username').value)
+        this.apiForgotPassword.apiForgotPassword(this.formGroup.get('email').value)
             .subscribe(data => {
                 this.toast.success('Attenzione', 'Tiabbiamo inviato una mail');
             }, (err) => {
                 if (err.status === 404 && err.error.message === 'USER_OR_EMAIL_NOT_FOUND') {
-                    this.toast.error('Attenzione', 'Utente non presente in archivio');
+                    this.toast.error('Attenzione', 'Email non presente in archivio');
+                } else {
+                    this.toast.error('Attenzione', 'Errore di sistema');
                 }
             });
     }
