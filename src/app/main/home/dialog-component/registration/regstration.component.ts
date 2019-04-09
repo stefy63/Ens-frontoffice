@@ -8,7 +8,7 @@ import { ApiItalyGeoService } from 'app/services/api/api-italy-geo.service';
 import { AlphabeticOnlyValidator } from 'app/services/MaterialValidator/AlphabeticOnlyValidator';
 import { EmailCustomValidator } from 'app/services/MaterialValidator/EmailCustomValidator';
 import { NumericOnlyValidator } from 'app/services/MaterialValidator/NumericOnlyValidator';
-import { map, assign } from 'lodash';
+import { assign } from 'lodash';
 import { IUser } from 'app/interfaces/i-user';
 import { EmptyInputValidator } from 'app/services/MaterialValidator/EmptyInputValidator';
 import { ApiUserService } from 'app/services/api/api-user.service';
@@ -95,10 +95,12 @@ export class DialogRegistrationComponent implements OnInit {
   }
 
   onYesClick(): void {
-    const updatedModalData = assign(this.user, {
-        username: this.formGroup.controls.username.value,
-        password: this.formGroup.controls.password.value,
-        userdata: {
+    var updatedModalData = assign(this.user, {
+        user: {
+            username: this.formGroup.controls.username.value,
+            password: this.formGroup.controls.password.value,
+        },
+        user_data: {
             name: this.formGroup.controls.name.value,
             surname: this.formGroup.controls.surname.value,
             email: this.formGroup.controls.email.value,
@@ -111,14 +113,20 @@ export class DialogRegistrationComponent implements OnInit {
         }
     });
 
-    this.apiUserService.apiCreateUser(updatedModalData).subscribe(user => {
-                this.toast.success('Registrazione', 'Registrazione avveunuta con successo');
+    this.apiUserService.apiCreateUser(updatedModalData)
+        .subscribe(data => {
+                this.toast.success('Attenzione', 'Tiabbiamo inviato una mail di conferma.');
                 this.dialogRef.close();
-            },
-            (err) => {
-                this.toast.error('Registrazione', err.error.message);
-            }
-        );
+            }, (err) => {
+                if (err.status === 404 && err.error.message === 'USER_ALREDY_EXIST') {
+                    this.toast.error('Attenzione', 'Utente già presente in archivio');
+                    this.formGroup.controls.username.setValue('');
+                }
+                if (err.status === 404 && err.error.message === 'CREATION_USER_FAILED') {
+                    this.toast.error('Attenzione', 'Creazione nuovo utente fallita');
+                }
+            });
     }
+
 
 }

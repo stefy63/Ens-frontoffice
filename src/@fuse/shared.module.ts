@@ -8,6 +8,7 @@ import { FuseDirectivesModule } from '@fuse/directives/directives';
 import { FusePipesModule } from '@fuse/pipes/pipes.module';
 import { MaterialModule } from './material.module';
 import { FuseMaterialColorPickerModule } from './components';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { FuseMaterialColorPickerModule } from './components';
         FusePipesModule,
         ReactiveFormsModule,
         FuseMaterialColorPickerModule,
-        FuseDirectivesModule
+        FuseDirectivesModule,
+        NgxSpinnerModule
     ],
     
     exports  : [
@@ -32,7 +34,8 @@ import { FuseMaterialColorPickerModule } from './components';
         FusePipesModule,
         ReactiveFormsModule,
         FuseMaterialColorPickerModule,
-        FuseDirectivesModule
+        FuseDirectivesModule,
+        NgxSpinnerModule
     ]
 })
 export class FuseSharedModule

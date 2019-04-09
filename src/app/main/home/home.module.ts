@@ -7,6 +7,7 @@ import { FuseSharedModule } from '@fuse/shared.module';
 import { DialogRegistrationComponent } from './dialog-component/registration/regstration.component';
 import { DialogNewTicket } from './dialog-component/new-ticket/dialog-new-ticket.component';
 import { DialogQueue } from './dialog-component/queue/dialog-queue.component';
+import { DialogForgotPassword } from './dialog-component/forgot-password/dialog-forgot-password.component';
 
 const routes = [
     {
@@ -22,7 +23,8 @@ const routes = [
         DialogLogin,
         DialogRegistrationComponent,
         DialogNewTicket,
-        DialogQueue
+        DialogQueue,
+        DialogForgotPassword
     ],
     imports     : [
         RouterModule.forChild(routes),
@@ -33,7 +35,8 @@ const routes = [
         DialogLogin,
         DialogRegistrationComponent,
         DialogNewTicket,
-        DialogQueue
+        DialogQueue,
+        DialogForgotPassword
     ],
     exports     : [
         HomeComponent

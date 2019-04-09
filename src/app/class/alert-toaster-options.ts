@@ -1,6 +1,6 @@
 
 export class AlertToasterOptions {
-    timeOut = 3000;
+    timeOut = 5000;
     position = ['bottom', 'right'];
     animate = 'fromRight';
     preventDuplicates = true;

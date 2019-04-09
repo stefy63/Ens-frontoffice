@@ -37,7 +37,6 @@ export class DialogChangePassword implements OnInit {
   }
 
   onYesClick(): void {
-      console.log(this.data);
     this.apiUserService.apiChangePassword({
         user_id: this.data.modalData.id,
         old_password: this.formGroup.controls['old_password'].value,
@@ -48,7 +47,7 @@ export class DialogChangePassword implements OnInit {
         this.dialogRef.close();
     },
     (err) => {
-        console.log(err);
+        console.log(err.error);
         this.formGroup.controls['old_password'].setValue(null);
         if (err.status === 501) {
             this.toast.error('Cambio Password', 'Vecchia password Errata!');

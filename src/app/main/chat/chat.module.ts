@@ -4,6 +4,8 @@ import { ChatComponent } from './chat.component';
 import { AuthGuard } from 'app/guard/auth.guard';
 import { RouterModule } from '@angular/router';
 import { FuseSharedModule } from '@fuse/shared.module';
+import { NgScrollbarModule } from 'ngx-scrollbar';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 const routes = [
     {
@@ -18,7 +20,8 @@ const routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    FuseSharedModule
+    FuseSharedModule,
+    NgScrollbarModule,
   ]
 })
 export class ChatModule { }

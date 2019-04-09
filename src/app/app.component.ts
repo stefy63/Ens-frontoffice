@@ -17,7 +17,6 @@ import { locale as navigationTurkish } from 'app/navigation/i18n/tr';
 import { AlertToasterOptions } from './class/alert-toaster-options';
 import { AuthService } from './services/auth/auth.service';
 import { LocalStorageService } from './services/local-storage/local-storage.service';
-import { IUser } from './interfaces/i-user';
 
 @Component({
     selector: 'app',

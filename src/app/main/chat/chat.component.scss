@@ -14,8 +14,8 @@
             flex-grow: 1;
         }
     }
-    .chat__container__messages {
-        height: calc(100% - 175px);
+    .message__container {
+        height: calc(100% - 148px);
     }
     .chat-header {
         display: flex;
@@ -41,55 +41,55 @@
         }
     }
     .chat-messages {
-        padding: 5px 8px;
+        padding: 8px 8px;
     }
-    #chat-content {
-        background: transparent;
-        overflow: auto;
-        height: 100%;
-        .message-row {
+
+    .chat-messages:last-child {
+        padding: 8px 8px 18px 8px;
+    }
+    
+    .message-row {
+        color: white;
+        flex-direction: column;
+        box-sizing: border-box;
+        display: flex;
+
+        .time {
+            font-size: 0.6em;
+            text-align: left;
+            color: #3c4252;
+        }
+
+        .bubble {
+            overflow: hidden;
+            position: relative;
+            padding: 7px;
+            background-color: rgb(35, 106, 182);
+            border-radius: 14px;
+            font-size: 15px;
             color: white;
-            flex-direction: column;
-            box-sizing: border-box;
-            display: flex;
+            margin-right: auto;
+
+            .message {
+                word-wrap: break-word;
+                white-space: pre-line;
+                overflow-wrap: break-word;
+                word-break: break-all;
+            }
+        }
+        &.user {
+            align-items: flex-end;
 
             .time {
-                font-size: 0.6em;
-                text-align: left;
-                color: #3c4252;
+                text-align: right;
             }
 
             .bubble {
-                overflow: hidden;
-                position: relative;
-                padding: 7px;
-                background-color: rgb(35, 106, 182);
-                border-radius: 14px;
-                font-size: 15px;
-                color: white;
-                margin-right: auto;
+                margin-left: auto;
+                margin-right: 0;
 
-                .message {
-                    word-wrap: break-word;
-                    white-space: pre-line;
-                    overflow-wrap: break-word;
-                    word-break: break-all;
-                }
-            }
-            &.user {
-                align-items: flex-end;
-
-                .time {
-                    text-align: right;
-                }
-    
-                .bubble {
-                    margin-left: auto;
-                    margin-right: 0;
-
-                    background-color: #e0e0e0;
-                    color: black;
-                }
+                background-color: #e0e0e0;
+                color: black;
             }
         }
     }

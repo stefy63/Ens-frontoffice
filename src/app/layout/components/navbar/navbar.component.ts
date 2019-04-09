@@ -13,10 +13,11 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { DialogChangePassword } from './dialog-component/change-password/dialog-change-password.component';
 import { LocalStorageService } from 'app/services/local-storage/local-storage.service';
-import { IUser } from 'app/interfaces/i-user';
 import { DialogProfileComponent } from './dialog-component/profile/profile.component';
 import { ApiUserService } from 'app/services/api/api-user.service';
 import { NotificationsService } from 'angular2-notifications';
+import { DialogConditionComponent } from './dialog-component/condition/condition.component';
+import { DialogPrivacyComponent } from './dialog-component/privacy/privacy.component';
 
 @Component({
     selector     : 'navbar',
@@ -38,7 +39,7 @@ export class NavbarComponent implements OnInit, OnDestroy
 
     // Private
     private _unsubscribeAll: Subject<any>;
-    private user: IUser;
+    private user;
 
     /**
      * Constructor
@@ -59,51 +60,7 @@ export class NavbarComponent implements OnInit, OnDestroy
         private apiUserService: ApiUserService
     )
     {
-        // Set the defaults
-        this.userStatusOptions = [
-            {
-                'title': 'Online',
-                'icon' : 'icon-checkbox-marked-circle',
-                'color': '#4CAF50'
-            },
-            {
-                'title': 'Away',
-                'icon' : 'icon-clock',
-                'color': '#FFC107'
-            },
-            {
-                'title': 'Do not Disturb',
-                'icon' : 'icon-minus-circle',
-                'color': '#F44336'
-            },
-            {
-                'title': 'Invisible',
-                'icon' : 'icon-checkbox-blank-circle-outline',
-                'color': '#BDBDBD'
-            },
-            {
-                'title': 'Offline',
-                'icon' : 'icon-checkbox-blank-circle-outline',
-                'color': '#616161'
-            }
-        ];
-
-        this.languages = [
-            {
-                id   : 'en',
-                title: 'English',
-                flag : 'us'
-            },
-            {
-                id   : 'tr',
-                title: 'Turkish',
-                flag : 'tr'
-            }
-        ];
-
         this.navigation = navigation;
-
-        // Set the private defaults
         this._unsubscribeAll = new Subject();
     }
 
@@ -165,53 +122,24 @@ export class NavbarComponent implements OnInit, OnDestroy
         this._fuseSidebarService.getSidebar(key).toggleOpen();
     }
 
-    /**
-     * Search
-     *
-     * @param value
-     */
-    search(value): void
-    {
-        // Do your search here...
-        console.log(value);
+    useCondition(): void {
+        this.dialog.open(DialogConditionComponent);
     }
 
-    /**
-     * Set the language
-     *
-     * @param lang
-     */
-    setLanguage(lang): void
-    {
-        // Set the selected language for the toolbar
-        this.selectedLanguage = lang;
-
-        // Use the selected language for translations
-        this._translateService.use(lang.id);
-    }
-
-    useCondition(): void{
-
-    }
-
-    privacy(): void{
-        
+    privacy(): void {
+        this.dialog.open(DialogPrivacyComponent);
     }
 
     edit_profile(): void{
-
-        const dialogRef = this.dialog.open(DialogProfileComponent, {
+        this.dialog.open(DialogProfileComponent, {
             hasBackdrop: true,
             data: {
                 modalData: this.user
             }
-        });
-
-        dialogRef
-            .afterClosed().pipe(
+        }).afterClosed().pipe(
                 filter((result) => !!result),
                 flatMap((result) => {
-                    this.user.userdata = result;
+                    this.user.user_data = result;
                     return this.apiUserService.apiChangeProfile(this.user);
                 })
             )
@@ -226,7 +154,7 @@ export class NavbarComponent implements OnInit, OnDestroy
     }
 
     change_password(): void{
-        const dialogRef = this.dialog.open(DialogChangePassword, {
+        this.dialog.open(DialogChangePassword, {
             data: {
                 modalData: this.user
             }
@@ -238,6 +166,5 @@ export class NavbarComponent implements OnInit, OnDestroy
             this.router.navigate(['home']);
         });
     }
-
 
 }

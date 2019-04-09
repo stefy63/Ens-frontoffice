@@ -1,5 +1,5 @@
 <div class="container__application">
-    <navbar></navbar>
+    <navbar [hidden]="!enableNav"></navbar>
     <div class="container__application__body">
         <div class="content__container">
             <router-outlet class="router"></router-outlet>
