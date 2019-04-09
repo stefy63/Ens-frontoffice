@@ -13,14 +13,8 @@ export class CageComponent
 
     constructor(private router: Router) {
         router.events.subscribe(event => {
-            console.log(event);
             if(event instanceof NavigationStart) {
-                if (event.url.includes('/success_forgot/')) {
-                    this.enableNav = false;
-                } else {
-                    this.enableNav = true;
-                }
-                
+                this.enableNav = !(event.url.includes('/success_forgot/'));
             }
         });
     }

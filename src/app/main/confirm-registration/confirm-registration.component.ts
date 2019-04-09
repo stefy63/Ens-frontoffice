@@ -32,11 +32,9 @@ export class ConfirmRegistrationComponent {
                 )
             )
             .subscribe(data => {
-                if (!!data) {
-                    this.validKey = true;
-                    this.toast.success('Benvenuto in Ermes!', 'Sei registrato correttamente.');
-                    this.route.navigate(['/']);
-                }
+                this.validKey = true;
+                this.toast.success('Benvenuto in Ermes!', 'Sei registrato correttamente.');
+                this.route.navigate(['/']);
             });
      }
 

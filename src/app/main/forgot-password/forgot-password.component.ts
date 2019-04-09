@@ -15,7 +15,7 @@ import { NotificationsService } from 'angular2-notifications';
 export class ForgotPasswordComponent implements OnInit {
 
     public formGroup: FormGroup;
-    public validKey: boolean;
+    public validKey = false;
 
     private forgotKey: string;
 
@@ -28,11 +28,7 @@ export class ForgotPasswordComponent implements OnInit {
         this.forgotKey = this.activeRoute.snapshot.paramMap.get('key');
         this.apiForgotPassword.apiForgotPasswordTestKey(this.forgotKey)
             .subscribe(data => {
-                if (!data) {
-                    this.validKey = false;
-                } else {
-                    this.validKey = true;
-                }
+                this.validKey = true;
             });
         
         this.formGroup = new FormGroup({

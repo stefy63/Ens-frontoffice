@@ -1,6 +1,6 @@
-import { Component, Inject} from '@angular/core';
-import * as _ from 'lodash';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Component} from '@angular/core';
+import { get } from 'lodash';
+import { MatDialogRef } from '@angular/material';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { NotificationsService } from 'angular2-notifications';
 import { AuthService } from 'app/services/auth/auth.service';
@@ -34,9 +34,10 @@ export class DialogLogin {
     }).subscribe(data => {
         this.dialogRef.close(data);
     }, (err) => {
-        if (err.status === 401 && err.error.message === 'USER_NOT_FOUND') {
+        const errorMessage = get(err, 'error.message', '');
+        if (errorMessage === 'USER_NOT_FOUND') {
             this.toast.error('Errore', 'Utente non trovato!');
-        } else if (err.status === 401 && err.error.message === 'WRONG_PASSWORD') {
+        } else if (errorMessage === 'WRONG_PASSWORD') {
             this.toast.error('Errore', 'Password errata!');
         } else {
             this.toast.error('Errore', 'Autenticazione Falita.');

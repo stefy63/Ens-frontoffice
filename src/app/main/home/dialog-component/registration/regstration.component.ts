@@ -13,6 +13,7 @@ import { IUser } from 'app/interfaces/i-user';
 import { EmptyInputValidator } from 'app/services/MaterialValidator/EmptyInputValidator';
 import { ApiUserService } from 'app/services/api/api-user.service';
 import { NotificationsService } from 'angular2-notifications';
+import { get } from 'lodash';
 
 
 export const MY_FORMATS = {
@@ -118,11 +119,12 @@ export class DialogRegistrationComponent implements OnInit {
                 this.toast.success('Attenzione', 'Tiabbiamo inviato una mail di conferma.');
                 this.dialogRef.close();
             }, (err) => {
-                if (err.status === 404 && err.error.message === 'USER_ALREDY_EXIST') {
+                const errorMessage = get(err, 'error.message', '');
+                if (errorMessage === 'USER_ALREDY_EXIST') {
                     this.toast.error('Attenzione', 'Utente già presente in archivio');
                     this.formGroup.controls.username.setValue('');
                 }
-                if (err.status === 404 && err.error.message === 'CREATION_USER_FAILED') {
+                else {
                     this.toast.error('Attenzione', 'Creazione nuovo utente fallita');
                 }
             });
