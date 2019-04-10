@@ -128,7 +128,10 @@ export class NavbarComponent implements OnInit, OnDestroy
     }
 
     privacy(): void {
-        this.dialog.open(DialogPrivacyComponent);
+        this.dialog.open(DialogPrivacyComponent, {
+            width: '80%',
+            height: '70%'
+        });
     }
 
     edit_profile(): void{
