@@ -31,7 +31,7 @@ export class DialogForgotPassword {
             .subscribe(data => {
                 this.toast.success('Attenzione', 'Tiabbiamo inviato una mail');
             }, (err) => {
-                if (err.status === 404 && err.error.message === 'USER_OR_EMAIL_NOT_FOUND') {
+                if (err.status === 404 && err.error.message === 'EMAIL_NOT_FOUND') {
                     this.toast.error('Attenzione', 'Email non presente in archivio');
                 } else {
                     this.toast.error('Attenzione', 'Errore di sistema');
