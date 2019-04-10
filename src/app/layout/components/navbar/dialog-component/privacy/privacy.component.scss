@@ -7,23 +7,7 @@
     mat-dialog-content {
         height: 100%;
     }
-    .dialog-header {
-      position: relative;
-      text-align: center;
-    }
-    .modal-title {
-        font-size: 3em;
-        font-weight: bold;
-        background-color: white !important;
-        color: #6195CC !important;
-        padding-bottom: 20px;
-    }
 
-    .close-dialog {
-        text-align: right;
-    }
-    .button-close--outlined {
-        outline: 0;
-    }
-
+  @import "../../../../../../assets/scss/dialod.scss";
+   
 }

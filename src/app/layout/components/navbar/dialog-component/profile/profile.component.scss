@@ -1,57 +1,14 @@
 :host {
   display: flex;
   flex-direction: column;
-//   height: 100%;
   margin-bottom: 30px;
-
-  mat-form-field {
-    // width: 100%;
-    padding-bottom: 0;
-  }
 
   mat-dialog-content {
     min-height: auto;
     overflow: unset;
   }
 
-  form {
-    display: flex;
-    // height: 100%;
-    flex-direction: column;
+  @import "../../../../../../assets/scss/dialod.scss";
 
-    .dialog-input {
-      font-size: 1em;
-    }
-  }
-
-  .form__footer {
-    flex-flow: column;
-    // display: block;
-    // text-align: center;
-  }
-
-  .dialog-header {
-    position: relative;
-    text-align: center;
-  }
-  .modal-title {
-    font-size: 2em;
-    font-weight: bold;
-    background-color: white !important;
-    color: #6195CC !important;
-  }
-
-    .close-dialog {
-        text-align: right;
-    }
-    .button-close--outlined {
-        outline: 0;
-    }
-
-  .form__container {
-    // height: 100%;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-  }
+  
 }

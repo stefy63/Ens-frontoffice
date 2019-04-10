@@ -4,10 +4,7 @@
             <mat-icon>close</mat-icon>
         </button>
     </div>  
-    <h1 mat-dialog-title class="accent modal-title">Modifica Profilo</h1>
-    <!-- <button mat-button mat-dialog-close class="close-dialog">
-        <mat-icon>close</mat-icon>
-    </button> -->
+    <h1 mat-dialog-title class="modal-title">Modifica Profilo</h1>
 </div>
 <form [formGroup]="formGroup" (ngSubmit)="onYesClick()">
     <mat-dialog-content>
@@ -47,7 +44,7 @@
 
         <div class="row">
             <mat-form-field class="col-md-6">
-                <mat-select formControlName="gender" placeholder="Sesso" required>
+                <mat-select formControlName="gender" placeholder="Sesso" required style="height: 25px">
                     <mat-option *ngFor="let sex of gender" [value]="sex.id">
                         {{sex.name}}
                     </mat-option>
