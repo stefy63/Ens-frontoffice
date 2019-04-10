@@ -46,16 +46,16 @@
         </div>
 
         <div class="row">
-            <mat-form-field class="col-md-6" placeholder="Sesso"   >
-                <mat-select formControlName="gender" required>
+            <mat-form-field class="col-md-6">
+                <mat-select formControlName="gender" placeholder="Sesso" required>
                     <mat-option *ngFor="let sex of gender" [value]="sex.id">
                         {{sex.name}}
                     </mat-option>
                 </mat-select>
                 <mat-error class="error-message" *ngIf="formGroup.controls['gender'].hasError('required')">Campo obbligatorio</mat-error>
             </mat-form-field>
-            <mat-form-field class="col-md-6"  placeholder="Numero di Carta ENS"  >
-                <input matInput class="dialog-input form-control" type="text" formControlName="card_number">
+            <mat-form-field class="col-md-6">
+                <input matInput class="dialog-input form-control" type="text" placeholder="Numero di Carta ENS" formControlName="card_number">
                 <mat-icon matSuffix>card_membership</mat-icon>
             </mat-form-field>
         </div>
