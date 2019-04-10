@@ -4,7 +4,7 @@ import { IUserData } from './i-userdata';
 
 export interface IUser {
     user: IUser;
-    user_data: IUserData;
+    userdata: IUserData;
     token: ITokenSession;
     service?: ITicketService[];
 }

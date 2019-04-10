@@ -18,6 +18,7 @@ import { ApiUserService } from 'app/services/api/api-user.service';
 import { NotificationsService } from 'angular2-notifications';
 import { DialogConditionComponent } from './dialog-component/condition/condition.component';
 import { DialogPrivacyComponent } from './dialog-component/privacy/privacy.component';
+import { IUser } from 'app/interfaces/i-user';
 
 @Component({
     selector     : 'navbar',
@@ -39,7 +40,7 @@ export class NavbarComponent implements OnInit, OnDestroy
 
     // Private
     private _unsubscribeAll: Subject<any>;
-    private user;
+    private user: IUser;
 
     /**
      * Constructor
@@ -139,7 +140,7 @@ export class NavbarComponent implements OnInit, OnDestroy
         }).afterClosed().pipe(
                 filter((result) => !!result),
                 flatMap((result) => {
-                    this.user.user_data = result;
+                    this.user.userdata = result;
                     return this.apiUserService.apiChangeProfile(this.user);
                 })
             )
