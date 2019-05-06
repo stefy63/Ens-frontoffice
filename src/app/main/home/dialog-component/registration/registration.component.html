@@ -10,12 +10,12 @@
     <mat-dialog-content>
         <div class="row">
             <mat-form-field class="col-md-6"  >
-                <input matInput class="dialog-input form-control" type="text" placeholder="Username" formControlName="username"  required>
+                <input matInput class="dialog-input" type="text" placeholder="Username" formControlName="username"  required>
                 <mat-icon matSuffix>face</mat-icon>
                 <!-- TODO USERNAME ERROR -->
             </mat-form-field>
             <mat-form-field class="col-md-6"  >
-                <input matInput class="dialog-input form-control" type="password" placeholder="Password"  formControlName="password"  required>
+                <input matInput class="dialog-input" type="password" placeholder="Password"  formControlName="password"  required>
                 <mat-icon matSuffix>face</mat-icon>
                 <mat-error class="error-message" *ngIf="formGroup.controls['password'].hasError('minlength')">La password deve avere almento 5 caratteri</mat-error>
                 <mat-error class="error-message" *ngIf="formGroup.controls['password'].hasError('required')">La nuova password è obbligatoria</mat-error>
@@ -25,7 +25,7 @@
     
         <div class="row">
             <mat-form-field class="col-md-6"  >
-                <input matInput class="dialog-input form-control" type="text" placeholder="Nome" formControlName="name"  required>
+                <input matInput class="dialog-input" type="text" placeholder="Nome" formControlName="name"  required>
                 <mat-icon matSuffix>face</mat-icon>
                 <mat-error class="error-message" *ngIf="formGroup.controls['name'].hasError('required')">Campo
                     obbligatorio</mat-error>
@@ -33,7 +33,7 @@
                     non permessi</mat-error>
             </mat-form-field>
             <mat-form-field class="col-md-6"  >
-                <input matInput class="dialog-input form-control" type="text" placeholder="Cognome"  formControlName="surname"  required>
+                <input matInput class="dialog-input" type="text" placeholder="Cognome"  formControlName="surname"  required>
                 <mat-icon matSuffix>face</mat-icon>
                 <mat-error class="error-message" *ngIf="formGroup.controls['surname'].hasError('required')">Campo
                     obbligatorio</mat-error>
@@ -44,13 +44,13 @@
 
         <div class="row">
             <mat-form-field class="col-md-6"  >
-                <input matInput class="dialog-input form-control" type="text" placeholder="Indirizzo e-mail"  formControlName="email" required>
+                <input matInput class="dialog-input" type="text" placeholder="Indirizzo e-mail"  formControlName="email" required>
                 <mat-icon matSuffix>mail_outline</mat-icon>
                 <mat-error class="error-message" *ngIf="formGroup.controls['email'].hasError('required')">Campo obbligatorio</mat-error>
                 <mat-error class="error-message" *ngIf="formGroup.controls['email'].hasError('email_custom')">Formato Mail errato</mat-error>
             </mat-form-field>
             <mat-form-field class="col-md-6"  >
-                <input matInput class="dialog-input form-control" type="text" placeholder="Telefono"  formControlName="phone" required>
+                <input matInput class="dialog-input" type="text" placeholder="Telefono"  formControlName="phone" required>
                 <mat-icon matSuffix>local_phone</mat-icon>
                 <mat-error class="error-message" *ngIf="formGroup.controls['phone'].hasError('required')">Campo  obbligatorio</mat-error>
                 <mat-error class="error-message" *ngIf="formGroup.controls['phone'].hasError('numericOnly')">Lettere non permesse</mat-error>
@@ -67,7 +67,7 @@
                 <mat-error class="error-message" *ngIf="formGroup.controls['gender'].hasError('required')">Campo obbligatorio</mat-error>
             </mat-form-field>
             <mat-form-field class="col-md-6"  >
-                <input matInput class="dialog-input form-control" type="text" formControlName="card_number"  placeholder="Numero di Carta ENS">
+                <input matInput class="dialog-input" type="text" formControlName="card_number"  placeholder="Numero di Carta ENS">
                 <mat-icon matSuffix>card_membership</mat-icon>
             </mat-form-field>
         </div>
