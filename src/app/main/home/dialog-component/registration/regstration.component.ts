@@ -122,10 +122,8 @@ export class DialogRegistrationComponent implements OnInit {
                 const errorMessage = get(err, 'error.message', '');
                 if (errorMessage === 'USER_ALREDY_EXIST') {
                     this.toast.error('Attenzione', 'Utente già presente in archivio');
-                    this.formGroup.controls.username.setValue('');
                 } else if (errorMessage === 'EMAIL_ALREDY_EXIST') {
                     this.toast.error('Attenzione', 'Email già presente in archivio');
-                    this.formGroup.controls.email.setValue('');
                 }
                 else {
                     this.toast.error('Attenzione', 'Creazione nuovo utente fallita');

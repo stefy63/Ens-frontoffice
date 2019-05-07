@@ -9,7 +9,7 @@
 <form (ngSubmit)="onYesClick()" [formGroup]="formGroup">
     <div class="form__body">
       <mat-form-field class="mb-3" >
-        <input matInput class="dialog-input" type="email" placeholder="Email" formControlName="email" required>
+        <input matInput  type="email" placeholder="Email" formControlName="email" required>
         <mat-icon matSuffix>email</mat-icon>
         <mat-error class="error-message" *ngIf="formGroup.controls['email'].hasError('required')">La Mail è obbligatoria</mat-error>
         <mat-error class="error-message" *ngIf="formGroup.controls['email'].hasError('email')">La Mail non ha un formato valido.</mat-error>

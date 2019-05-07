@@ -15,7 +15,7 @@
 <form (ngSubmit)="onYesClick()" [formGroup]="formGroup">
     <div class="form__body">
       <mat-form-field class="mb-3"    >
-        <input matInput class="dialog-input" type="text" placeholder="Numero da chiamare" formControlName="phone" required>
+        <input matInput  type="text" placeholder="Numero da chiamare" formControlName="phone" required>
         <mat-icon matSuffix>local_phone</mat-icon>
         <mat-error class="error-message" *ngIf="formGroup.controls['phone'].hasError('required')">Campo obbligatorio</mat-error>
         <mat-error class="error-message" *ngIf="formGroup.controls['phone'].hasError('PhoneValidator')">Solo numeri</mat-error>
