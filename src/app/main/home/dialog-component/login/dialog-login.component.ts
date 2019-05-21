@@ -37,6 +37,8 @@ export class DialogLogin {
         const errorMessage = get(err, 'error.message', '');
         if (errorMessage === 'USER_NOT_FOUND') {
             this.toast.error('Errore', 'Utente non trovato!');
+        } else if (errorMessage === 'USER_DISABLED') {
+            this.toast.error('Errore', 'Utente Disabilitato!');
         } else if (errorMessage === 'WRONG_PASSWORD') {
             this.toast.error('Errore', 'Password errata!');
         } else {
