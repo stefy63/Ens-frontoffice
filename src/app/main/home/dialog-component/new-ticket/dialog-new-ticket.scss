@@ -4,9 +4,14 @@
     height: 100%;
 
     mat-form-field {
-      width: 100%;
+        width: 100%;
     }
-   
-  @import '../../../../../assets/scss/dialod.scss';
+
+    .icon__service {
+        font-size: 1em;
+        margin-right: 10px;
+    }
+
+    @import '../../../../../assets/scss/dialod.scss';
 
 }

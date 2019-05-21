@@ -7,7 +7,7 @@
     <h1 mat-dialog-title class="modal-title">Modifica Profilo</h1>
 </div>
 <form [formGroup]="formGroup" (ngSubmit)="onYesClick()">
-    <mat-dialog-content>
+    <mat-dialog-content class="dialog-content__container">
         <div class="row">
             <mat-form-field class="col-md-6"  >
                 <input matInput  type="text" placeholder="Nome" formControlName="name"  required>
@@ -58,7 +58,7 @@
         </div>
 
         <mat-checkbox formControlName="privacyaccept">
-            <span class="mat-caption col-md-12">Accetto le condizioni generali per la privacy*</span>
+            <span class="mat-caption col-md-12">Accetto le condizioni della privacy*</span>
         </mat-checkbox><br>
         <mat-error class="error-message" *ngIf="formGroup.controls['privacyaccept'].hasError('required')">Campo obbligatorio</mat-error>
         <mat-checkbox formControlName="newsletteraccept">

@@ -124,13 +124,14 @@ export class NavbarComponent implements OnInit, OnDestroy
     }
 
     useCondition(): void {
-        this.dialog.open(DialogConditionComponent);
+        this.dialog.open(DialogConditionComponent, {
+            hasBackdrop: true
+        });
     }
 
     privacy(): void {
         this.dialog.open(DialogPrivacyComponent, {
-            width: '80%',
-            height: '70%'
+            hasBackdrop: true
         });
     }
 
@@ -159,6 +160,7 @@ export class NavbarComponent implements OnInit, OnDestroy
 
     change_password(): void{
         this.dialog.open(DialogChangePassword, {
+            hasBackdrop: true,
             data: {
                 modalData: this.user
             }

@@ -130,6 +130,7 @@ export class HomeComponent implements OnInit {
                 filter((data) => data.operatorActive > 0),
                 mergeMap(() => 
                     this.dialog.open(DialogNewTicket, {
+                        hasBackdrop: true,
                         data: {
                             service: service,
                             color: ServicesColor[service]
