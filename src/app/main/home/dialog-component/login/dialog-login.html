@@ -19,17 +19,13 @@
         <mat-error class="error-message" *ngIf="formGroup.controls['password'].hasError('required')">La password è obbligatoria</mat-error>
       </mat-form-field>
     </div>
-    <div class="text-right">
-        <a (click)="Forgot()" class="forgot">Hai dimenticato la password?</a>
-    </div>
-    <br>
     <div class="form__footer">
       <button mat-raised-button class="col-6" type="submit" color="accent" [disabled]="!formGroup.valid">
           Login
       </button>
     </div>
-    <br>
-    <div class="text-right" >
-        Non hai un account? <a (click)="Registration()">Registrati</a>
+    <div class="text-center mt-3">
+      <a (click)="Forgot()" class="forgot">Hai dimenticato la password?</a> <br />
+      Non hai un account? <a (click)="Registration()">Registrati</a>
     </div>
 </form>
