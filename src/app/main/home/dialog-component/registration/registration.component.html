@@ -6,8 +6,8 @@
     </div>  
     <h1 mat-dialog-title class="modal-title">Registrazione</h1>
 </div>
-<form [formGroup]="formGroup" (ngSubmit)="onYesClick()">
-    <mat-dialog-content class="dialog-content__container">
+<form [formGroup]="formGroup" class="mat-dialog-content" (ngSubmit)="onYesClick()">
+    <div class="dialog-content__container">
         <div class="row">
             <mat-form-field class="col-md-6"  >
                 <input matInput  type="text" placeholder="Username" formControlName="username"  required>
@@ -82,12 +82,12 @@
         <mat-checkbox formControlName="becontacted" >
             <span class="mat-caption col-md-12">Acconsento ad essere contattato</span>
         </mat-checkbox>
-    </mat-dialog-content>
+    </div>
 
-    <mat-dialog-actions class="form__footer">
+    <div class="form__footer">
         <button mat-raised-button class="col-md-6" type="submit" color="accent" [disabled]="!formGroup.valid">
             Procedi
         </button>
-    </mat-dialog-actions>
+    </div>
 </form>
 

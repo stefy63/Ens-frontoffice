@@ -1,6 +1,8 @@
 :host {
   display: flex;
   flex-direction: column;
+  height: 100%;
+  overflow: hidden;
 
   mat-form-field {
     padding-bottom: 0;
@@ -11,6 +13,6 @@
     overflow: auto;
   }
 
-  @import '../../../../../assets/scss/dialod.scss';
+  @import '../../../../../assets/scss/dialog.scss';
 
 }

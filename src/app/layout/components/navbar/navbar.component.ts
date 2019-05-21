@@ -160,7 +160,6 @@ export class NavbarComponent implements OnInit, OnDestroy
 
     change_password(): void{
         this.dialog.open(DialogChangePassword, {
-            hasBackdrop: true,
             data: {
                 modalData: this.user
             }
