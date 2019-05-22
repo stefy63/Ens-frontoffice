@@ -32,7 +32,11 @@ export class VideochatComponent implements OnInit, OnDestroy {
         .subscribe((item: ITicket) => {
             this.ticket = item;
             if (this.ticket.id_status === TicketStatuses.ONLINE){
-                window.open('https://appear.in/comunicaens_op' + item.id_operator, '_blank');
+              const videochatRoomOperator = 'https://appear.in/comunicaens_op' + item.id_operator;
+              const windowsOpenStatus = window.open(videochatRoomOperator, '_blank');
+              if (windowsOpenStatus == null || typeof(windowsOpenStatus) === 'undefined') {
+                  window.location.href = videochatRoomOperator;
+              }
             }
             this.router.navigate(['home']);
         }, (err) => {
