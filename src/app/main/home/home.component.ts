@@ -86,11 +86,12 @@ export class HomeComponent implements OnInit {
             return;
         }
 
-        this.apiLoginService.apiGetToken().subscribe(data => {
-            this.openNewTicketModal(service);
-        }, (error) => {
-            this.openLoginModal(service);
-        });
+        this.apiLoginService.apiGetToken()
+            .subscribe(data => {
+                this.openNewTicketModal(service);
+            }, (error) => {
+                this.openLoginModal(service);
+            });
     }
 
     private openLoginModal(service: string): void {
@@ -128,6 +129,7 @@ export class HomeComponent implements OnInit {
                     }
                 }),
                 filter((data) => data.operatorActive > 0),
+                filter((data) => (TicketServices[service] === TicketServices.CHAT || TicketServices[service] === TicketServices.VIDEOCHAT)),
                 mergeMap(() => 
                     this.dialog.open(DialogNewTicket, {
                         hasBackdrop: true,
