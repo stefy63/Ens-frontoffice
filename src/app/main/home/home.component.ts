@@ -24,6 +24,7 @@ import { DialogLogin } from './dialog-component/login/dialog-login.component';
 import { DialogNewTicket } from './dialog-component/new-ticket/dialog-new-ticket.component';
 import { DialogRegistrationComponent } from './dialog-component/registration/regstration.component';
 import { DialogForgotPassword } from './dialog-component/forgot-password/dialog-forgot-password.component';
+import { GoogleAnalyticsService } from 'app/services/analytics/google-analitics-service';
 
 
 @Component({
@@ -52,10 +53,12 @@ export class HomeComponent implements OnInit {
         private storage: LocalStorageService,
         private toast: NotificationsService,
         private socketService: SocketService,
-        private apiQueueService: ApiQueueService
+        private apiQueueService: ApiQueueService,
+        public googleAnalyticsService: GoogleAnalyticsService
     ) { }
 
     ngOnInit(): void {
+        this.googleAnalyticsService.pageEmitter('HomePage');
         this.apiTicketServiceService.getAll().pipe(
             tap((services) => this.ticketServices = keyBy(services, (serviceItem) => serviceItem.service)),
             flatMap((data) => from(data)),
@@ -82,6 +85,10 @@ export class HomeComponent implements OnInit {
     }
 
     public clickService(service: string): void {
+        // ANALYTICS BLOCK
+        this.googleAnalyticsService.eventEmitter('ClickCard', service, 'New Request');
+        // END ANALYTICS BLOCK
+
         if (!this.isOpen(service)){
             return;
         }

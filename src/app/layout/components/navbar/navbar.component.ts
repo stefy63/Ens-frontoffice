@@ -10,7 +10,7 @@ import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import { navigation } from 'app/navigation/navigation';
 import { AuthService } from 'app/services/auth/auth.service';
 import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatIconRegistry } from '@angular/material';
 import { DialogChangePassword } from './dialog-component/change-password/dialog-change-password.component';
 import { LocalStorageService } from 'app/services/local-storage/local-storage.service';
 import { DialogProfileComponent } from './dialog-component/profile/profile.component';
@@ -19,6 +19,7 @@ import { NotificationsService } from 'angular2-notifications';
 import { DialogConditionComponent } from './dialog-component/condition/condition.component';
 import { DialogPrivacyComponent } from './dialog-component/privacy/privacy.component';
 import { IUser } from 'app/interfaces/i-user';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
     selector     : 'navbar',
@@ -58,9 +59,16 @@ export class NavbarComponent implements OnInit, OnDestroy
         private _translateService: TranslateService,
         private authService: AuthService,
         private toast: NotificationsService,
-        private apiUserService: ApiUserService
+        private apiUserService: ApiUserService,
+        private matIconRegistry: MatIconRegistry,
+        private domSanitizer: DomSanitizer
     )
     {
+        this.matIconRegistry.addSvgIcon(
+            `icon_ens_logo`,
+            this.domSanitizer.bypassSecurityTrustResourceUrl("assets/images/logos/logo comunicaens.svg")
+          );
+
         this.navigation = navigation;
         this._unsubscribeAll = new Subject();
     }

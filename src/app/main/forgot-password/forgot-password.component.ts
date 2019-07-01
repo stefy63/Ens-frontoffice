@@ -1,3 +1,4 @@
+import { GoogleAnalyticsService } from 'app/services/analytics/google-analitics-service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -23,7 +24,8 @@ export class ForgotPasswordComponent implements OnInit {
     private activeRoute: ActivatedRoute,
     private apiForgotPassword: ApiForgotPasswordService,
     private toast: NotificationsService,
-    private route: Router
+    private route: Router,
+    private googleAnalyticsService: GoogleAnalyticsService
     ) {
         this.forgotKey = this.activeRoute.snapshot.paramMap.get('key');
         this.apiForgotPassword.apiForgotPasswordTestKey(this.forgotKey)
@@ -37,8 +39,9 @@ export class ForgotPasswordComponent implements OnInit {
           });
      }
 
-  ngOnInit() {
-  }
+     ngOnInit() {
+        this.googleAnalyticsService.pageEmitter('ForgotPasswordPage');
+      }
 
   onYesClick(): void {
     this.apiForgotPassword.apiCangePassword(this.forgotKey, {

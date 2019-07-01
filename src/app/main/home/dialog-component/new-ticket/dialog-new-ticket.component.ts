@@ -1,4 +1,5 @@
-import { Component, Inject} from '@angular/core';
+import { GoogleAnalyticsService } from 'app/services/analytics/google-analitics-service';
+import { Component, Inject, OnInit } from '@angular/core';
 import * as _ from 'lodash';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -15,7 +16,7 @@ import { assign } from 'lodash';
   styleUrls: ['./dialog-new-ticket.scss']
 })
 // tslint:disable-next-line:component-class-suffix
-export class DialogNewTicket {
+export class DialogNewTicket implements OnInit {
 
   public formGroup: FormGroup;
   public categories: ITicketCategory[];
@@ -24,7 +25,8 @@ export class DialogNewTicket {
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<DialogNewTicket>,
     private storage: LocalStorageService,
-    private toast: NotificationsService
+    private toast: NotificationsService,
+    private googleAnalyticsService: GoogleAnalyticsService
   ) { 
     this.categories = this.storage.getItem('ticket_category');
     this.formGroup = new FormGroup({
@@ -32,6 +34,10 @@ export class DialogNewTicket {
         'category': new FormControl(this.categories, [Validators.required]),
         'description': new FormControl('', [Validators.required])
     });
+  }
+
+  ngOnInit() {
+      this.googleAnalyticsService.pageEmitter('NewTcketPage');
   }
 
   setMyStyles(): any {

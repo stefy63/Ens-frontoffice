@@ -1,3 +1,4 @@
+import { GoogleAnalyticsService } from 'app/services/analytics/google-analitics-service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TicketStatuses } from 'app/enums/TicketStatuses.enum';
@@ -23,10 +24,12 @@ export class VideochatComponent implements OnInit, OnDestroy {
       private router: Router,
       private storage: LocalStorageService,
       private ticketService: ApiTicketService,
-      private activeRoute: ActivatedRoute
+      private activeRoute: ActivatedRoute,
+      private googleAnalyticsService: GoogleAnalyticsService
     ) { }
   
     ngOnInit(): void {
+        this.googleAnalyticsService.pageEmitter('VideoChatPage');
         this.ticketID = +this.activeRoute.snapshot.paramMap.get('id');
         this.ticketSubscription = this.ticketService.getFromId(this.ticketID)
         .subscribe((item: ITicket) => {

@@ -1,3 +1,4 @@
+import { GoogleAnalyticsService } from './../../../../../services/analytics/google-analitics-service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DialogPrivacyComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+      private googleAnalyticsService: GoogleAnalyticsService
+  ) { }
 
   ngOnInit(): void {
+    this.googleAnalyticsService.pageEmitter('PrivacyPage');
   }
 
 }

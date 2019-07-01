@@ -1,4 +1,5 @@
-import { Component} from '@angular/core';
+import { GoogleAnalyticsService } from 'app/services/analytics/google-analitics-service';
+import { Component, OnInit } from '@angular/core';
 import { get } from 'lodash';
 import { MatDialogRef } from '@angular/material';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -12,19 +13,24 @@ import { AuthService } from 'app/services/auth/auth.service';
   styleUrls: ['./dialog-login.scss']
 })
 // tslint:disable-next-line:component-class-suffix
-export class DialogLogin {
+export class DialogLogin implements OnInit {
 
   public formGroup: FormGroup;
 
   constructor(
     public dialogRef: MatDialogRef<DialogLogin>,
     private toast: NotificationsService,
-    private authService: AuthService
+    private authService: AuthService,
+    private googleAnalyticsService: GoogleAnalyticsService
   ) { 
     this.formGroup = new FormGroup({
       'username': new FormControl('', [Validators.required]),
       'password': new FormControl('', [Validators.required])
     });
+  }
+
+  ngOnInit(){
+    this.googleAnalyticsService.pageEmitter('LoginPage');
   }
 
   onYesClick(): void {

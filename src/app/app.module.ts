@@ -38,7 +38,9 @@ import { VideochatModule } from './main/videochat/videochat.module';
 import { ForgotPasswordModule } from './main/forgot-password/forgot-password.module';
 import { ApiForgotPasswordService } from './services/api/api-forgot-password.service';
 import { ConfirmRegistrationModule } from './main/confirm-registration/confirm-registration.module';
-
+import { GoogleAnalyticsService } from './services/analytics/google-analitics-service';
+import { MatIconModule } from '@angular/material/icon'
+ 
 const appRoutes: Routes = [
     {
         path      : '**',
@@ -86,6 +88,7 @@ const config: SocketIoConfig = { url: environment.ws_url + wssPort, options: opt
         ConfirmRegistrationModule,
         SimpleNotificationsModule.forRoot(),
         SocketIoModule.forRoot(config),
+        MatIconModule
     ],
     providers: [
         SocketService,
@@ -106,7 +109,8 @@ const config: SocketIoConfig = { url: environment.ws_url + wssPort, options: opt
         ApiTicketService,
         ApiTicketHistoryService,
         ChatService,
-        AuthGuard
+        AuthGuard,
+        GoogleAnalyticsService
     ],
     bootstrap   : [
         AppComponent

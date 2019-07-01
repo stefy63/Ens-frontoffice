@@ -1,3 +1,4 @@
+import { Router, NavigationEnd } from '@angular/router';
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { Platform } from '@angular/cdk/platform';
@@ -17,6 +18,8 @@ import { locale as navigationTurkish } from 'app/navigation/i18n/tr';
 import { AlertToasterOptions } from './class/alert-toaster-options';
 import { AuthService } from './services/auth/auth.service';
 import { LocalStorageService } from './services/local-storage/local-storage.service';
+
+declare let ga: Function;
 
 @Component({
     selector: 'app',
@@ -53,8 +56,11 @@ export class AppComponent implements OnInit, OnDestroy {
         private _translateService: TranslateService,
         private _platform: Platform,
         private authService: AuthService,
-        private storage: LocalStorageService
+        private storage: LocalStorageService,
+        private router: Router
     ) {
+       
+
         // Get default navigation
         this.navigation = navigation;
 
@@ -116,6 +122,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
         // Set the private defaults
         this._unsubscribeAll = new Subject();
+
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -126,6 +133,13 @@ export class AppComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
+        // this.router.events.subscribe(event => {
+        //     if (event instanceof NavigationEnd) {
+        //         ga('set', 'page', event.urlAfterRedirects);
+        //         ga('send', 'pageview');
+        //         console.log('%%% Google Analytics page view event %%%');
+        //     }
+        // });
         // Subscribe to config changes
         this._fuseConfigService.config
             .pipe(takeUntil(this._unsubscribeAll))

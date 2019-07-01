@@ -1,4 +1,5 @@
-import { Component, Inject} from '@angular/core';
+import { GoogleAnalyticsService } from 'app/services/analytics/google-analitics-service';
+import { Component, Inject, OnInit } from '@angular/core';
 import * as _ from 'lodash';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -12,7 +13,7 @@ import { ApiForgotPasswordService } from 'app/services/api/api-forgot-password.s
   styleUrls: ['./dialog-forgot-pasword.scss']
 })
 
-export class DialogForgotPassword {
+export class DialogForgotPassword implements OnInit {
 
     public formGroup: FormGroup;
 
@@ -20,10 +21,15 @@ export class DialogForgotPassword {
     private apiForgotPassword: ApiForgotPasswordService,
     public dialogRef: MatDialogRef<DialogForgotPassword>,
     private toast: NotificationsService,
+    private googleAnalyticsService: GoogleAnalyticsService
     ) { 
     this.formGroup = new FormGroup({
         'email': new FormControl('', [Validators.required, Validators.email]),
     });
+    }
+
+    ngOnInit() {
+      this.googleAnalyticsService.pageEmitter('ForgotPasswordPage');
     }
 
     onYesClick(): void {

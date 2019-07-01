@@ -5,6 +5,11 @@ navbar {
     color: white;
     padding: 0;
 
+    .logo-ens {
+        width: 6rem;
+        height: 5rem;
+    }
+ 
     .logged{
         width: 100%;
     }
@@ -24,6 +29,7 @@ navbar {
 
     .navbar-brand {
         font-size: 2.5em;
+        font-weight: lighter;
     }
 
     @media (max-width: 991px){

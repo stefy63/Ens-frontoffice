@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { GoogleAnalyticsService } from 'app/services/analytics/google-analitics-service';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiForgotPasswordService } from 'app/services/api/api-forgot-password.service';
 import { NotificationsService } from 'angular2-notifications';
@@ -10,7 +11,7 @@ import { filter, mergeMap } from 'rxjs/operators';
   templateUrl: './confirm-registration.component.html',
   styleUrls: ['./confirm-registration.component.scss']
 })
-export class ConfirmRegistrationComponent {
+export class ConfirmRegistrationComponent implements  OnInit {
 
     public validKey = false;
 
@@ -21,7 +22,8 @@ export class ConfirmRegistrationComponent {
     private apiForgotPassword: ApiForgotPasswordService,
     private apiUserService: ApiUserService,
     private toast: NotificationsService,
-    private route: Router
+    private route: Router,
+    private googleAnalyticsService: GoogleAnalyticsService
     ) {
         this.registerKey = this.activeRoute.snapshot.paramMap.get('key');
         this.apiForgotPassword.apiForgotPasswordTestKey(this.registerKey)
@@ -36,6 +38,10 @@ export class ConfirmRegistrationComponent {
                 this.toast.success('Benvenuto in Ermes!', 'Sei registrato correttamente.');
                 this.route.navigate(['/']);
             });
+     }
+
+     ngOnInit() {
+        this.googleAnalyticsService.pageEmitter('ConfirmRegistrationPage');
      }
 
 }

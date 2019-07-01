@@ -14,6 +14,7 @@ import { EmptyInputValidator } from 'app/services/MaterialValidator/EmptyInputVa
 import { ApiUserService } from 'app/services/api/api-user.service';
 import { NotificationsService } from 'angular2-notifications';
 import { get } from 'lodash';
+import { GoogleAnalyticsService } from 'app/services/analytics/google-analitics-service';
 
 
 export const MY_FORMATS = {
@@ -54,6 +55,7 @@ export class DialogRegistrationComponent implements OnInit {
     public toast: NotificationsService,
     private httpItalyGeo: ApiItalyGeoService,
     private apiUserService: ApiUserService,
+    private googleAnalyticsService: GoogleAnalyticsService
     ) {
       this.httpItalyGeo.apiGetAllProvince()
         .subscribe(provinces => {
@@ -62,6 +64,8 @@ export class DialogRegistrationComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.googleAnalyticsService.pageEmitter('/RegistrationPage');
+
     this.formGroup = new FormGroup({
         'username': new FormControl(''),
         'password': new FormControl('', [

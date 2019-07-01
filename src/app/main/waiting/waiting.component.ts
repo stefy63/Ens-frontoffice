@@ -1,3 +1,4 @@
+import { GoogleAnalyticsService } from './../../services/analytics/google-analitics-service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ApiQueueService } from 'app/services/api/api-queue.service';
@@ -39,7 +40,8 @@ export class WaitingComponent implements OnInit, OnDestroy {
         private ticketService: ApiTicketService,
         public dialog: MatDialog,
         private storage: LocalStorageService,
-        public toast: NotificationsService
+        public toast: NotificationsService,
+        private googleAnalyticsService: GoogleAnalyticsService
     ) {
         this.ticketID = +this.activeRoute.snapshot.paramMap.get('id');
         this.updateTicketSubscription = merge(
@@ -77,7 +79,7 @@ export class WaitingComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-
+        this.googleAnalyticsService.pageEmitter('/WaitingPage');
     }
 
     ngOnDestroy(): void {
