@@ -108,6 +108,7 @@ export class WaitingComponent implements OnInit, OnDestroy {
                     return this.ticketService.update(ticket);
                 })
             ).subscribe(data => {
+                this.googleAnalyticsService.eventEmitter('WaitingPage', 'Cancel Request');
                 this.toast.success('Nuovo Ticket', 'Richiesta Annullata!');
                 this.router.navigate(['home']);
             }, err => {

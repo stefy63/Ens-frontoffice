@@ -38,16 +38,21 @@ export class DialogLogin implements OnInit {
         username: this.formGroup.get('username').value,
         password: this.formGroup.get('password').value
     }).subscribe(data => {
+        this.googleAnalyticsService.eventEmitter('LoginPage', 'Login Successfully');
         this.dialogRef.close(data);
     }, (err) => {
         const errorMessage = get(err, 'error.message', '');
         if (errorMessage === 'USER_NOT_FOUND') {
+            this.googleAnalyticsService.eventEmitter('LoginPage', 'Login Fault (user not found)');
             this.toast.error('Errore', 'Utente non trovato!');
         } else if (errorMessage === 'USER_DISABLED') {
+            this.googleAnalyticsService.eventEmitter('LoginPage', 'Login Fault (user disabled)');
             this.toast.error('Errore', 'Utente Disabilitato!');
         } else if (errorMessage === 'WRONG_PASSWORD') {
+            this.googleAnalyticsService.eventEmitter('LoginPage', 'Login Fault (wrong password)');
             this.toast.error('Errore', 'Password errata!');
         } else {
+            this.googleAnalyticsService.eventEmitter('LoginPage', 'Login Fault (generic)');
             this.toast.error('Errore', 'Autenticazione Falita.');
         }
     });

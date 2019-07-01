@@ -120,16 +120,20 @@ export class DialogRegistrationComponent implements OnInit {
 
     this.apiUserService.apiCreateUser(updatedModalData)
         .subscribe(data => {
+                this.googleAnalyticsService.eventEmitter('RegistrationPage', 'Registration Successfully');
                 this.toast.success('Attenzione', 'Tiabbiamo inviato una mail di conferma.');
                 this.dialogRef.close();
             }, (err) => {
                 const errorMessage = get(err, 'error.message', '');
                 if (errorMessage === 'USER_ALREDY_EXIST') {
+                    this.googleAnalyticsService.eventEmitter('RegistrationPage', 'Registration Fault (user exist)');
                     this.toast.error('Attenzione', 'Utente già presente in archivio');
                 } else if (errorMessage === 'EMAIL_ALREDY_EXIST') {
+                    this.googleAnalyticsService.eventEmitter('RegistrationPage', 'Registration Fault (email exist)');
                     this.toast.error('Attenzione', 'Email già presente in archivio');
                 }
                 else {
+                    this.googleAnalyticsService.eventEmitter('RegistrationPage', 'Registration Fault (generic)');
                     this.toast.error('Attenzione', 'Creazione nuovo utente fallita');
                 }
             });

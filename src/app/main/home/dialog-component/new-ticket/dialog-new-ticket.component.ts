@@ -55,6 +55,7 @@ export class DialogNewTicket implements OnInit {
             category: this.formGroup.controls.category.value,
             description: this.formGroup.controls.description.value,
         });
+        this.googleAnalyticsService.eventEmitter('NewTicketPage', 'New Ticket Creation Successfully');
         this.dialogRef.close(updatedModalData);
       }
   }

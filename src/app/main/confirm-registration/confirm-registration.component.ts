@@ -34,6 +34,7 @@ export class ConfirmRegistrationComponent implements  OnInit {
                 )
             )
             .subscribe(data => {
+                this.googleAnalyticsService.eventEmitter('ConfirmRegistrationPage', 'Reigistration Successfully');
                 this.validKey = true;
                 this.toast.success('Benvenuto in Ermes!', 'Sei registrato correttamente.');
                 this.route.navigate(['/']);

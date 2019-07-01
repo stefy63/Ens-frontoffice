@@ -37,6 +37,7 @@ export class VideochatComponent implements OnInit, OnDestroy {
             if (this.ticket.id_status === TicketStatuses.ONLINE){
               const videochatRoomOperator = 'https://appear.in/comunicaens_op' + item.id_operator;
               const windowsOpenStatus = window.open(videochatRoomOperator, '_blank');
+              this.googleAnalyticsService.eventEmitter('VideoChatPage', 'Init Video Session');
               if (windowsOpenStatus == null || typeof(windowsOpenStatus) === 'undefined') {
                   window.location.href = videochatRoomOperator;
               }

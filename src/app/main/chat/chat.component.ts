@@ -159,6 +159,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
         this.updateScrollbarSubscription.unsubscribe();
       }
       this.sendUserSessionActivity(false);
+      this.googleAnalyticsService.eventEmitter('ChatPage', 'exit on chat');
     }
   
     ngAfterViewInit(): void {
