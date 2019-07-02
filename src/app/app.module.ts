@@ -39,7 +39,9 @@ import { ForgotPasswordModule } from './main/forgot-password/forgot-password.mod
 import { ApiForgotPasswordService } from './services/api/api-forgot-password.service';
 import { ConfirmRegistrationModule } from './main/confirm-registration/confirm-registration.module';
 import { GoogleAnalyticsService } from './services/analytics/google-analitics-service';
-import { MatIconModule } from '@angular/material/icon'
+import { MatIconModule } from '@angular/material/icon';
+import { CookieLawModule } from 'angular2-cookie-law';
+import { CookieModule } from './main/coockie/cookie.module';
  
 const appRoutes: Routes = [
     {
@@ -84,11 +86,13 @@ const config: SocketIoConfig = { url: environment.ws_url + wssPort, options: opt
         WaitingModule,
         ChatModule,
         VideochatModule,
+        CookieModule,
         ForgotPasswordModule,
         ConfirmRegistrationModule,
         SimpleNotificationsModule.forRoot(),
         SocketIoModule.forRoot(config),
-        MatIconModule
+        MatIconModule,
+        CookieLawModule
     ],
     providers: [
         SocketService,

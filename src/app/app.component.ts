@@ -1,5 +1,5 @@
 import { Router, NavigationEnd } from '@angular/router';
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { Platform } from '@angular/cdk/platform';
 import { TranslateService } from '@ngx-translate/core';
@@ -29,6 +29,7 @@ declare let ga: Function;
 export class AppComponent implements OnInit, OnDestroy {
     fuseConfig: any;
     navigation: any;
+    @ViewChild('cookieLaw') cookieLaw;
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -181,4 +182,10 @@ export class AppComponent implements OnInit, OnDestroy {
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
     }
+
+    public seen(evt: boolean) {
+        if (evt) {
+            this.cookieLaw.dismiss();
+        }
+      }
 }

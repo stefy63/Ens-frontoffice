@@ -3,5 +3,7 @@
 <ng-container>
     <cage></cage>
 </ng-container>
-
+<cookie-law  #cookieLaw >
+    Questa applicazione utilizza i cookie. Per maggiori dettagli clicca <a routerLink="/cookie" routerLinkActive="active" (click)="seen(true)">qui.</a>
+</cookie-law>
 <simple-notifications [options]="options"></simple-notifications>
