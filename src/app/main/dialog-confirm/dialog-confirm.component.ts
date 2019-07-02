@@ -1,4 +1,3 @@
-import { GoogleAnalyticsService } from 'app/services/analytics/google-analitics-service';
 import { Component, Inject, OnInit } from '@angular/core';
 import * as _ from 'lodash';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
@@ -16,11 +15,9 @@ export class DialogConfirm implements OnInit{
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<DialogConfirm>,
-    private googleAnalyticsService: GoogleAnalyticsService
   ) {  }
 
   ngOnInit(): void {
-    this.googleAnalyticsService.pageEmitter('DialogConfirmationPage');
     this.msg = this.data.msg;
   }
 

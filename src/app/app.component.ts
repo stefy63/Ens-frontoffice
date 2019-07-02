@@ -134,27 +134,12 @@ export class AppComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
-        // this.router.events.subscribe(event => {
-        //     if (event instanceof NavigationEnd) {
-        //         ga('set', 'page', event.urlAfterRedirects);
-        //         ga('send', 'pageview');
-        //         console.log('%%% Google Analytics page view event %%%');
-        //     }
-        // });
         // Subscribe to config changes
         this._fuseConfigService.config
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((config) => {
 
                 this.fuseConfig = config;
-
-                // Boxed
-                // if (this.fuseConfig.layout.width === 'boxed') {
-                //     this.document.body.classList.add('boxed');
-                // }
-                // else {
-                //     this.document.body.classList.remove('boxed');
-                // }
 
                 // Color theme - Use normal for loop for IE11 compatibility
                 for (let i = 0; i < this.document.body.classList.length; i++) {

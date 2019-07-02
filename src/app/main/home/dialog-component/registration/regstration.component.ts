@@ -64,7 +64,7 @@ export class DialogRegistrationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.googleAnalyticsService.pageEmitter('/RegistrationPage');
+    this.googleAnalyticsService.pageEmitter('RegistrationPage');
 
     this.formGroup = new FormGroup({
         'username': new FormControl(''),

@@ -1,4 +1,4 @@
-import { GoogleAnalyticsService } from './../../services/analytics/google-analitics-service';
+import { GoogleAnalyticsService } from '../../services/analytics/google-analitics-service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({

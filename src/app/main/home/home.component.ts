@@ -85,10 +85,7 @@ export class HomeComponent implements OnInit {
     }
 
     public clickService(service: string): void {
-        // ANALYTICS BLOCK
-        this.googleAnalyticsService.eventEmitter('ClickCard', service, 'New Request');
-        // END ANALYTICS BLOCK
-
+        this.googleAnalyticsService.eventEmitter('ClickCard', service);
         if (!this.isOpen(service)){
             return;
         }

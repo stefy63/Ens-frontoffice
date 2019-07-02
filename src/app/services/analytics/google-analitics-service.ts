@@ -5,7 +5,9 @@ declare let ga: Function;
 @Injectable()
 export class GoogleAnalyticsService {
 
-  constructor() { }
+  constructor() { 
+    ga('create', 'UA-142899635-1', 'auto');
+  }
 
 
    public eventEmitter(

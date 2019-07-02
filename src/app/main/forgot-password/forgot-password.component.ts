@@ -40,7 +40,7 @@ export class ForgotPasswordComponent implements OnInit {
      }
 
      ngOnInit() {
-        this.googleAnalyticsService.pageEmitter('NavForgotPasswordPage');
+        this.googleAnalyticsService.pageEmitter('EndForgotPasswordPage');
       }
 
   onYesClick(): void {
@@ -48,13 +48,13 @@ export class ForgotPasswordComponent implements OnInit {
         new_password: this.formGroup.controls['new_password'].value,
     } as IForgotChangePassword)
     .subscribe(() => {
-        this.googleAnalyticsService.eventEmitter('NavForgotPasswordPage', 'New Password Successfully');
+        this.googleAnalyticsService.eventEmitter('EndForgotPasswordPage', 'New Password Successfully');
         this.toast.success('Ok!', 'Password aggiornata con succeso');
         this.route.navigate(['/']);
     },
     (err) => {
         console.log(err.error);
-        this.googleAnalyticsService.eventEmitter('ForgotPasswordPage', 'New Password fault (generic)');
+        this.googleAnalyticsService.eventEmitter('EndForgotPasswordPage', 'New Password fault (generic)');
         this.toast.error('Attenzione', 'Operazione non riuscita');
     });
   }

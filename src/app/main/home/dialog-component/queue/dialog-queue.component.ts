@@ -42,7 +42,7 @@ export class DialogQueue implements OnInit {
 
 
     ngOnInit(): void {
-        this.googleAnalyticsService.pageEmitter('/WaitingPage');
+        this.googleAnalyticsService.pageEmitter('WaitingPage');
     }
 
   setMyStyles(): any {

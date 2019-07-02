@@ -41,7 +41,7 @@ import { ConfirmRegistrationModule } from './main/confirm-registration/confirm-r
 import { GoogleAnalyticsService } from './services/analytics/google-analitics-service';
 import { MatIconModule } from '@angular/material/icon';
 import { CookieLawModule } from 'angular2-cookie-law';
-import { CookieModule } from './main/coockie/cookie.module';
+import { CookieModule } from './main/cookie/cookie.module';
  
 const appRoutes: Routes = [
     {

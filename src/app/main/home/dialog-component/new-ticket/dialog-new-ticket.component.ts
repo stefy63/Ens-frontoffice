@@ -37,7 +37,7 @@ export class DialogNewTicket implements OnInit {
   }
 
   ngOnInit() {
-      this.googleAnalyticsService.pageEmitter('NewTcketPage');
+      this.googleAnalyticsService.pageEmitter('NewTicketPage');
   }
 
   setMyStyles(): any {
