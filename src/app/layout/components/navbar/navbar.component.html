@@ -30,6 +30,12 @@
                     <mat-icon>remove_red_eye</mat-icon>
                     <span>Privacy</span>
                 </button>
+
+                <button mat-menu-item fxLayout="row" fxLayoutAlign="left center" (click)="cookie()">
+                    <mat-icon>sentiment_satisfied_alt</mat-icon>
+                    <span>Cookies</span>
+                </button>
+
                 <div *ngIf="userLogged">
                     <button mat-menu-item fxLayout="row" fxLayoutAlign="left center" (click)="edit_profile()">
                         <mat-icon>chrome_reader_mode</mat-icon>

@@ -180,4 +180,8 @@ export class NavbarComponent implements OnInit, OnDestroy
         });
     }
 
+    cookie(): void {
+        this.router.navigate(['cookie']);
+    }
+
 }
