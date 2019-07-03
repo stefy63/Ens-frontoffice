@@ -17,7 +17,6 @@ import { DialogProfileComponent } from './dialog-component/profile/profile.compo
 import { ApiUserService } from 'app/services/api/api-user.service';
 import { NotificationsService } from 'angular2-notifications';
 import { DialogConditionComponent } from './dialog-component/condition/condition.component';
-import { DialogPrivacyComponent } from './dialog-component/privacy/privacy.component';
 import { IUser } from 'app/interfaces/i-user';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -137,12 +136,6 @@ export class NavbarComponent implements OnInit, OnDestroy
         });
     }
 
-    privacy(): void {
-        this.dialog.open(DialogPrivacyComponent, {
-            hasBackdrop: true
-        });
-    }
-
     edit_profile(): void{
         this.dialog.open(DialogProfileComponent, {
             hasBackdrop: true,
@@ -182,6 +175,10 @@ export class NavbarComponent implements OnInit, OnDestroy
 
     cookie(): void {
         this.router.navigate(['cookie']);
+    }
+
+    privacy() {
+        this.router.navigate(['privacy']);
     }
 
 }

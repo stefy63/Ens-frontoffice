@@ -1,3 +1,4 @@
+import { PrivacyModule } from './main/privacy/privacy.module';
 import { NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -92,7 +93,8 @@ const config: SocketIoConfig = { url: environment.ws_url + wssPort, options: opt
         SimpleNotificationsModule.forRoot(),
         SocketIoModule.forRoot(config),
         MatIconModule,
-        CookieLawModule
+        CookieLawModule,
+        PrivacyModule
     ],
     providers: [
         SocketService,

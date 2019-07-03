@@ -1,3 +1,4 @@
+import { environment } from 'environments/environment';
 import { Injectable } from '@angular/core';
 
 declare let ga: Function;
@@ -6,7 +7,7 @@ declare let ga: Function;
 export class GoogleAnalyticsService {
 
   constructor() { 
-    ga('create', 'UA-142899635-1', 'auto');
+    ga('create', environment.analyticsID, 'auto');
   }
 
 

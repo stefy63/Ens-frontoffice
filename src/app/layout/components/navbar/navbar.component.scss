@@ -3,7 +3,11 @@
 navbar {
     position: relative;
     color: white;
-    padding: 0;
+
+    .navbar {
+        padding: 0;
+    }
+    
 
     .logo-ens {
         width: 6rem;
@@ -53,5 +57,4 @@ navbar {
         color: white;
         border-color: white;
     }
-
 }
