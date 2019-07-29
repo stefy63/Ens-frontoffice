@@ -19,8 +19,6 @@ import { AlertToasterOptions } from './class/alert-toaster-options';
 import { AuthService } from './services/auth/auth.service';
 import { LocalStorageService } from './services/local-storage/local-storage.service';
 
-declare let ga: Function;
-
 @Component({
     selector: 'app',
     templateUrl: './app.component.html',
