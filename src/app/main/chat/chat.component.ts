@@ -1,3 +1,4 @@
+import { GoogleAnalyticsService } from 'app/services/analytics/google-analitics-service';
 import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild, ViewChildren, ElementRef, ChangeDetectorRef, HostListener} from '@angular/core';
 import { Subscription, merge, interval, Subject } from 'rxjs';
 import { NgForm } from '@angular/forms';
@@ -70,9 +71,11 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
       private router: Router,
       private activeRoute: ActivatedRoute,
       private ticketService: ApiTicketService,
+      private googleAnalyticsService: GoogleAnalyticsService
     ) {  }
   
     ngOnInit(): void {
+      this.googleAnalyticsService.pageEmitter('ChatPage');
       this.ticketID = +this.activeRoute.snapshot.paramMap.get('id');
       this.spinner.show();
 
@@ -156,6 +159,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
         this.updateScrollbarSubscription.unsubscribe();
       }
       this.sendUserSessionActivity(false);
+      this.googleAnalyticsService.eventEmitter('ChatPage', 'exit on chat');
     }
   
     ngAfterViewInit(): void {

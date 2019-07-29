@@ -1,4 +1,4 @@
-import { Component, Inject} from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { find } from 'lodash';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { NotificationsService } from 'angular2-notifications';
@@ -7,6 +7,7 @@ import { LocalStorageService } from 'app/services/local-storage/local-storage.se
 import { ITicketService } from 'app/interfaces/i-ticket-service';
 import { SocketService } from 'app/services/socket/socket.service';
 import { Subscription } from 'rxjs';
+import { GoogleAnalyticsService } from 'app/services/analytics/google-analitics-service';
 
 
 @Component({
@@ -15,7 +16,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./dialog-queue.scss']
 })
 // tslint:disable-next-line:component-class-suffix
-export class DialogQueue {
+export class DialogQueue implements OnInit {
 
     public ticketInWaiting: number;
     public operatorOnline: number;
@@ -31,13 +32,18 @@ export class DialogQueue {
     private toast: NotificationsService,
     private queueService: ApiQueueService,
     private storage: LocalStorageService,
-    private socket: SocketService
+    private socket: SocketService,
+    private googleAnalyticsService: GoogleAnalyticsService
   ) { 
     this.ticketService = this.storage.getItem('ticket_service');
     this.service = this.data.service;
       
   }
 
+
+    ngOnInit(): void {
+        this.googleAnalyticsService.pageEmitter('WaitingPage');
+    }
 
   setMyStyles(): any {
     const style = {

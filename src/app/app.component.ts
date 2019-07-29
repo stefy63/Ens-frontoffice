@@ -1,4 +1,5 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
+import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { Platform } from '@angular/cdk/platform';
 import { TranslateService } from '@ngx-translate/core';
@@ -26,6 +27,7 @@ import { LocalStorageService } from './services/local-storage/local-storage.serv
 export class AppComponent implements OnInit, OnDestroy {
     fuseConfig: any;
     navigation: any;
+    @ViewChild('cookieLaw') cookieLaw;
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -53,8 +55,11 @@ export class AppComponent implements OnInit, OnDestroy {
         private _translateService: TranslateService,
         private _platform: Platform,
         private authService: AuthService,
-        private storage: LocalStorageService
+        private storage: LocalStorageService,
+        private router: Router
     ) {
+       
+
         // Get default navigation
         this.navigation = navigation;
 
@@ -116,6 +121,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
         // Set the private defaults
         this._unsubscribeAll = new Subject();
+
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -132,14 +138,6 @@ export class AppComponent implements OnInit, OnDestroy {
             .subscribe((config) => {
 
                 this.fuseConfig = config;
-
-                // Boxed
-                // if (this.fuseConfig.layout.width === 'boxed') {
-                //     this.document.body.classList.add('boxed');
-                // }
-                // else {
-                //     this.document.body.classList.remove('boxed');
-                // }
 
                 // Color theme - Use normal for loop for IE11 compatibility
                 for (let i = 0; i < this.document.body.classList.length; i++) {
@@ -167,4 +165,10 @@ export class AppComponent implements OnInit, OnDestroy {
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
     }
+
+    public seen(evt: boolean) {
+        if (evt) {
+            this.cookieLaw.dismiss();
+        }
+      }
 }

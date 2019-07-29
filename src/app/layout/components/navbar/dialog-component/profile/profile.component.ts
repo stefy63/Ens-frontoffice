@@ -1,3 +1,4 @@
+import { GoogleAnalyticsService } from './../../../../../services/analytics/google-analitics-service';
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
@@ -48,7 +49,8 @@ export class DialogProfileComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<DialogProfileComponent>,
-    private httpItalyGeo: ApiItalyGeoService
+    private httpItalyGeo: ApiItalyGeoService,
+    private googleAnalyticsService: GoogleAnalyticsService
     ) {
       this.httpItalyGeo.apiGetAllProvince()
         .subscribe(provinces => {
@@ -57,6 +59,7 @@ export class DialogProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.googleAnalyticsService.pageEmitter('ProfilePage');
     this.modalData = this.data.modalData.userdata as IUserData;
     this.modalData.privacyaccept = this.modalData.privacyaccept || true;
     this.formGroup = new FormGroup({

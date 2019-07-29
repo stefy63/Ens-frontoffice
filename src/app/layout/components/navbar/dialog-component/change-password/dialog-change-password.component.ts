@@ -1,3 +1,4 @@
+import { GoogleAnalyticsService } from './../../../../../services/analytics/google-analitics-service';
 import { Component, Inject, OnInit } from '@angular/core';
 import * as _ from 'lodash';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
@@ -25,6 +26,7 @@ export class DialogChangePassword implements OnInit {
     public dialogRef: MatDialogRef<DialogChangePassword>,
     private apiUserService: ApiUserService,
     private toast: NotificationsService,
+    private googleAnalyticsService: GoogleAnalyticsService
   ) {
     this.formGroup = new FormGroup({
       'old_password': new FormControl('', [Validators.required, EmptyInputValidator.whiteSpace]),
@@ -34,6 +36,7 @@ export class DialogChangePassword implements OnInit {
   }
 
   ngOnInit(): void {
+    this.googleAnalyticsService.pageEmitter('ChangePasswordPage');
   }
 
   onYesClick(): void {

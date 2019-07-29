@@ -1,3 +1,4 @@
+import { PrivacyModule } from './main/privacy/privacy.module';
 import { NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -38,7 +39,11 @@ import { VideochatModule } from './main/videochat/videochat.module';
 import { ForgotPasswordModule } from './main/forgot-password/forgot-password.module';
 import { ApiForgotPasswordService } from './services/api/api-forgot-password.service';
 import { ConfirmRegistrationModule } from './main/confirm-registration/confirm-registration.module';
-
+import { GoogleAnalyticsService } from './services/analytics/google-analitics-service';
+import { MatIconModule } from '@angular/material/icon';
+import { CookieLawModule } from 'angular2-cookie-law';
+import { CookieModule } from './main/cookie/cookie.module';
+ 
 const appRoutes: Routes = [
     {
         path      : '**',
@@ -82,10 +87,14 @@ const config: SocketIoConfig = { url: environment.ws_url + wssPort, options: opt
         WaitingModule,
         ChatModule,
         VideochatModule,
+        CookieModule,
         ForgotPasswordModule,
         ConfirmRegistrationModule,
         SimpleNotificationsModule.forRoot(),
         SocketIoModule.forRoot(config),
+        MatIconModule,
+        CookieLawModule,
+        PrivacyModule
     ],
     providers: [
         SocketService,
@@ -106,7 +115,8 @@ const config: SocketIoConfig = { url: environment.ws_url + wssPort, options: opt
         ApiTicketService,
         ApiTicketHistoryService,
         ChatService,
-        AuthGuard
+        AuthGuard,
+        GoogleAnalyticsService
     ],
     bootstrap   : [
         AppComponent

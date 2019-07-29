@@ -18,7 +18,7 @@ export class DialogConfirm implements OnInit{
   ) {  }
 
   ngOnInit(): void {
-      this.msg = this.data.msg;
+    this.msg = this.data.msg;
   }
 
 
