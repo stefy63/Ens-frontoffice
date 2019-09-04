@@ -6,6 +6,7 @@ export const environment = {
     production: true,
     hmr       : false,
     version   : '5.0.0',
+    analyticsID: 'UA-142899635-1',
 
 
     // ws_url: 'https://preprodttms.3punto6.com',
