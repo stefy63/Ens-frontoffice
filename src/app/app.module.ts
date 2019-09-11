@@ -1,5 +1,8 @@
+import { DialogRegistrationComponent } from './main/home/dialog-component/registration/regstration.component';
+import { DialogForgotPassword } from './main/home/dialog-component/forgot-password/dialog-forgot-password.component';
+import { LoginModule } from './main/login/login.module';
 import { PrivacyModule } from './main/privacy/privacy.module';
-import { NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -47,7 +50,7 @@ import { CookieModule } from './main/cookie/cookie.module';
 const appRoutes: Routes = [
     {
         path      : '**',
-        redirectTo: 'home'
+        redirectTo: 'login'
     }
 ];
 
@@ -68,6 +71,8 @@ const config: SocketIoConfig = { url: environment.ws_url + wssPort, options: opt
     declarations: [
         AppComponent,
         DialogConfirm,
+        DialogForgotPassword,
+        DialogRegistrationComponent,
     ],
     imports     : [
         FuseSharedModule,
@@ -84,6 +89,7 @@ const config: SocketIoConfig = { url: environment.ws_url + wssPort, options: opt
         // App modules
         CageModule,
         HomeModule,
+        LoginModule,
         WaitingModule,
         ChatModule,
         VideochatModule,

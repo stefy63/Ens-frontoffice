@@ -76,6 +76,7 @@ export class HomeComponent implements OnInit {
                     this.userLogged = true;
                 } else {
                     this.userLogged = false;
+                    this.router.navigate(['login']);
                 }
             });
     }

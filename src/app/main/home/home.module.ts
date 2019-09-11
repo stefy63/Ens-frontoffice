@@ -21,10 +21,8 @@ const routes = [
     declarations: [
         HomeComponent,
         DialogLogin,
-        DialogRegistrationComponent,
         DialogNewTicket,
         DialogQueue,
-        DialogForgotPassword
     ],
     imports     : [
         RouterModule.forChild(routes),
