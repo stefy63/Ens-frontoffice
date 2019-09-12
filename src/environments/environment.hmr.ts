@@ -1,6 +1,7 @@
 export const environment = {
     production: false,
     hmr       : true,
+    version   : '5.1.0',
     analyticsID: 'UA-142899635-1',
 
     

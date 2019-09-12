@@ -5,7 +5,7 @@
 export const environment = {
     production: true,
     hmr       : false,
-    version   : '5.0.0',
+    version   : '5.1.0',
     analyticsID: 'UA-142899635-1',
 
 

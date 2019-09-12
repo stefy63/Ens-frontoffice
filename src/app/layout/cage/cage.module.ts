@@ -1,3 +1,4 @@
+import { FuseSharedModule } from './../../../@fuse/shared.module';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FooterModule } from 'app/layout/components/footer/footer.module';
@@ -14,7 +15,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
         FooterModule,
         NavbarModule,
         NgxSpinnerModule,
-        RouterModule
+        RouterModule,
+        FuseSharedModule,
     ],
     exports: [
         CageComponent
