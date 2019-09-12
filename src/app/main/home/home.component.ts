@@ -25,6 +25,7 @@ import { DialogNewTicket } from './dialog-component/new-ticket/dialog-new-ticket
 import { DialogRegistrationComponent } from './dialog-component/registration/regstration.component';
 import { DialogForgotPassword } from './dialog-component/forgot-password/dialog-forgot-password.component';
 import { GoogleAnalyticsService } from 'app/services/analytics/google-analitics-service';
+import * as moment from 'moment';
 
 
 @Component({
@@ -168,6 +169,5 @@ export class HomeComponent implements OnInit {
                     }))
                 );
             }
-
 
 }

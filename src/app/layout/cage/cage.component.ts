@@ -23,10 +23,14 @@ export class CageComponent
     }
 
     public bgSeason() {
-    const mounth = moment()
-      .format('MMMM')
-      .toString()
-      .toLowerCase();
-    return `url("assets/images/backgrounds/${mounth}.jpg") no-repeat`;
-  }
+        if (this.router.url != '/cookie') {
+            const mounth = moment()
+            .format('MMMM')
+            .toString()
+            .toLowerCase();
+            return `url("assets/images/backgrounds/${mounth}.jpg") no-repeat`;
+        } else {
+            return 'unset';
+        }
+    }
 }
