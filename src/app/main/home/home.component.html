@@ -1,114 +1,54 @@
-<div class="container">
-    <div class="row">
-        <div class="col-md-6 mb-20">
-            <div class="card chat">
-                <div class="card-header">
-                    <div *ngIf="isOpen('CHAT'); else chatElseBlock" class="is-open">Aperto</div>
-                    <ng-template #chatElseBlock>
-                        <div class="is-closed">Chiuso</div>
-                    </ng-template>
+
+    <div class="home-page">
+        <div class="row-top" [ngStyle]="{'background': bgSeason()}">
+            <div class="top-header">
+                <div class="title">
+                    Comunica. Come vuoi, Dove vuoi.<br>
+                    Tutto su Comunic@ens.
                 </div>
-                <div class="card-body">
-                    <mat-icon>forum</mat-icon>
-                    <h1 class="card-title">Chat</h1>
-                </div>
-                <div class="card-footer text-muted" [ngClass]="{'service-close': !isOpen('CHAT')}" (click)="clickService('CHAT')">
-                    <span>Procedi</span>
+                <div class="col-md-8">
+                    <button type="button" class="btn btn-light col-md-5">Modifica profilo</button>
+                    <button type="button" class="btn btn-danger col-md-5">Esci</button>
                 </div>
             </div>
         </div>
-        <div class="col-md-6 mb-20">
-            <div class="card videochat">
-                <div class="card-header">
-                        <div *ngIf="isOpen('VIDEOCHAT'); else videochatElseBlock" class="is-open">Aperto</div>
-                        <ng-template #videochatElseBlock>
-                            <div class="is-closed">Chiuso</div>
-                        </ng-template>
+        <div class="container">
+            <div class="row row-bottom col-md-12">
+                <div class="col-md-6 mb-20">
+                    <div class="card chat">
+                        <div class="card-header">
+                            <div *ngIf="isOpen('CHAT'); else chatElseBlock" class="is-open">Aperto</div>
+                            <ng-template #chatElseBlock>
+                                <div class="is-closed">Chiuso</div>
+                            </ng-template>
+                        </div>
+                        <div class="card-body">
+                            <mat-icon>forum</mat-icon>
+                            <h1 class="card-title">Chat</h1>
+                        </div>
+                        <div class="card-footer text-muted" [ngClass]="{'service-close': !isOpen('CHAT')}" (click)="clickService('CHAT')">
+                            <span>Procedi</span>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <mat-icon>videocam</mat-icon>
-                        <h1 class="card-title">Video Chat</h1>
-                    </div>
-                    <div class="card-footer text-muted" [ngClass]="{'service-close': !isOpen('VIDEOCHAT')}" (click)="clickService('VIDEOCHAT')">
-                        <span>Procedi</span>
-                    </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6 mb-20">
-            <div class="card sms">
-                <div class="card-header">
-                        <div *ngIf="isOpen('SMS'); else smsElseBlock" class="is-open">Aperto</div>
-                        <ng-template #smsElseBlock>
-                            <div class="is-closed">Chiuso</div>
-                        </ng-template>
-                    </div>
-                    <div class="card-body">
-                        <mat-icon>textsms</mat-icon>
-                        <h1 class="card-title">SMS</h1>
-                    </div>
-                    <div class="card-footer text-muted" [ngClass]="{'service-close': !isOpen('SMS'), 'userlogged': userLogged}">
-                            <div class="card-footer text-muted" [ngClass]="{'service-close': !isOpen('SMS')}" (click)="clickService('SMS')" *ngIf="!userLogged">
+                </div>
+                <div class="col-md-6 mb-20">
+                    <div class="card videochat">
+                        <div class="card-header">
+                                <div *ngIf="isOpen('VIDEOCHAT'); else videochatElseBlock" class="is-open">Aperto</div>
+                                <ng-template #videochatElseBlock>
+                                    <div class="is-closed">Chiuso</div>
+                                </ng-template>
+                            </div>
+                            <div class="card-body">
+                                <mat-icon>videocam</mat-icon>
+                                <h1 class="card-title">Video Chat</h1>
+                            </div>
+                            <div class="card-footer text-muted" [ngClass]="{'service-close': !isOpen('VIDEOCHAT')}" (click)="clickService('VIDEOCHAT')">
                                 <span>Procedi</span>
                             </div>
-                            <div class="card-footer text-muted" *ngIf="userLogged"><span>un SMS al numero 320.20.41.209</span></div>
                     </div>
+                </div> 
             </div>
-        </div>
-        <div class="col-md-6 mb-20 ">
-            <div class="card email">
-                <div class="card-header">
-                    <div *ngIf="isOpen('MAIL'); else emailElseBlock" class="is-open">Aperto</div>
-                    <ng-template #emailElseBlock>
-                        <div class="is-closed">Chiuso</div>
-                    </ng-template>
-                </div>
-                <div class="card-body">
-                    <mat-icon>email</mat-icon>
-                    <h1 class="card-title">E-mail</h1>
-                </div>
-                <div class="card-footer text-muted" [ngClass]="{'service-close': !isOpen('MAIL'), 'userlogged': userLogged}">
-                        <div class="card-footer text-muted" [ngClass]="{'service-close': !isOpen('MAIL')}" (click)="clickService('MAIL')" *ngIf="!userLogged">
-                                <span>Procedi</span>
-                        </div>
-                        <div class="card-footer text-muted" *ngIf="userLogged"><span>Scrivi a email@comunicaens.it</span></div>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="row">
-        <div class="col-md-6 mb-20">
-            <div class="card telegram">
-                <div class="card-header">
-                    <div *ngIf="isOpen('TELEGRAM'); else telegramElseBlock" class="is-open">Aperto</div>
-                    <ng-template #telegramElseBlock>
-                        <div class="is-closed">Chiuso</div>
-                    </ng-template>
-                </div>
-                <div class="card-body">
-                    <div class="text-center">
-                        <span class="icon-ermes-telegram"></span>
-                        <h1 class="card-title">Telegram</h1>
-                    </div>
-                </div>
-                <div class="card-footer text-muted" [ngClass]="{'service-close': !isOpen('TELEGRAM'), 'userlogged': userLogged}">
-                        <div class="card-footer text-muted" [ngClass]="{'service-close': !isOpen('TELEGRAM')}" (click)="clickService('TELEGRAM')" *ngIf="!userLogged">
-                                <span>Procedi</span>
-                        </div>
-                        <div class="card-footer text-muted" *ngIf="userLogged"><span>Scrivi sul canale <em>@ComunicaEnsBot</em></span></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6 mb-20">
-            <div class="card tutorial">
-                <div class="card-body">
-                    <iframe class="video__tutorial" src="https://www.youtube.com/embed/qVnCH-XJH6k?rel=0&autoplay=1" frameborder="0" allowfullscreen></iframe>
-                </div>
-            </div>
-        </div>
     </div>
-
 </div>
-

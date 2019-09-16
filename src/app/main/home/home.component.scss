@@ -1,7 +1,42 @@
 :host {
-    .container {
-        margin-top: 1rem;
+    .home-page {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        background-color: white;
+        .row-top {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+            .top-header {
+                width: 80%;
+                .title {
+                    font-size: 25px;
+                    color: white;
+                    font-weight: bold;
+                    padding: 20px 0 20px 20px;
+                }
+                .btn {
+                    font-size: 15px;
+                    margin-right: 20px;
+                    margin-bottom: 10px;
+                }
+
+            }
+        }
+        .container {
+            flex-grow: 1;
+            justify-items: center;
+            align-items: center;
+            justify-content: center;
+            display: flex;
+            .row-bottom {
+                margin: 0 auto;
+            }
+        }
     }
+
+
    .card {
         padding: 0em;
         overflow: hidden;

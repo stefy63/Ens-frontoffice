@@ -1,6 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { Router, NavigationStart } from '@angular/router';
-import * as moment from 'moment';
 
 @Component({
     selector     : 'cage',
@@ -22,15 +21,4 @@ export class CageComponent
         });
     }
 
-    public bgSeason() {
-        if (this.router.url != '/cookie') {
-            const mounth = moment()
-            .format('MMMM')
-            .toString()
-            .toLowerCase();
-            return `url("assets/images/backgrounds/${mounth}.jpg") no-repeat`;
-        } else {
-            return 'unset';
-        }
-    }
 }

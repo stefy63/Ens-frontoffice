@@ -8,6 +8,7 @@ import { AuthService } from './../../services/auth/auth.service';
 import { NotificationsService } from 'angular2-notifications';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { OnInit, Component } from '@angular/core';
+import * as moment from 'moment';
 
 
 @Component({
@@ -68,6 +69,17 @@ export class FuseLoginComponent implements OnInit {
     this.dialog.open(DialogForgotPassword);
   }
 
+  public bgSeason() {
+        if (this.router.url != '/cookie') {
+            const mounth = moment()
+            .format('MMMM')
+            .toString()
+            .toLowerCase();
+            return `url("assets/images/backgrounds/${mounth}.jpg") no-repeat`;
+        } else {
+            return 'unset';
+        }
+    }
 
 
 }

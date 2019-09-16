@@ -170,4 +170,16 @@ export class HomeComponent implements OnInit {
                 );
             }
 
+  public bgSeason() {
+    if (this.router.url != '/cookie') {
+        const mounth = moment()
+        .format('MMMM')
+        .toString()
+        .toLowerCase();
+        return `url("assets/images/backgrounds/${mounth}_hd.png") 6% 37% no-repeat`;
+    } else {
+        return 'unset';
+    }
+}
+
 }
