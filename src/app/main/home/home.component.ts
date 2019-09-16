@@ -176,7 +176,7 @@ export class HomeComponent implements OnInit {
         .format('MMMM')
         .toString()
         .toLowerCase();
-        return `url("assets/images/backgrounds/${mounth}_hd.png") 6% 37% no-repeat`;
+        return `url("assets/images/backgrounds/${mounth}_hd.png") 6% 38% no-repeat`;
     } else {
         return 'unset';
     }
