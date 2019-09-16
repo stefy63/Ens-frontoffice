@@ -19,6 +19,7 @@ import { NotificationsService } from 'angular2-notifications';
 import { DialogConditionComponent } from './dialog-component/condition/condition.component';
 import { IUser } from 'app/interfaces/i-user';
 import { DomSanitizer } from '@angular/platform-browser';
+import { environment } from 'environments/environment';
 
 @Component({
     selector     : 'navbar',
@@ -168,8 +169,10 @@ export class NavbarComponent implements OnInit, OnDestroy
     }
     
     logout(): void {
+        const externalUrl = environment.return_url;
         this.authService.logout().subscribe(() => {
-            this.router.navigate(['login']);
+            // this.router.navigate([externalUrl]);
+            window.open(externalUrl, '_self');
         });
     }
 

@@ -21,4 +21,8 @@ export const environment = {
     videoChat_room_suffix: 'Ens_',
     videoChat_server_url: null,
 
+
+    // redirect url after logout
+    return_url: 'login',
+
 };
