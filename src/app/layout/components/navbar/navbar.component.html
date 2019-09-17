@@ -22,6 +22,10 @@
                 </div>
             </button>
             <mat-menu #moreMenu="matMenu" [overlapTrigger]="false">
+                    <button mat-menu-item fxLayout="row" fxLayoutAlign="left center" [routerLink]="['/home']">
+                        <mat-icon svgIcon="icon_ens_logo" class="logo-ens"></mat-icon>
+                        <span>Home</span>
+                    </button>
                 <button mat-menu-item fxLayout="row" fxLayoutAlign="left center" (click)="useCondition()">
                     <mat-icon>chrome_reader_mode</mat-icon>
                     <span>Termini e condizioni d'uso</span>

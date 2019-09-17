@@ -1,3 +1,6 @@
+import { ApiUserService } from 'app/services/api/api-user.service';
+import { IUser } from 'app/interfaces/i-user';
+import { DialogProfileComponent } from './../../layout/components/navbar/dialog-component/profile/profile.component';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
@@ -26,6 +29,7 @@ import { DialogRegistrationComponent } from './dialog-component/registration/reg
 import { DialogForgotPassword } from './dialog-component/forgot-password/dialog-forgot-password.component';
 import { GoogleAnalyticsService } from 'app/services/analytics/google-analitics-service';
 import * as moment from 'moment';
+import { environment } from 'environments/environment.prod';
 
 
 @Component({
@@ -41,7 +45,7 @@ export class HomeComponent implements OnInit {
     public userLogged: boolean;
 
     private dataModal: any;
-
+    private user: IUser;
     constructor(
         private router: Router,
         public dialog: MatDialog,
@@ -54,11 +58,13 @@ export class HomeComponent implements OnInit {
         private storage: LocalStorageService,
         private toast: NotificationsService,
         private socketService: SocketService,
+        private apiUserService: ApiUserService,
         private apiQueueService: ApiQueueService,
         public googleAnalyticsService: GoogleAnalyticsService
     ) { }
 
     ngOnInit(): void {
+        this.user = this.storage.getItem('user');
         this.googleAnalyticsService.pageEmitter('HomePage');
         this.apiTicketServiceService.getAll().pipe(
             tap((services) => this.ticketServices = keyBy(services, (serviceItem) => serviceItem.service)),
@@ -181,5 +187,37 @@ export class HomeComponent implements OnInit {
         return 'unset';
     }
 }
+
+
+edit_profile(): void{
+    this.dialog.open(DialogProfileComponent, {
+        hasBackdrop: true,
+        data: {
+            modalData: this.user
+        }
+    }).afterClosed().pipe(
+            filter((result) => !!result),
+            flatMap((result) => {
+                this.user.userdata = result;
+                return this.apiUserService.apiChangeProfile(this.user);
+            })
+        )
+        .subscribe(user => {
+            this.storage.setKey('user', user);
+            this.toast.success('Aggiornamento Profilo', 'Profilo modificato con successo');
+        },
+        (err) => {
+            this.toast.error('Aggiornamento Profilo', 'Modifica Profilo fallita');
+        }
+        );
+}
+
+logout(): void {
+    const externalUrl = environment.return_url;
+    this.authService.logout().subscribe(() => {
+        window.open(externalUrl, '_self');
+    });
+}
+
 
 }
