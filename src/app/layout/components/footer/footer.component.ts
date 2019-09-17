@@ -17,4 +17,8 @@ export class FooterComponent
     constructor()
     {
     }
+
+    public devHome() {
+        window.open('http://www.3punto6.com', '_new');
+    }
 }
