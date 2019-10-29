@@ -13,7 +13,16 @@
             </div>
         </div>
         <div class="container">
-            <div class="row row-bottom col-md-12">
+            <div class="row row-bottom col-md-12" *ngIf="!userPrivacyAccepted">
+                <div class="col-md-6 mb-20">
+                    Le confizione di <a [routerLink]="['/privacy']">privacy</a>  devono essere accettate
+                    per poter usufruire del servizio.
+                </div>
+                <div class="col-md-6 mb-20">
+                    <button type="button" class="btn btn-danger col-md-5"  (click)="edit_profile()">Modifica profilo</button>
+                </div>
+            </div>
+            <div class="row row-bottom col-md-12" *ngIf="userPrivacyAccepted">
                 <div class="col-md-6 mb-20">
                     <div class="card chat">
                         <div class="card-header">
