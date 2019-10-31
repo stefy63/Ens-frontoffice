@@ -62,7 +62,11 @@ export class HomeComponent implements OnInit {
         private apiUserService: ApiUserService,
         private apiQueueService: ApiQueueService,
         public googleAnalyticsService: GoogleAnalyticsService
-    ) { }
+    ) { 
+        if (!this.storage.getItem('user')) {
+            this.router.navigate(['/login']);
+        }
+    }
 
     ngOnInit(): void {
         this.user = this.storage.getItem('user');
