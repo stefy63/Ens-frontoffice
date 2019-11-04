@@ -106,9 +106,6 @@ export class DialogRegistrationComponent implements OnInit {
   }
 
   onYesClick(): void {
-    if (!this.formGroup.valid) {
-
-    }
     const updatedModalData = assign(this.user, {
         user: {
             username: this.formGroup.controls.username.value,
