@@ -34,6 +34,7 @@ export class ForgotPasswordComponent implements OnInit {
             });
         
         this.formGroup = new FormGroup({
+<<<<<<< Updated upstream
             'new_password':  new FormControl('', [Validators.required, EmptyInputValidator.whiteSpace]),
             'confirm_password':  new FormControl('', [Validators.required, PasswordValidator.match])
           });
@@ -58,5 +59,31 @@ export class ForgotPasswordComponent implements OnInit {
         this.toast.error('Attenzione', 'Operazione non riuscita');
     });
   }
+=======
+            'new_password':  new FormControl('', [Validators.required, EmptyInputValidator.whiteSpace, PasswordValidator.match('confirm_password')]),
+            'confirm_password':  new FormControl('', [Validators.required, PasswordValidator.match('new_password')])
+          });
+     }
+
+    ngOnInit() {
+    this.googleAnalyticsService.pageEmitter('EndForgotPasswordPage');
+    }
+
+    onYesClick(): void {
+        this.apiForgotPassword.apiCangePassword(this.forgotKey, {
+            new_password: this.formGroup.controls['new_password'].value,
+        } as IForgotChangePassword)
+        .subscribe(() => {
+            this.googleAnalyticsService.eventEmitter('EndForgotPasswordPage', 'New Password Successfully');
+            this.toast.success('Ok!', 'Password aggiornata con succeso');
+            this.route.navigate(['/']);
+        },
+        (err) => {
+            console.log(err.error);
+            this.googleAnalyticsService.eventEmitter('EndForgotPasswordPage', 'New Password fault (generic)');
+            this.toast.error('Attenzione', 'Operazione non riuscita');
+        });
+    }
+>>>>>>> Stashed changes
 
 }

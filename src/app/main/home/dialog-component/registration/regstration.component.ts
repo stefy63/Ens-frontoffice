@@ -1,3 +1,7 @@
+<<<<<<< Updated upstream
+=======
+import { PasswordValidator } from 'app/services/MaterialValidator/PasswordValidator';
+>>>>>>> Stashed changes
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
@@ -68,6 +72,7 @@ export class DialogRegistrationComponent implements OnInit {
 
     this.formGroup = new FormGroup({
         'username': new FormControl(''),
+<<<<<<< Updated upstream
         'password': new FormControl('', [
             Validators.required, 
             EmptyInputValidator.whiteSpace,
@@ -96,14 +101,59 @@ export class DialogRegistrationComponent implements OnInit {
       'privacyaccept': new FormControl({value: true, disabled: true}),
       'newsletteraccept': new FormControl(''),
       'becontacted': new FormControl(''),
+=======
+        'new_password': new FormControl('', [
+            Validators.required, 
+            EmptyInputValidator.whiteSpace,
+            Validators.minLength(5), 
+            PasswordValidator.match('confirm_password')
+        ]),
+        'confirm_password':  new FormControl('', [
+            Validators.required, 
+            PasswordValidator.match('new_password')
+        ]),
+        'name': new FormControl('', [
+            Validators.required,
+            AlphabeticOnlyValidator.alphabeticOnly
+        ]),
+        'surname': new FormControl('', [
+            Validators.required,
+            AlphabeticOnlyValidator.alphabeticOnly
+        ]),
+        'email': new FormControl('', [
+            Validators.required, 
+            EmailCustomValidator.email_custom
+        ]),
+        'gender': new FormControl('', [
+            Validators.required
+            ]),
+        'phone': new FormControl('', [
+            Validators.required, 
+            NumericOnlyValidator.numericOnly
+        ]),
+        'card_number': new FormControl('', []),
+        'privacyaccept': new FormControl({value: true, disabled: true}),
+        'newsletteraccept': new FormControl(''),
+        'becontacted': new FormControl(''),
+>>>>>>> Stashed changes
     });
   }
 
   onYesClick(): void {
+<<<<<<< Updated upstream
     const updatedModalData = assign(this.user, {
         user: {
             username: this.formGroup.controls.username.value,
             password: this.formGroup.controls.password.value,
+=======
+    if (!this.formGroup.valid) {
+
+    }
+    const updatedModalData = assign(this.user, {
+        user: {
+            username: this.formGroup.controls.username.value,
+            password: this.formGroup.controls.new_password.value,
+>>>>>>> Stashed changes
         },
         user_data: {
             name: this.formGroup.controls.name.value,
