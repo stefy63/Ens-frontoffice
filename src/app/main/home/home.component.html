@@ -14,13 +14,18 @@
         </div>
         <div class="container">
             <div class="row row-bottom col-md-12" *ngIf="!userPrivacyAccepted">
-                <div class="col-md-6 mb-20">
-                    Le condizioni di <a [routerLink]="['/privacy']">privacy</a>  devono essere accettate
-                    per poter usufruire del servizio.
+                <div class="col-md-12 mb-20">
+                    <div class="card privacy">
+                        <div class="card-body">
+                            <mat-icon>edit</mat-icon>
+                            <h1 class="card-title">Conferma i tuoi dati anagrafici.</h1>
+                        </div>
+                        <div class="card-footer text-muted" (click)="edit_profile()">
+                            <span>Procedi</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-6 mb-20">
-                    <button type="button" class="btn btn-danger col-md-5"  (click)="edit_profile()">Modifica profilo</button>
-                </div>
+
             </div>
             <div class="row row-bottom col-md-12" *ngIf="userPrivacyAccepted">
                 <div class="col-md-6 mb-20">
