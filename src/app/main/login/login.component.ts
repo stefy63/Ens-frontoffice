@@ -1,3 +1,5 @@
+import { LocalStorageService } from './../../services/local-storage/local-storage.service';
+import { IUser } from 'app/interfaces/i-user';
 import { Router } from '@angular/router';
 import { DialogForgotPassword } from '../home/dialog-component/forgot-password/dialog-forgot-password.component';
 import { DialogRegistrationComponent } from '../home/dialog-component/registration/regstration.component';
@@ -20,17 +22,24 @@ export class FuseLoginComponent implements OnInit {
 
     public formGroup: FormGroup;
 
+    private user: IUser;
+
   constructor(
     private toast: NotificationsService,
+    private storage: LocalStorageService,
     private authService: AuthService,
     public dialog: MatDialog,
     private router: Router,
     private googleAnalyticsService: GoogleAnalyticsService
   ) {
+    if (!!this.storage.getItem('user')) {
+        this.router.navigate(['/home']);
+    }
     this.formGroup = new FormGroup({
       'username': new FormControl('', [Validators.required]),
       'password': new FormControl('', [Validators.required])
-    }); }
+    }); 
+}
 
   ngOnInit() {
 

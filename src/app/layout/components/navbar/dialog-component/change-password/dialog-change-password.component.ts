@@ -30,8 +30,8 @@ export class DialogChangePassword implements OnInit {
   ) {
     this.formGroup = new FormGroup({
       'old_password': new FormControl('', [Validators.required, EmptyInputValidator.whiteSpace]),
-      'new_password':  new FormControl('', [Validators.required, EmptyInputValidator.whiteSpace]),
-      'confirm_password':  new FormControl('', [Validators.required, PasswordValidator.match])
+      'new_password':  new FormControl('', [Validators.required, EmptyInputValidator.whiteSpace, PasswordValidator.match('confirm_password')]),
+      'confirm_password':  new FormControl('', [Validators.required, PasswordValidator.match('new_password')])
     });
   }
 

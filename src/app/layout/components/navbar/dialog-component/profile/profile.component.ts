@@ -61,7 +61,7 @@ export class DialogProfileComponent implements OnInit {
   ngOnInit(): void {
     this.googleAnalyticsService.pageEmitter('ProfilePage');
     this.modalData = this.data.modalData.userdata as IUserData;
-    this.modalData.privacyaccept = this.modalData.privacyaccept || true;
+    // this.modalData.privacyaccept = this.modalData.privacyaccept || true;
     this.formGroup = new FormGroup({
       'name': new FormControl(this.modalData.name, [
         Validators.required,
@@ -79,7 +79,7 @@ export class DialogProfileComponent implements OnInit {
         Validators.required, NumericOnlyValidator.numericOnly
       ]),
       'card_number': new FormControl(this.modalData.card_number, []),
-      'privacyaccept': new FormControl({value: this.modalData.privacyaccept, disabled: true}),
+      'privacyaccept': new FormControl(this.modalData.privacyaccept),
       'newsletteraccept': new FormControl(this.modalData.newsletteraccept),
       'becontacted': new FormControl(this.modalData.becontacted),
     });

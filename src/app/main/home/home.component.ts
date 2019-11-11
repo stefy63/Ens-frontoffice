@@ -43,6 +43,7 @@ export class HomeComponent implements OnInit {
     public ticketServices;
     public options = AlertToasterOptions;
     public userLogged: boolean;
+    public userPrivacyAccepted: boolean;
 
     private dataModal: any;
     private user: IUser;
@@ -61,10 +62,15 @@ export class HomeComponent implements OnInit {
         private apiUserService: ApiUserService,
         private apiQueueService: ApiQueueService,
         public googleAnalyticsService: GoogleAnalyticsService
-    ) { }
+    ) { 
+        if (!this.storage.getItem('user')) {
+            this.router.navigate(['/login']);
+        }
+    }
 
     ngOnInit(): void {
         this.user = this.storage.getItem('user');
+        this.userPrivacyAccepted = !!this.user.userdata.privacyaccept;
         this.googleAnalyticsService.pageEmitter('HomePage');
         this.apiTicketServiceService.getAll().pipe(
             tap((services) => this.ticketServices = keyBy(services, (serviceItem) => serviceItem.service)),
@@ -176,13 +182,13 @@ export class HomeComponent implements OnInit {
                 );
             }
 
-  public bgSeason() {
-    if (this.router.url != '/cookie') {
+  public bgSeason(): string {
+    if (this.router.url !== '/cookie') {
         const mounth = moment()
         .format('MMMM')
         .toString()
         .toLowerCase();
-        return `url("assets/images/backgrounds/${mounth}_hd.png") 6% 38% no-repeat`;
+        return `url("assets/images/backgrounds/${mounth}_hd.png") 10% 38% no-repeat`;
     } else {
         return 'unset';
     }
@@ -204,6 +210,7 @@ edit_profile(): void{
         )
         .subscribe(user => {
             this.storage.setKey('user', user);
+            this.userPrivacyAccepted = !!this.user.userdata.privacyaccept;
             this.toast.success('Aggiornamento Profilo', 'Profilo modificato con successo');
         },
         (err) => {
@@ -219,5 +226,9 @@ logout(): void {
     });
 }
 
+
+privacy() {
+    this.router.navigate(['privacy']);
+}
 
 }

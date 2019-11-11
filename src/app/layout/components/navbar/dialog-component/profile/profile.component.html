@@ -57,16 +57,17 @@
             </mat-form-field>
         </div>
 
-        <mat-checkbox formControlName="privacyaccept">
-            <span class="mat-caption col-md-12">Accetto le condizioni della privacy*</span>
-        </mat-checkbox><br>
-        <mat-error class="error-message" *ngIf="formGroup.controls['privacyaccept'].hasError('required')">Campo obbligatorio</mat-error>
+        <mat-checkbox formControlName="privacyaccept" required>
+            <span class="col-md-12">Accetto le condizioni della privacy*</span>
+        </mat-checkbox>
+        <mat-error class="mat-caption error-message" *ngIf="formGroup.controls['privacyaccept'].hasError('required')">Campo obbligatorio</mat-error>
+        <br>
         <mat-checkbox formControlName="newsletteraccept">
-            <span class="mat-caption col-md-12">Iscrizione alla Newsletter</span>
+            <span class="col-md-12">Iscrizione alla Newsletter</span>
         </mat-checkbox><br>
         <mat-checkbox formControlName="becontacted" >
-            <span class="mat-caption col-md-12">Acconsento ad essere contattato</span>
-        </mat-checkbox>
+            <span class="col-md-12">Acconsento ad essere contattato</span>
+        </mat-checkbox><br>
     </div>
 
     <div class="form__footer">
