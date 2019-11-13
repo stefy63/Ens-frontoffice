@@ -26,7 +26,7 @@ export const environment = {
     videoChat_server_url: null,
 
     // redirect url after logout
-    return_url: 'http://www.google.it',
+    return_url: 'http://www.comunicaens.it',
 
     
 };

@@ -99,7 +99,7 @@ export class DialogRegistrationComponent implements OnInit {
             NumericOnlyValidator.numericOnly
         ]),
         'card_number': new FormControl('', []),
-        'privacyaccept': new FormControl({value: true, disabled: true}),
+        'privacyaccept': new FormControl(''),
         'newsletteraccept': new FormControl(''),
         'becontacted': new FormControl(''),
     });

@@ -27,5 +27,5 @@ export const environment = {
 
     
     // redirect url after logout
-    return_url: 'login',
+    return_url: 'http://www.comunicaens.it',
 };

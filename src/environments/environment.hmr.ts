@@ -23,6 +23,6 @@ export const environment = {
 
 
     // redirect url after logout
-    return_url: 'login',
+    return_url: 'loghttp://www.comunicaens.itin',
 
 };
