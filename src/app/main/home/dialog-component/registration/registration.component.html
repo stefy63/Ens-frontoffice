@@ -25,7 +25,7 @@
                 <mat-error class="error-message" *ngIf="formGroup.controls['new_password'].hasError('whiteSpace')">Gli spazi non sono ammessi</mat-error>
                 <mat-error class="error-message" *ngIf="formGroup.controls['new_password'].hasError('passwordMatch')">Le password devono corrispondere</mat-error>
             </mat-form-field>
-            <mat-form-field  >
+            <mat-form-field  class="col-md-6">
                 <input matInput type="password"  placeholder="Conferma Nuova Password" formControlName="confirm_password" required>
                 <mat-icon matSuffix>vpn_key</mat-icon>
                 <mat-error class="error-message" *ngIf="formGroup.controls['confirm_password'].hasError('required')">La conferma della password è obbligatoria</mat-error>
