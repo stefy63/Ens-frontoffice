@@ -22,4 +22,6 @@ cage {
     flex-grow: 1;
     padding: 0;
     overflow: auto;
+    display: flex;
+    flex-direction: column;
 }
