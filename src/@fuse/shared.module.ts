@@ -6,29 +6,41 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { FuseDirectivesModule } from '@fuse/directives/directives';
 import { FusePipesModule } from '@fuse/pipes/pipes.module';
+import { MaterialModule } from './material.module';
+import { FuseMaterialColorPickerModule } from './components';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material';
+
 
 @NgModule({
-    imports  : [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-
-        FlexLayoutModule,
-
-        FuseDirectivesModule,
-        FusePipesModule
+    providers: [
+        {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true, maxWidth: '100vh'}}
     ],
-    exports  : [
+    imports  :  [
+        FusePipesModule,
+        FlexLayoutModule,
+        MaterialModule,
         CommonModule,
         FormsModule,
+        FusePipesModule,
         ReactiveFormsModule,
-
-        FlexLayoutModule,
-
+        FuseMaterialColorPickerModule,
         FuseDirectivesModule,
-        FusePipesModule
+        NgxSpinnerModule
+    ],
+    
+    exports  : [
+        FusePipesModule,
+        FlexLayoutModule,
+        MaterialModule,
+        CommonModule,
+        FormsModule,
+        FusePipesModule,
+        ReactiveFormsModule,
+        FuseMaterialColorPickerModule,
+        FuseDirectivesModule,
+        NgxSpinnerModule
     ]
 })
 export class FuseSharedModule
-{
-}
+{}

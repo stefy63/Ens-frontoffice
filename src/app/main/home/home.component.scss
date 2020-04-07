@@ -1,78 +1,152 @@
 :host {
-    mat-grid-tile {
+    .home-page {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        background-color: white;
+        overflow: auto;
+        .row-top {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+            .top-header {
+                width: 80%;
+                .title {
+                    font-size: 25px;
+                    color: white;
+                    font-weight: bold;
+                    padding: 20px 0 20px 20px;
+                }
+                .btn {
+                    font-size: 15px;
+                    margin-right: 20px;
+                    margin-bottom: 10px;
+                }
+
+            }
+        }
+        .container {
+            flex-grow: 1;
+            align-items: center;
+            display: flex;
+            .row-bottom {
+                margin: 0 auto;
+            }
+        }
     }
-    mat-card {
-       
+
+
+   .card {
+        padding: 0em;
+        overflow: hidden;
+        border-radius: 0.9rem !important;
+        height: 100%;
     }
-    .chat-card {
-        & mat-card-header {
-
+    .card-header {
+        border-bottom: none;
+        background-color: white;
+        overflow: hidden;
+        .is-open {
+            color: green;
         }
-        & mat-card-content {
-
-        }
-        & mat-card-actions {
-            background-color: #cc5b49;
+        .is-closed {
+            color: red;
         }
     }
-    .video-card {
-        & mat-card-header {
-
+    .card-body {
+        padding: 0;
+        text-align: center;
+        font-weight: bold;
+        mat-icon {
+            font-size: 4em !important;
+            display: inline-table !important;
         }
-        & mat-card-content {
-
+        [class^="icon-ermes-"], [class*=" icon-ermes-"] {
+            font-size: 4em !important;
         }
-        & mat-card-actions {
-            background-color: #c7c7c7;
+        .card-title {
+            font-weight: 700;
         }
-        
     }
-    .sms-card {
-        & mat-card-header {
-
+    .card-footer {
+        color: white !important;
+        text-align: center;
+        overflow: hidden;
+        cursor: pointer;
+        a, span {
+            font-size: 1.5em;
         }
-        & mat-card-content {
-
-        }
-        & mat-card-actions {
-            background-color: #e19d3e;
-        }
-        
+        border: 0;
     }
-    .email-card {
-        & mat-card-header {
-
+    .privacy {
+        .card-footer {
+            background-color: #6195CC;
         }
-        & mat-card-content {
-
+        .card-body {
+            color:  #6195CC;
         }
-        & mat-card-actions {
-            background-color: #2f684a;
-        }
-        
     }
-    .telegram-card {
-        & mat-card-header {
-
+    .chat {
+        .card-footer {
+            background-color: #CC5B49;
         }
-        & mat-card-content {
-
+        .card-body {
+            color:  #CC5B49;
         }
-        & mat-card-actions {
-            background-color: #73b4e3;
-        }
-        
     }
-    .tutorial-card {
-        & mat-card-header {
+    .videochat {
+        .card-footer {
+            background-color: #365FA5;
+        }
+        .card-body {
+            color:  #365FA5;
+        }
+    }
+    .sms {
+        .card-footer {
+            background-color: #E19D3E;
+        }
+        .card-body {
+            color:  #E19D3E;
+        }
+    }
+    .email {
+        .card-footer {
+            background-color: #2F684A;
+        }
+        .card-body {
+            color:  #2F684A;
+        }
+    }
+    .telegram {
+        .card-footer {
+            background-color: #73B4E3;
+        }
+        .card-body {
+            color: #73B4E3;
+        }
+    }
+    .tutorial {
+        .card-body {
+            background-color: black;
+        }
+    }
+    .service-close {
+        background-color: #C7C7C7 !important;
+        font-weight: 100;
+        cursor: not-allowed;
+    }
 
-        }
-        & mat-card-content {
+    .video__tutorial {
+        width: 100%;
+        height: 216px;
+    }
 
-        }
-        & mat-card-actions {
-            background-color: white;
-        }
-        
+    .userlogged {
+        color: white !important;
+        text-align: center;
+        overflow: hidden;
+        cursor: unset !important;
     }
 }
+

@@ -1,38 +1,9 @@
-<!-- PROGRESS BAR -->
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.0)" size="large" color="#039be5" type="ball-clip-rotate"></ngx-spinner>
 <fuse-progress-bar></fuse-progress-bar>
-<!-- / PROGRESS BAR -->
-
-<!-- VERTICAL LAYOUT 1 -->
-<!-- <ng-container *ngIf="fuseConfig.layout.style === 'vertical-layout-1'">
-    <vertical-layout-1></vertical-layout-1>
-</ng-container> -->
-<!-- / VERTICAL LAYOUT 1 -->
-
-<!-- VERTICAL LAYOUT 2 -->
-<!-- <ng-container *ngIf="fuseConfig.layout.style === 'vertical-layout-2'">
-    <vertical-layout-2></vertical-layout-2>
-</ng-container> -->
-<!-- / VERTICAL LAYOUT 2 -->
-
-<!-- VERTICAL LAYOUT 3 -->
-<!-- <ng-container *ngIf="fuseConfig.layout.style === 'vertical-layout-3'">
-    <vertical-layout-3></vertical-layout-3>
-</ng-container> -->
-<!-- / VERTICAL LAYOUT 3 -->
-
-<!-- HORIZONTAL LAYOUT 1 -->
 <ng-container>
-    <horizontal-layout-1></horizontal-layout-1>
+    <cage></cage>
 </ng-container>
-<!-- / HORIZONTAL LAYOUT 1 -->
-
-<!-- THEME OPTIONS PANEL -->
-<!-- <button mat-icon-button class="warn mat-elevation-z2 theme-options-button"
-        (click)="toggleSidebarOpen('themeOptionsPanel')">
-    <mat-icon>settings</mat-icon>
-</button> -->
-
-<!-- <fuse-sidebar name="themeOptionsPanel" class="theme-options-sidebar" position="right" [invisibleOverlay]="true">
-    <fuse-theme-options></fuse-theme-options>
-</fuse-sidebar> -->
-<!-- / THEME OPTIONS PANEL -->
+<cookie-law  #cookieLaw >
+    Questa applicazione utilizza i cookie. Per maggiori dettagli clicca <a routerLink="/cookie" routerLinkActive="active" (click)="seen(true)">qui.</a>
+</cookie-law>
+<simple-notifications [options]="options"></simple-notifications>

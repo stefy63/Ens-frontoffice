@@ -1,0 +1,111 @@
+:host {
+    background-color: #fafafa;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    .timer__container {
+        display: flex;
+        background-color: #F3F4F5;
+        padding: 0px 10px;
+        .chat-header-operator {
+            font-size: 1em;
+            font-weight: bold;
+            color: black;
+            flex-grow: 1;
+        }
+    }
+    .message__container {
+        height: calc(100% - 148px);
+    }
+    .chat-header {
+        display: flex;
+        background-color: #e4e4e4;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+        .chat-header-title {
+            font-size: 1.7em;
+            font-weight: bold;
+            color: #6195CC;
+            flex-grow: 1;
+            &.chat_close {
+                color: red;
+            }
+        }
+        .chat-header-close {
+            outline: none;
+            cursor: pointer;
+            &.chat_close {
+                color: red;
+            }
+        }
+    }
+    .chat-messages {
+        padding: 8px 8px 0px 8px;
+    }
+
+    .chat-messages:last-child {
+        padding: 8px 8px 18px 8px;
+    }
+    
+    .message-row {
+        color: white;
+        flex-direction: column;
+        box-sizing: border-box;
+        display: flex;
+
+        .time {
+            font-size: 0.6em;
+            text-align: left;
+            color: #3c4252;
+        }
+
+        .bubble {
+            overflow: hidden;
+            position: relative;
+            padding: 7px;
+            background-color: rgb(35, 106, 182);
+            border-radius: 14px;
+            font-size: 15px;
+            color: white;
+            margin-right: auto;
+
+            .message {
+                word-wrap: break-word;
+                white-space: pre-line;
+                overflow-wrap: break-word;
+                word-break: break-all;
+            }
+        }
+        &.user {
+            align-items: flex-end;
+
+            .time {
+                text-align: right;
+            }
+
+            .bubble {
+                margin-left: auto;
+                margin-right: 0;
+
+                background-color: #e0e0e0;
+                color: black;
+            }
+        }
+    }
+    .chat-footer {
+        height: 100px;
+        background-color: #F3F4F5;
+        color: rgba(0, 0, 0, 0.87);
+        border-top: 1px solid rgba(0, 0, 0, .08);
+        padding: 10px;
+        .send__button {
+            margin-left: 8px;
+        }
+    }
+    .on-writing {
+        font-weight: bold;
+        color: red;
+        font-style: oblique;
+    }
+}

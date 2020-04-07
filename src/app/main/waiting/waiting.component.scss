@@ -1,0 +1,85 @@
+:host {
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    height: 100%;
+
+    .waiting-card__container {
+        margin: 0 auto;
+    }
+
+    .card {
+        .card-header {
+            padding: 0;
+            background-color: white;
+            position: relative;
+            text-align: center;
+        }
+    }
+    .card-title {
+        font-size: 2rem;
+        font-weight: bold;
+        background-color: white;
+        border-bottom: 0;
+        margin: 0 !important;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+        display: flex;
+
+        mat-icon {
+            font-size: 3em;
+            display: contents;
+        }
+        span {
+            font-size: 4rem;
+            margin-left: 5px;
+        }
+    }
+
+    .close-card {
+      outline: none;
+    }
+
+    .card-body {
+        padding: 0;
+        .queue {
+            text-align: center;
+            font-size: 8rem;
+            font-weight: 700;
+        }
+        .next {
+            color: green;
+            animation: blink-animation 1s steps(5, start) infinite;
+            -webkit-animation: blink-animation 1s steps(5, start) infinite;
+        }
+        .info-queue {
+            text-align: center;
+            font-size: 1.2rem;
+        }
+    }
+
+    .card-footer {
+        text-align: center;
+        background-color: white;
+        margin-bottom: 15px;
+        font-size: 1.2rem;
+
+        mat-icon {
+            height: 40px;
+            width: 60px;
+            font-size: 5rem;
+        }
+    }
+}
+
+@keyframes blink-animation {
+    to {
+        visibility: hidden;
+    }
+}
+@-webkit-keyframes blink-animation {
+    to {
+        visibility: hidden;
+    }
+}

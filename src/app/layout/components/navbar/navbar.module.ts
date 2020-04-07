@@ -1,26 +1,36 @@
 import { NgModule } from '@angular/core';
-
+import { RouterModule } from '@angular/router';
+import { MatButtonModule, MatIconModule, MatMenuModule, MatToolbarModule } from '@angular/material';
+import { NavbarComponent } from './navbar.component';
+import { DialogChangePassword } from './dialog-component/change-password/dialog-change-password.component';
+import { DialogProfileComponent } from './dialog-component/profile/profile.component';
 import { FuseSharedModule } from '@fuse/shared.module';
+import { DialogConditionComponent } from './dialog-component/condition/condition.component';
 
-import { NavbarComponent } from 'app/layout/components/navbar/navbar.component';
-import { NavbarHorizontalStyle1Module } from 'app/layout/components/navbar/horizontal/style-1/style-1.module';
-import { NavbarVerticalStyle1Module } from 'app/layout/components/navbar/vertical/style-1/style-1.module';
-import { NavbarVerticalStyle2Module } from 'app/layout/components/navbar/vertical/style-2/style-2.module';
 
 @NgModule({
     declarations: [
-        NavbarComponent
+        NavbarComponent,
+        DialogChangePassword,
+        DialogProfileComponent,
+        DialogConditionComponent
     ],
-    imports     : [
+    imports: [
         FuseSharedModule,
-
-        NavbarHorizontalStyle1Module,
-        NavbarVerticalStyle1Module,
-        NavbarVerticalStyle2Module
+        RouterModule,
+        MatButtonModule,
+        MatIconModule,
+        MatMenuModule,
+        MatToolbarModule,
     ],
-    exports     : [
+    exports: [
         NavbarComponent
-    ]
+    ],
+    entryComponents: [
+        DialogChangePassword,
+        DialogProfileComponent,
+        DialogConditionComponent
+    ],
 })
 export class NavbarModule
 {

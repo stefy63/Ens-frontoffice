@@ -1,0 +1,17 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    mat-form-field {
+        width: 100%;
+    }
+
+    .logo-ens {
+        width: 22rem;
+        height: 16rem;
+        color: #253C8D;
+        align-self: center;
+    } 
+
+    @import '../../../../../assets/scss/dialog.scss';
+}

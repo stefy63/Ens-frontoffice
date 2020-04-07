@@ -1,0 +1,17 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    mat-form-field {
+        width: 100%;
+    }
+
+    .icon__service {
+        font-size: 1em;
+        margin-right: 10px;
+    }
+
+    @import '../../../../../assets/scss/dialog.scss';
+
+}

@@ -4,14 +4,30 @@
 
 export const environment = {
     production: false,
-    hmr       : false
-};
+    hmr       : false,
+    version   : '5.1.0',
+    analyticsID: 'UA-142899635-1',
 
-/*
- * For easier debugging in development mode, you can import the following file
- * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
- *
- * This import should be commented out in production mode because it will have a negative impact
- * on performance if an error is thrown.
- */
-// import 'zone.js/dist/zone-error';  // Included with Angular CLI.
+
+    // ws_url: 'https://preprodttms.3punto6.com',
+    ws_url: 'http://localhost',
+    ws_path: '/wss',
+    ws_port: 9000,
+
+    // API configuration url
+    // api_url: 'https://preprodttms.3punto6.com',
+    api_url: 'http://localhost',
+    api_port: 3030,
+    api_suffix: '/api',
+
+    
+    // VideoChat Config
+    videoChat_room_suffix: 'Ens_',
+    videoChat_server_url: null,
+    videoChat_service_url: 'https://whereby.com/comunicaens_op',
+
+    // redirect url after logout
+    return_url: 'http://www.comunicaens.it',
+
+    
+};

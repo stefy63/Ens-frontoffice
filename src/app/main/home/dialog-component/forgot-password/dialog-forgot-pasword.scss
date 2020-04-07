@@ -1,0 +1,14 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    mat-form-field {
+        width: 100%;
+    }
+    @import '../../../../../assets/scss/dialog.scss';
+    
+    .resend-mail {
+        font-size: 1rem;
+        margin-top: 5px;
+    }
+}

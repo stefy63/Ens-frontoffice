@@ -1,83 +1,68 @@
-<div class="page-layout blank p-24">
-    <mat-grid-list cols="2" rowHeight="3:1">
-        <mat-grid-tile>
-            <mat-card class="chat-card">
-                <mat-card-header>
-                    Aperto
-                </mat-card-header>
-                <mat-card-content>
-                  <mat-icon>chat</mat-icon>
-                </mat-card-content>
-                <mat-card-actions >
-                  <button mat-button>Procedi</button>
-                </mat-card-actions>
-            </mat-card>
-        </mat-grid-tile>
-        <mat-grid-tile>
-            <mat-card class="video-card">
-                <mat-card-header>
-                    Aperto
-                </mat-card-header>
-                <mat-card-content>
-                    <mat-icon>chat</mat-icon>
-                </mat-card-content>
-                <mat-card-actions >
-                    <button mat-button>Procedi</button>
-                </mat-card-actions>
-            </mat-card>
-        </mat-grid-tile>
-        <mat-grid-tile>
-            <mat-card class="sms-card">
-                <mat-card-header>
-                    Aperto
-                </mat-card-header>
-                <mat-card-content>
-                    <mat-icon>chat</mat-icon>
-                </mat-card-content>
-                <mat-card-actions >
-                    <button mat-button>Procedi</button>
-                </mat-card-actions>
-            </mat-card>
-        </mat-grid-tile>
-        <mat-grid-tile>
-            <mat-card class="email-card">
-                <mat-card-header>
-                    Aperto
-                </mat-card-header>
-                <mat-card-content>
-                    <mat-icon>chat</mat-icon>
-                </mat-card-content>
-                <mat-card-actions >
-                    <button mat-button>Procedi</button>
-                </mat-card-actions>
-            </mat-card>
-        </mat-grid-tile>
-        <mat-grid-tile>
-            <mat-card class="telegram-card">
-                <mat-card-header>
-                    Aperto
-                </mat-card-header>
-                <mat-card-content>
-                    <mat-icon>chat</mat-icon>
-                </mat-card-content>
-                <mat-card-actions >
-                    <button mat-button>Procedi</button>
-                </mat-card-actions>
-            </mat-card>
-        </mat-grid-tile>
-        <mat-grid-tile>
-            <mat-card class="tutorial-card">
-                <mat-card-header>
-                    Aperto
-                </mat-card-header>
-                <mat-card-content>
-                    <mat-icon>chat</mat-icon>
-                </mat-card-content>
-                <mat-card-actions >
-                    <button mat-button>Procedi</button>
-                </mat-card-actions>
-            </mat-card>
-        </mat-grid-tile>
-    </mat-grid-list>
 
+    <div class="home-page">
+        <div class="row-top" [ngStyle]="{'background': bgSeason()}">
+            <div class="top-header">
+                <div class="title">
+                    Comunica. Come vuoi, Dove vuoi.<br>
+                    Tutto su Comunic@ens.
+                </div>
+                <div class="col-md-8">
+                    <button type="button" class="btn btn-light col-md-5"  (click)="edit_profile()">Modifica profilo</button>
+                    <button type="button" class="btn btn-danger col-md-5" (click)="logout()">Esci</button>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row row-bottom col-md-12" *ngIf="!userPrivacyAccepted">
+                <div class="col-md-12 mb-20">
+                    <div class="card privacy">
+                        <div class="card-body">
+                            <mat-icon>edit</mat-icon>
+                            <h1 class="card-title">Conferma i tuoi dati anagrafici.</h1>
+                        </div>
+                        <div class="card-footer text-muted" (click)="edit_profile()">
+                            <span>Procedi</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row row-bottom col-md-12" *ngIf="userPrivacyAccepted">
+                <div class="col-md-6 mb-20">
+                    <div class="card chat">
+                        <div class="card-header">
+                            <div *ngIf="isOpen('CHAT'); else chatElseBlock" class="is-open">Aperto</div>
+                            <ng-template #chatElseBlock>
+                                <div class="is-closed">Chiuso</div>
+                            </ng-template>
+                        </div>
+                        <div class="card-body">
+                            <mat-icon>forum</mat-icon>
+                            <h1 class="card-title">Chat</h1>
+                        </div>
+                        <div class="card-footer text-muted" [ngClass]="{'service-close': !isOpen('CHAT')}" (click)="clickService('CHAT')">
+                            <span>Procedi</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-20">
+                    <div class="card videochat">
+                        <div class="card-header">
+                                <div *ngIf="isOpen('VIDEOCHAT'); else videochatElseBlock" class="is-open">Aperto</div>
+                                <ng-template #videochatElseBlock>
+                                    <div class="is-closed">Chiuso</div>
+                                </ng-template>
+                            </div>
+                            <div class="card-body">
+                                <mat-icon>videocam</mat-icon>
+                                <h1 class="card-title">Video Chat</h1>
+                            </div>
+                            <div class="card-footer text-muted" [ngClass]="{'service-close': !isOpen('VIDEOCHAT')}" (click)="clickService('VIDEOCHAT')">
+                                <span>Procedi</span>
+                            </div>
+                    </div>
+                </div> 
+            </div>
+
+    </div>
 </div>
