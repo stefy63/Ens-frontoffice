@@ -19,12 +19,11 @@ export const environment = {
     api_url: 'http://localhost',
     api_port: 3030,
     api_suffix: '/api',
-
     
     // VideoChat Config
     videoChat_room_suffix: 'Ens_',
     videoChat_server_url: null,
-
+    videoChat_service_url: 'https://whereby.com/comunicaens_op',
     
     // redirect url after logout
     return_url: 'http://www.comunicaens.it',

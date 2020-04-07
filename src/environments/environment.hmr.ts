@@ -20,7 +20,7 @@ export const environment = {
     // VideoChat Config
     videoChat_room_suffix: 'Ens_',
     videoChat_server_url: null,
-
+    videoChat_service_url: 'https://whereby.com/comunicaens_op',
 
     // redirect url after logout
     return_url: 'loghttp://www.comunicaens.itin',
