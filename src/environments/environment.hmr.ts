@@ -23,6 +23,6 @@ export const environment = {
     videoChat_service_url: 'https://whereby.com/comunicaens_op',
 
     // redirect url after logout
-    return_url: 'loghttp://www.comunicaens.itin',
+    return_url: 'loghttp://www.comunicaens.it',
 
 };

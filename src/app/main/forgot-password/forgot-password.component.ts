@@ -1,12 +1,12 @@
-import { GoogleAnalyticsService } from 'app/services/analytics/google-analitics-service';
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { NotificationsService } from 'angular2-notifications';
+import { IForgotChangePassword } from 'app/interfaces/i-forgot-change-password';
+import { GoogleAnalyticsService } from 'app/services/analytics/google-analitics-service';
+import { ApiForgotPasswordService } from 'app/services/api/api-forgot-password.service';
 import { EmptyInputValidator } from 'app/services/MaterialValidator/EmptyInputValidator';
 import { PasswordValidator } from 'app/services/MaterialValidator/PasswordValidator';
-import { ApiForgotPasswordService } from 'app/services/api/api-forgot-password.service';
-import { IForgotChangePassword } from 'app/interfaces/i-forgot-change-password';
-import { NotificationsService } from 'angular2-notifications';
 
 @Component({
   selector: 'app-forgot-password',
@@ -49,7 +49,7 @@ export class ForgotPasswordComponent implements OnInit {
         } as IForgotChangePassword)
         .subscribe(() => {
             this.googleAnalyticsService.eventEmitter('EndForgotPasswordPage', 'New Password Successfully');
-            this.toast.success('Ok!', 'Password aggiornata con succeso');
+            this.toast.success('Ok!', 'Password aggiornata con successo');
             this.route.navigate(['/']);
         },
         (err) => {
