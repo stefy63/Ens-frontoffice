@@ -37,7 +37,7 @@ export class DialogForgotPassword implements OnInit {
                 this.googleAnalyticsService.eventEmitter('ForgotPasswordPage', 'Send Mail successfully');
                 this.toast.success('Attenzione', 'Ti abbiamo inviato una mail');
             }, (err) => {
-                if (err.status === 404 && err.error.message === 'EMAIL_NOT_FOUND') {
+                if (err.status === 404 && err.error.message === 'USER_OR_EMAIL_NOT_FOUND') {
                     this.googleAnalyticsService.eventEmitter('ForgotPasswordPage', 'Send Mail fault (email not found)');
                     this.toast.error('Attenzione', 'Email non presente in archivio');
                 } else {
