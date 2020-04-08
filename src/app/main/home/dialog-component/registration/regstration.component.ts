@@ -15,6 +15,7 @@ import { EmptyInputValidator } from 'app/services/MaterialValidator/EmptyInputVa
 import { NumericOnlyValidator } from 'app/services/MaterialValidator/NumericOnlyValidator';
 import { PasswordValidator } from 'app/services/MaterialValidator/PasswordValidator';
 import { assign, get } from 'lodash';
+import { PasswordPolicyValidator } from '../../../../services/MaterialValidator/PasswordPolicyValidator';
 
 
 export const MY_FORMATS = {
@@ -71,11 +72,11 @@ export class DialogRegistrationComponent implements OnInit {
         'new_password': new FormControl('', [
             Validators.required, 
             EmptyInputValidator.whiteSpace,
-            Validators.minLength(5), 
+            PasswordPolicyValidator.policy,
             PasswordValidator.match('confirm_password')
         ]),
         'confirm_password':  new FormControl('', [
-            Validators.required, 
+            Validators.required,
             PasswordValidator.match('new_password')
         ]),
         'name': new FormControl('', [

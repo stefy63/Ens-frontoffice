@@ -1,13 +1,13 @@
-import { GoogleAnalyticsService } from './../../../../../services/analytics/google-analitics-service';
 import { Component, Inject, OnInit } from '@angular/core';
-import * as _ from 'lodash';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { NotificationsService } from 'angular2-notifications';
 import { IChangePassword } from 'app/interfaces/i-change-password';
+import { ApiUserService } from 'app/services/api/api-user.service';
 import { EmptyInputValidator } from 'app/services/MaterialValidator/EmptyInputValidator';
 import { PasswordValidator } from 'app/services/MaterialValidator/PasswordValidator';
-import { ApiUserService } from 'app/services/api/api-user.service';
+import { PasswordPolicyValidator } from '../../../../../services/MaterialValidator/PasswordPolicyValidator';
+import { GoogleAnalyticsService } from './../../../../../services/analytics/google-analitics-service';
 
 @Component({
   selector: 'fuse-dialog-change-password',
@@ -30,7 +30,7 @@ export class DialogChangePassword implements OnInit {
   ) {
     this.formGroup = new FormGroup({
       'old_password': new FormControl('', [Validators.required, EmptyInputValidator.whiteSpace]),
-      'new_password':  new FormControl('', [Validators.required, EmptyInputValidator.whiteSpace, PasswordValidator.match('confirm_password')]),
+      'new_password':  new FormControl('', [Validators.required, EmptyInputValidator.whiteSpace, PasswordPolicyValidator.policy, PasswordValidator.match('confirm_password')]),
       'confirm_password':  new FormControl('', [Validators.required, PasswordValidator.match('new_password')])
     });
   }

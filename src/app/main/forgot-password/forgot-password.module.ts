@@ -1,9 +1,9 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { ForgotPasswordComponent } from './forgot-password.component';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FuseSharedModule } from '@fuse/shared.module';
+import { ForgotPasswordComponent } from './forgot-password.component';
+
 
 const routes = [
     {

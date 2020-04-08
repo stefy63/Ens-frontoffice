@@ -7,6 +7,7 @@ import { GoogleAnalyticsService } from 'app/services/analytics/google-analitics-
 import { ApiForgotPasswordService } from 'app/services/api/api-forgot-password.service';
 import { EmptyInputValidator } from 'app/services/MaterialValidator/EmptyInputValidator';
 import { PasswordValidator } from 'app/services/MaterialValidator/PasswordValidator';
+import { PasswordPolicyValidator } from '../../services/MaterialValidator/PasswordPolicyValidator';
 
 @Component({
   selector: 'app-forgot-password',
@@ -34,7 +35,7 @@ export class ForgotPasswordComponent implements OnInit {
             });
         
         this.formGroup = new FormGroup({
-            'new_password':  new FormControl('', [Validators.required, EmptyInputValidator.whiteSpace, PasswordValidator.match('confirm_password')]),
+            'new_password':  new FormControl('', [Validators.required, EmptyInputValidator.whiteSpace, PasswordPolicyValidator.policy, PasswordValidator.match('confirm_password')]),
             'confirm_password':  new FormControl('', [Validators.required, PasswordValidator.match('new_password')])
           });
      }
@@ -55,7 +56,8 @@ export class ForgotPasswordComponent implements OnInit {
         (err) => {
             console.log(err.error);
             this.googleAnalyticsService.eventEmitter('EndForgotPasswordPage', 'New Password fault (generic)');
-            this.toast.error('Attenzione', 'Operazione non riuscita');
+            const errorMessage = err.error === 'USER_OR_EMAIL_NOT_FOUND' ? 'Utente o Email non trovati' : 'Operazione non riuscita';
+            this.toast.error('Attenzione', errorMessage);
         });
     }
 
