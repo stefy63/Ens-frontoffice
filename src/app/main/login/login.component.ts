@@ -1,16 +1,17 @@
-import { LocalStorageService } from './../../services/local-storage/local-storage.service';
-import { IUser } from 'app/interfaces/i-user';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
+import { NotificationsService } from 'angular2-notifications';
+import { IUser } from 'app/interfaces/i-user';
+import { get } from 'lodash';
+import * as moment from 'moment';
+import { GoogleAnalyticsService } from '../../services/analytics/google-analitics-service';
+import { SocketService } from '../../services/socket/socket.service';
 import { DialogForgotPassword } from '../home/dialog-component/forgot-password/dialog-forgot-password.component';
 import { DialogRegistrationComponent } from '../home/dialog-component/registration/regstration.component';
-import { MatDialog } from '@angular/material';
-import { get } from 'lodash';
-import { GoogleAnalyticsService } from '../../services/analytics/google-analitics-service';
 import { AuthService } from './../../services/auth/auth.service';
-import { NotificationsService } from 'angular2-notifications';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { OnInit, Component } from '@angular/core';
-import * as moment from 'moment';
+import { LocalStorageService } from './../../services/local-storage/local-storage.service';
 
 
 @Component({
@@ -30,7 +31,8 @@ export class FuseLoginComponent implements OnInit {
     private authService: AuthService,
     public dialog: MatDialog,
     private router: Router,
-    private googleAnalyticsService: GoogleAnalyticsService
+    private googleAnalyticsService: GoogleAnalyticsService,
+    private socketService: SocketService
   ) {
     if (!!this.storage.getItem('user')) {
         this.router.navigate(['/home']);
@@ -52,6 +54,9 @@ export class FuseLoginComponent implements OnInit {
         password: this.formGroup.get('password').value
     }).subscribe(data => {
         this.googleAnalyticsService.eventEmitter('LoginPage', 'Login Successfully');
+        this.socketService.sendMessage('welcome-message', {
+          userToken: this.authService.getToken().token_session
+        });
         this.router.navigate(['home']);
     }, (err) => {
         const errorMessage = get(err, 'error.message', '');
