@@ -1,25 +1,25 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { Subject } from 'rxjs';
-import { takeUntil, filter, flatMap } from 'rxjs/operators';
-import { TranslateService } from '@ngx-translate/core';
-import * as _ from 'lodash';
-
-import { FuseConfigService } from '@fuse/services/config.service';
-import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
-
-import { navigation } from 'app/navigation/navigation';
-import { AuthService } from 'app/services/auth/auth.service';
-import { Router } from '@angular/router';
 import { MatDialog, MatIconRegistry } from '@angular/material';
-import { DialogChangePassword } from './dialog-component/change-password/dialog-change-password.component';
-import { LocalStorageService } from 'app/services/local-storage/local-storage.service';
-import { DialogProfileComponent } from './dialog-component/profile/profile.component';
-import { ApiUserService } from 'app/services/api/api-user.service';
-import { NotificationsService } from 'angular2-notifications';
-import { DialogConditionComponent } from './dialog-component/condition/condition.component';
-import { IUser } from 'app/interfaces/i-user';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Router } from '@angular/router';
+import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
+import { FuseConfigService } from '@fuse/services/config.service';
+import { TranslateService } from '@ngx-translate/core';
+import { NotificationsService } from 'angular2-notifications';
+import { IUser } from 'app/interfaces/i-user';
+import { navigation } from 'app/navigation/navigation';
+import { ApiUserService } from 'app/services/api/api-user.service';
+import { AuthService } from 'app/services/auth/auth.service';
+import { LocalStorageService } from 'app/services/local-storage/local-storage.service';
 import { environment } from 'environments/environment';
+import * as _ from 'lodash';
+import { Subject } from 'rxjs';
+import { filter, flatMap, takeUntil } from 'rxjs/operators';
+import { DialogChangePassword } from './dialog-component/change-password/dialog-change-password.component';
+import { DialogConditionComponent } from './dialog-component/condition/condition.component';
+import { DialogProfileComponent } from './dialog-component/profile/profile.component';
+
+
 
 @Component({
     selector     : 'navbar',
@@ -66,7 +66,7 @@ export class NavbarComponent implements OnInit, OnDestroy
     {
         this.matIconRegistry.addSvgIcon(
             `icon_ens_logo`,
-            this.domSanitizer.bypassSecurityTrustResourceUrl("assets/images/logos/logo comunicaens.svg")
+            this.domSanitizer.bypassSecurityTrustResourceUrl('assets/images/logos/logo comunicaens.svg')
           );
 
         this.navigation = navigation;

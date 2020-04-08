@@ -1,21 +1,21 @@
-import { PasswordValidator } from 'app/services/MaterialValidator/PasswordValidator';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { NotificationsService } from 'angular2-notifications';
 import { AlertToasterOptions } from 'app/class/alert-toaster-options';
+import { IUser } from 'app/interfaces/i-user';
+import { GoogleAnalyticsService } from 'app/services/analytics/google-analitics-service';
 import { ApiItalyGeoService } from 'app/services/api/api-italy-geo.service';
+import { ApiUserService } from 'app/services/api/api-user.service';
 import { AlphabeticOnlyValidator } from 'app/services/MaterialValidator/AlphabeticOnlyValidator';
 import { EmailCustomValidator } from 'app/services/MaterialValidator/EmailCustomValidator';
-import { NumericOnlyValidator } from 'app/services/MaterialValidator/NumericOnlyValidator';
-import { assign } from 'lodash';
-import { IUser } from 'app/interfaces/i-user';
 import { EmptyInputValidator } from 'app/services/MaterialValidator/EmptyInputValidator';
-import { ApiUserService } from 'app/services/api/api-user.service';
-import { NotificationsService } from 'angular2-notifications';
-import { get } from 'lodash';
-import { GoogleAnalyticsService } from 'app/services/analytics/google-analitics-service';
+import { NumericOnlyValidator } from 'app/services/MaterialValidator/NumericOnlyValidator';
+import { PasswordValidator } from 'app/services/MaterialValidator/PasswordValidator';
+import { assign, get } from 'lodash';
+import { PasswordPolicyValidator } from '../../../../services/MaterialValidator/PasswordPolicyValidator';
 
 
 export const MY_FORMATS = {
@@ -72,11 +72,11 @@ export class DialogRegistrationComponent implements OnInit {
         'new_password': new FormControl('', [
             Validators.required, 
             EmptyInputValidator.whiteSpace,
-            Validators.minLength(5), 
+            PasswordPolicyValidator.policy,
             PasswordValidator.match('confirm_password')
         ]),
         'confirm_password':  new FormControl('', [
-            Validators.required, 
+            Validators.required,
             PasswordValidator.match('new_password')
         ]),
         'name': new FormControl('', [
@@ -127,7 +127,7 @@ export class DialogRegistrationComponent implements OnInit {
     this.apiUserService.apiCreateUser(updatedModalData)
         .subscribe(data => {
                 this.googleAnalyticsService.eventEmitter('RegistrationPage', 'Registration Successfully');
-                this.toast.success('Attenzione', 'Tiabbiamo inviato una mail di conferma.');
+                this.toast.success('Attenzione', 'Ti abbiamo inviato una mail di conferma.');
                 this.dialogRef.close();
             }, (err) => {
                 const errorMessage = get(err, 'error.message', '');

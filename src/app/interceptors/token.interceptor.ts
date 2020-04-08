@@ -1,26 +1,20 @@
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {
-  HttpRequest,
-  HttpHandler,
-  HttpEvent,
-  HttpInterceptor
-} from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/throw';
-import { Router } from '@angular/router';
-import { LocalStorageService } from 'app/services/local-storage/local-storage.service';
 import { AuthService } from 'app/services/auth/auth.service';
+import { LocalStorageService } from 'app/services/local-storage/local-storage.service';
 import { throwError } from 'rxjs';
+import 'rxjs/add/observable/throw';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/do';
+import { Observable } from 'rxjs/Observable';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
 
   constructor(
     private auth: AuthService,
-    private storage: LocalStorageService,
-    private router: Router
+    private storage: LocalStorageService
   ) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -35,6 +29,7 @@ export class TokenInterceptor implements HttpInterceptor {
               .catch(response => {
                 if (response.status === 401) {
                   this.storage.clear();
+                  window.open(environment.return_url, '_self');
                 }
                 return throwError(response);
               });

@@ -1,6 +1,3 @@
-import { ApiUserService } from 'app/services/api/api-user.service';
-import { IUser } from 'app/interfaces/i-user';
-import { DialogProfileComponent } from './../../layout/components/navbar/dialog-component/profile/profile.component';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
@@ -11,25 +8,28 @@ import { TicketServices } from 'app/enums/ticket-services.enum';
 import { ServicesColor } from 'app/enums/TicketServicesColor.enum';
 import { ITicket } from 'app/interfaces/i-ticket';
 import { ITicketHistory } from 'app/interfaces/i-ticket-history';
+import { IUser } from 'app/interfaces/i-user';
+import { GoogleAnalyticsService } from 'app/services/analytics/google-analitics-service';
 import { ApiCalendarService } from 'app/services/api/api-calendar-service';
 import { ApiLoginService } from 'app/services/api/api-login.service';
 import { ApiQueueService } from 'app/services/api/api-queue.service';
 import { ApiTicketHistoryService } from 'app/services/api/api-ticket-history.service';
 import { ApiTicketServiceService } from 'app/services/api/api-ticket-service-service';
 import { ApiTicketService } from 'app/services/api/api-ticket.service';
+import { ApiUserService } from 'app/services/api/api-user.service';
 import { AuthService } from 'app/services/auth/auth.service';
 import { LocalStorageService } from 'app/services/local-storage/local-storage.service';
 import { SocketService } from 'app/services/socket/socket.service';
+import { environment } from 'environments/environment.prod';
 import { keyBy } from 'lodash';
+import * as moment from 'moment';
 import { from, Observable } from 'rxjs';
 import { filter, flatMap, map, mergeMap, tap } from 'rxjs/operators';
+import { DialogProfileComponent } from './../../layout/components/navbar/dialog-component/profile/profile.component';
+import { DialogForgotPassword } from './dialog-component/forgot-password/dialog-forgot-password.component';
 import { DialogLogin } from './dialog-component/login/dialog-login.component';
 import { DialogNewTicket } from './dialog-component/new-ticket/dialog-new-ticket.component';
 import { DialogRegistrationComponent } from './dialog-component/registration/regstration.component';
-import { DialogForgotPassword } from './dialog-component/forgot-password/dialog-forgot-password.component';
-import { GoogleAnalyticsService } from 'app/services/analytics/google-analitics-service';
-import * as moment from 'moment';
-import { environment } from 'environments/environment.prod';
 
 
 @Component({
