@@ -1,6 +1,11 @@
 
     <div class="home-page">
         <div class="row-top" [ngStyle]="{'background': bgSeason()}">
+            <div class="browser-info">
+                <button type="button" class="btn btn-raised" (click)="openBrowserInfo()">
+                    <i class="material-icons">info</i>
+                </button>
+            </div>
             <div class="top-header">
                 <div class="title">
                     Comunica. Come vuoi, Dove vuoi.<br>

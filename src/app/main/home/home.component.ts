@@ -30,7 +30,7 @@ import { DialogForgotPassword } from './dialog-component/forgot-password/dialog-
 import { DialogLogin } from './dialog-component/login/dialog-login.component';
 import { DialogNewTicket } from './dialog-component/new-ticket/dialog-new-ticket.component';
 import { DialogRegistrationComponent } from './dialog-component/registration/regstration.component';
-
+import {MatSnackBar, MatSnackBarConfig} from '@angular/material';
 
 @Component({
     selector: 'home',
@@ -61,7 +61,8 @@ export class HomeComponent implements OnInit {
         private socketService: SocketService,
         private apiUserService: ApiUserService,
         private apiQueueService: ApiQueueService,
-        public googleAnalyticsService: GoogleAnalyticsService
+        public googleAnalyticsService: GoogleAnalyticsService,
+        public snackBar: MatSnackBar
     ) { 
         if (!this.storage.getItem('user')) {
             this.router.navigate(['/login']);
@@ -69,6 +70,7 @@ export class HomeComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.openBrowserInfo();
         this.user = this.storage.getItem('user');
         this.userPrivacyAccepted = !!this.user.userdata.privacyaccept;
         this.googleAnalyticsService.pageEmitter('HomePage');
@@ -188,7 +190,7 @@ export class HomeComponent implements OnInit {
         .format('MMMM')
         .toString()
         .toLowerCase();
-        return `url("assets/images/backgrounds/${mounth}_hd.png") 10% 38% no-repeat`;
+        return `url("assets/images/backgrounds/${mounth}_hd.png") 10% 50% no-repeat`;
     } else {
         return 'unset';
     }
@@ -229,6 +231,24 @@ logout(): void {
 
 privacy() {
     this.router.navigate(['privacy']);
+}
+
+openBrowserInfo() {
+    let snackConfig = new MatSnackBarConfig();
+    snackConfig.panelClass = [
+
+    ]
+    this.snackBar.open(`
+                Browser Supportati:\n
+        * [Safari >= 11.1.2 (high Sierra)]\n
+        * [Chrome ultima versione (80)]\n
+        * [Firefox ultima versione (74)]\n
+    `, 'Ho Capito', {
+    duration: 20000,
+    panelClass: [
+        'multiline-snackbar'
+    ]
+    });
 }
 
 }
