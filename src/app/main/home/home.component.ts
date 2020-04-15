@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import { Router } from '@angular/router';
 import { NotificationsService } from 'angular2-notifications';
 import { AlertToasterOptions } from 'app/class/alert-toaster-options';
@@ -30,7 +30,6 @@ import { DialogForgotPassword } from './dialog-component/forgot-password/dialog-
 import { DialogLogin } from './dialog-component/login/dialog-login.component';
 import { DialogNewTicket } from './dialog-component/new-ticket/dialog-new-ticket.component';
 import { DialogRegistrationComponent } from './dialog-component/registration/regstration.component';
-import {MatSnackBar, MatSnackBarConfig} from '@angular/material';
 
 @Component({
     selector: 'home',
@@ -236,12 +235,11 @@ privacy() {
 }
 
 openBrowserInfo() {
-    let snackConfig = new MatSnackBarConfig();
+    const snackConfig = new MatSnackBarConfig();
     snackConfig.panelClass = [
 
-    ]
-    let snackBarRef = this.snackBar.open(`
-                Browser Supportati:\n
+    ];
+    const snackBarRef = this.snackBar.open(`Browser Supportati:\n
         - Safari >= 11.1.2 (high Sierra)\n
         - Chrome ultima versione (>=80)\n
         - Firefox ultima versione (>=74)\n
