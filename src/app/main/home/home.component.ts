@@ -192,7 +192,7 @@ export class HomeComponent implements OnInit {
         .format('MMMM')
         .toString()
         .toLowerCase();
-        return `url("assets/images/backgrounds/${mounth}_hd.png") 10% 50% no-repeat`;
+        return `url("assets/images/backgrounds/${mounth}_hd.png");`;
     } else {
         return 'unset';
     }
