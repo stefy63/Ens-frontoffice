@@ -62,7 +62,7 @@ export class HomeComponent implements OnInit {
         private apiUserService: ApiUserService,
         private apiQueueService: ApiQueueService,
         public googleAnalyticsService: GoogleAnalyticsService,
-        public snackBar: MatSnackBar
+        public snackBar: MatSnackBar,
     ) { 
         if (!this.storage.getItem('user')) {
             this.router.navigate(['/login']);
@@ -70,7 +70,9 @@ export class HomeComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.openBrowserInfo();
+        if (!this.storage.getItem('browser-info')) {
+            this.openBrowserInfo();
+        }
         this.user = this.storage.getItem('user');
         this.userPrivacyAccepted = !!this.user.userdata.privacyaccept;
         this.googleAnalyticsService.pageEmitter('HomePage');
@@ -238,16 +240,22 @@ openBrowserInfo() {
     snackConfig.panelClass = [
 
     ]
-    this.snackBar.open(`
+    let snackBarRef = this.snackBar.open(`
                 Browser Supportati:\n
-        * [Safari >= 11.1.2 (high Sierra)]\n
-        * [Chrome ultima versione (80)]\n
-        * [Firefox ultima versione (74)]\n
+        - Safari >= 11.1.2 (high Sierra)\n
+        - Chrome ultima versione (>=80)\n
+        - Firefox ultima versione (>=74)\n
     `, 'Ho Capito', {
-    duration: 20000,
+    duration: 60000,
     panelClass: [
         'multiline-snackbar'
-    ]
+    ],
+    verticalPosition: 'top', // 'top' | 'bottom'
+    // horizontalPosition: 'end', //'start' | 'center' | 'end' | 'left' | 'right'
+    });
+
+    snackBarRef.afterDismissed().subscribe(() => {
+        this.storage.setKey('browser-info', true);
     });
 }
 
