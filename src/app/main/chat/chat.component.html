@@ -7,29 +7,33 @@
 </div>
 <div class="timer__container" *ngIf="ticket">
     <span class="chat-header-operator">Operatore: {{opName}}</span>
-    <div class="text-right" *ngIf="showReplyMessage">
+    <div class="timer--count text-right" *ngIf="showReplyMessage">
         {{ timer }}
     </div>
 </div>
-<ng-scrollbar trackX="false" class="message__container"> 
-    <div class="chat-messages" *ngFor="let message of ticketHistorys">
-        <!-- MESSAGE -->
-        <div class="message-row" [ngClass]="{'user': (message.type.type === 'OPERATOR')}">
-            <div class="bubble">
-                <div class="message" innerHtml="{{message.action}}"></div>
+<div class="message__container">
+    <div class="ngx-scrollbar-wrapper">
+        <ng-scrollbar trackX="false" class="message__container"> 
+            <div class="chat-messages" *ngFor="let message of ticketHistorys">
+                <!-- MESSAGE -->
+                <div class="message-row" [ngClass]="{'user': (message.type.type !== 'OPERATOR')}">
+                    <div class="bubble">
+                        <div class="message" innerHtml="{{message.action}}"></div>
+                    </div>
+                    <div class="time text-muted">{{message.date_time | date:'dd/MM/yyyy, HH:mm':'UTC'}}</div>
+                </div>
+                <!-- / MESSAGE -->
             </div>
-            <div class="time text-muted">{{message.date_time | date:'dd/MM/yyyy, HH:mm':'UTC'}}</div>
-        </div>
-        <!-- / MESSAGE -->
+        </ng-scrollbar>
     </div>
-</ng-scrollbar>            
+</div>       
 <div #onWritingMsg class="on-writing">L'operatore sta scrivendo........</div>
 <!-- CHAT FOOTER -->
 <div class="chat-footer" [hidden]="!ticket">
     <!-- REPLY FORM -->
-    <form #replyForm="ngForm" (ngSubmit)="reply($event)" (keyup.enter)="reply($event)" (keydown)="typing($event)" fxFlex
-        class="reply-form" fxLayout="row" fxLayoutAlign="center center">
-        <mat-form-field style="flex-grow: 1" floatPlaceholder="never">
+    <form #replyForm="ngForm" (ngSubmit)="reply($event)" (keyup.enter)="reply($event)" (keydown)="typing($event)"
+        class="reply-form">
+        <mat-form-field style="width: calc(100% - 60px);" floatPlaceholder="never">
             <textarea matInput #replyInput ngModel name="message" [disabled]="!showReplyMessage"></textarea>
             <mat-placeholder [hidden]="!showReplyMessage">Scrivi il messaggio e premi Enter</mat-placeholder>
             <mat-placeholder [hidden]="showReplyMessage">Chat terminata. Tornare alla Home Page, Grazie. </mat-placeholder>

@@ -66,7 +66,7 @@ export class NavbarComponent implements OnInit, OnDestroy
     {
         this.matIconRegistry.addSvgIcon(
             `icon_ens_logo`,
-            this.domSanitizer.bypassSecurityTrustResourceUrl('assets/images/logos/logo comunicaens.svg')
+            this.domSanitizer.bypassSecurityTrustResourceUrl('assets/images/logos/comunicaens_vettoriale.svg')
           );
 
         this.navigation = navigation;

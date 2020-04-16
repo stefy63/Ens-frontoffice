@@ -1,26 +1,69 @@
+
+::ng-deep .multiline-snackbar {
+    white-space: pre-line;
+    line-height: 10px !important;
+    opacity: 0.9 !important;
+    color: white !important;
+}
 :host {
+    flex-grow: 1;
+
+    height: 100%;
     .home-page {
         display: flex;
         flex-direction: column;
         height: 100%;
-        background-color: white;
         overflow: auto;
+        flex-grow: 1;
+
         .row-top {
             display: flex;
             justify-content: center;
             margin-bottom: 10px;
+            background-repeat: repeat;
+            background-position: center;
+
+            padding: 20px;
+            .browser-info {
+                .btn {
+                    .material-icons {
+                        color: red;
+                        font-size: 25px;
+                    }
+                }
+                .btn:focus,.btn:active {
+                    outline: none !important;
+                    box-shadow: none;
+                }
+                @media (max-width: 600px){
+                    .btn .material-icons {
+                        font-size: 15px;
+                    }  
+                }
+
+            }
             .top-header {
                 width: 80%;
                 .title {
                     font-size: 25px;
                     color: white;
                     font-weight: bold;
-                    padding: 20px 0 20px 20px;
+                    padding-left: 20px;
+                    margin-bottom: 10px;
                 }
                 .btn {
                     font-size: 15px;
                     margin-right: 20px;
                     margin-bottom: 10px;
+                }
+                @media (max-width: 600px){
+                    .title {
+                        font-size: 13px;
+                    }  
+                    .btn {
+                        font-size: 12px;
+                        margin-bottom: 15px;
+                    }  
                 }
 
             }
@@ -66,6 +109,14 @@
         }
         .card-title {
             font-weight: 700;
+        }
+        .service_description {
+            font-weight: normal;
+            padding-left: 10px;
+            text-align: left;
+            color: grey;
+            border-left: 2px solid grey;
+            margin: 20px;
         }
     }
     .card-footer {

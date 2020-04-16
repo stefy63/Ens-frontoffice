@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import { Router } from '@angular/router';
 import { NotificationsService } from 'angular2-notifications';
 import { AlertToasterOptions } from 'app/class/alert-toaster-options';
@@ -31,7 +31,6 @@ import { DialogLogin } from './dialog-component/login/dialog-login.component';
 import { DialogNewTicket } from './dialog-component/new-ticket/dialog-new-ticket.component';
 import { DialogRegistrationComponent } from './dialog-component/registration/regstration.component';
 
-
 @Component({
     selector: 'home',
     templateUrl: './home.component.html',
@@ -61,7 +60,8 @@ export class HomeComponent implements OnInit {
         private socketService: SocketService,
         private apiUserService: ApiUserService,
         private apiQueueService: ApiQueueService,
-        public googleAnalyticsService: GoogleAnalyticsService
+        public googleAnalyticsService: GoogleAnalyticsService,
+        public snackBar: MatSnackBar,
     ) { 
         if (!this.storage.getItem('user')) {
             this.router.navigate(['/login']);
@@ -69,6 +69,9 @@ export class HomeComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        if (!this.storage.getItem('browser-info')) {
+            this.openBrowserInfo();
+        }
         this.user = this.storage.getItem('user');
         this.userPrivacyAccepted = !!this.user.userdata.privacyaccept;
         this.googleAnalyticsService.pageEmitter('HomePage');
@@ -76,6 +79,7 @@ export class HomeComponent implements OnInit {
             tap((services) => this.ticketServices = keyBy(services, (serviceItem) => serviceItem.service)),
             flatMap((data) => from(data)),
             flatMap((service: any) => this.apiCalendarService.apiIsActive(service.id).pipe(map((status) => ({
+                'description': service.description,
                 'service': service.service,
                 'status': status
             }))),
@@ -163,7 +167,7 @@ export class HomeComponent implements OnInit {
                     this.router.navigate(['/waiting', ticketHistory.id_ticket]);
                 }, (err) => {
                     console.error(err);
-                    this.toast.error('Nuovo Tichet', 'Hai appena richiesto una assistenza, aspetta un minuto prima di richiederne un\'altra');
+                    this.toast.error('Nuovo Ticket', 'Hai appena richiesto una assistenza, aspetta un minuto prima di richiederne un\'altra');
                 });
             }
 
@@ -188,7 +192,7 @@ export class HomeComponent implements OnInit {
         .format('MMMM')
         .toString()
         .toLowerCase();
-        return `url("assets/images/backgrounds/${mounth}_hd.png") 10% 38% no-repeat`;
+        return `url("assets/images/backgrounds/${mounth}_hd.png");`;
     } else {
         return 'unset';
     }
@@ -229,6 +233,29 @@ logout(): void {
 
 privacy() {
     this.router.navigate(['privacy']);
+}
+
+openBrowserInfo() {
+    const snackConfig = new MatSnackBarConfig();
+    snackConfig.panelClass = [
+
+    ];
+    const snackBarRef = this.snackBar.open(`Browser Supportati:\n
+        - Safari >= 11.1.2 (high Sierra)\n
+        - Chrome ultima versione (>=80)\n
+        - Firefox ultima versione (>=74)\n
+    `, 'Ho Capito', {
+    duration: 60000,
+    panelClass: [
+        'multiline-snackbar'
+    ],
+    verticalPosition: 'top', // 'top' | 'bottom'
+    // horizontalPosition: 'end', //'start' | 'center' | 'end' | 'left' | 'right'
+    });
+
+    snackBarRef.afterDismissed().subscribe(() => {
+        this.storage.setKey('browser-info', true);
+    });
 }
 
 }
