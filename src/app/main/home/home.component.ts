@@ -167,7 +167,7 @@ export class HomeComponent implements OnInit {
                     this.router.navigate(['/waiting', ticketHistory.id_ticket]);
                 }, (err) => {
                     console.error(err);
-                    this.toast.error('Nuovo Tichet', 'Hai appena richiesto una assistenza, aspetta un minuto prima di richiederne un\'altra');
+                    this.toast.error('Nuovo Ticket', 'Hai appena richiesto una assistenza, aspetta un minuto prima di richiederne un\'altra');
                 });
             }
 

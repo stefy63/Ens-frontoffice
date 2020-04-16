@@ -16,7 +16,7 @@ export const WsEvents = {
     },
     ticketHistory: {
         create: 'onTicketHistoryCreate',
-        updated: 'onTichetHistoryUpdated',
+        updated: 'onTicketHistoryUpdated',
     },
     serverMessage: {
         connect: 'connect',
