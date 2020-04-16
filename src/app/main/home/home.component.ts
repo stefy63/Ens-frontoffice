@@ -79,6 +79,7 @@ export class HomeComponent implements OnInit {
             tap((services) => this.ticketServices = keyBy(services, (serviceItem) => serviceItem.service)),
             flatMap((data) => from(data)),
             flatMap((service: any) => this.apiCalendarService.apiIsActive(service.id).pipe(map((status) => ({
+                'description': service.description,
                 'service': service.service,
                 'status': status
             }))),
