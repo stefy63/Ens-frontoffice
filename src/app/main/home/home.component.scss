@@ -13,7 +13,6 @@
         display: flex;
         flex-direction: column;
         height: 100%;
-        background-color: white;
         overflow: auto;
         flex-grow: 1;
 
@@ -112,9 +111,12 @@
             font-weight: 700;
         }
         .service_description {
+            font-weight: normal;
             padding-left: 10px;
             text-align: left;
-            color: blue;
+            color: grey;
+            border-left: 2px solid grey;
+            margin: 20px;
         }
     }
     .card-footer {
