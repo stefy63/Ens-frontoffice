@@ -21,7 +21,7 @@ import { AuthService } from 'app/services/auth/auth.service';
 import { LocalStorageService } from 'app/services/local-storage/local-storage.service';
 import { SocketService } from 'app/services/socket/socket.service';
 import { environment } from 'environments/environment.prod';
-import { keyBy, find } from 'lodash';
+import { keyBy } from 'lodash';
 import * as moment from 'moment';
 import { from, Observable } from 'rxjs';
 import { filter, flatMap, map, mergeMap, tap } from 'rxjs/operators';

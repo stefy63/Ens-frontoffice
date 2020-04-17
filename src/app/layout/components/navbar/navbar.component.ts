@@ -54,6 +54,12 @@ export class NavbarComponent implements OnInit, OnDestroy
     constructor(
         private storage: LocalStorageService,
         public dialog: MatDialog,
+        private router: Router,
+        private _fuseConfigService: FuseConfigService,
+        private _fuseSidebarService: FuseSidebarService,
+        private _translateService: TranslateService,
+        private authService: AuthService,
+        private toast: NotificationsService,
         private apiUserService: ApiUserService,
         private matIconRegistry: MatIconRegistry,
         private domSanitizer: DomSanitizer
