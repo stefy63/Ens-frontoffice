@@ -38,6 +38,7 @@ export class NavbarComponent implements OnInit, OnDestroy
     selectedLanguage: any;
     userStatusOptions: any[];
     public userLogged: boolean;
+    public titleNavBar: string;
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -53,20 +54,15 @@ export class NavbarComponent implements OnInit, OnDestroy
     constructor(
         private storage: LocalStorageService,
         public dialog: MatDialog,
-        private router: Router,
-        private _fuseConfigService: FuseConfigService,
-        private _fuseSidebarService: FuseSidebarService,
-        private _translateService: TranslateService,
-        private authService: AuthService,
-        private toast: NotificationsService,
         private apiUserService: ApiUserService,
         private matIconRegistry: MatIconRegistry,
         private domSanitizer: DomSanitizer
     )
     {
+        this.titleNavBar = environment.APP_TITLE;
         this.matIconRegistry.addSvgIcon(
-            `icon_ens_logo`,
-            this.domSanitizer.bypassSecurityTrustResourceUrl('assets/images/logos/comunicaens_vettoriale.svg')
+            `icon_logo`,
+            this.domSanitizer.bypassSecurityTrustResourceUrl('assets/images/logos/logo_vettoriale.svg')
           );
 
         this.navigation = navigation;

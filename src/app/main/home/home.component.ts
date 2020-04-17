@@ -21,7 +21,7 @@ import { AuthService } from 'app/services/auth/auth.service';
 import { LocalStorageService } from 'app/services/local-storage/local-storage.service';
 import { SocketService } from 'app/services/socket/socket.service';
 import { environment } from 'environments/environment.prod';
-import { keyBy } from 'lodash';
+import { keyBy, find } from 'lodash';
 import * as moment from 'moment';
 import { from, Observable } from 'rxjs';
 import { filter, flatMap, map, mergeMap, tap } from 'rxjs/operators';
@@ -30,6 +30,7 @@ import { DialogForgotPassword } from './dialog-component/forgot-password/dialog-
 import { DialogLogin } from './dialog-component/login/dialog-login.component';
 import { DialogNewTicket } from './dialog-component/new-ticket/dialog-new-ticket.component';
 import { DialogRegistrationComponent } from './dialog-component/registration/regstration.component';
+
 
 @Component({
     selector: 'home',
@@ -43,6 +44,7 @@ export class HomeComponent implements OnInit {
     public options = AlertToasterOptions;
     public userLogged: boolean;
     public userPrivacyAccepted: boolean;
+    public activeService: string[];
 
     private dataModal: any;
     private user: IUser;
@@ -66,6 +68,7 @@ export class HomeComponent implements OnInit {
         if (!this.storage.getItem('user')) {
             this.router.navigate(['/login']);
         }
+        this.activeService = environment.active_service;
     }
 
     ngOnInit(): void {
@@ -256,6 +259,10 @@ openBrowserInfo() {
     snackBarRef.afterDismissed().subscribe(() => {
         this.storage.setKey('browser-info', true);
     });
+}
+
+serviceActive(service: string) {
+    return this.activeService.indexOf(service) >= 0;
 }
 
 }

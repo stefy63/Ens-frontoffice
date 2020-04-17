@@ -3,7 +3,7 @@ import { DialogForgotPassword } from './main/home/dialog-component/forgot-passwo
 import { LoginModule } from './main/login/login.module';
 import { PrivacyModule } from './main/privacy/privacy.module';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
@@ -122,7 +122,8 @@ const config: SocketIoConfig = { url: environment.ws_url + wssPort, options: opt
         ApiTicketHistoryService,
         ChatService,
         AuthGuard,
-        GoogleAnalyticsService
+        GoogleAnalyticsService,
+        Title
     ],
     bootstrap   : [
         AppComponent
