@@ -12,7 +12,8 @@
             </div>
         </div>
         <div class="card-body">
-            <div class="queue" [ngClass]="{'next' : ticketInWaiting < 2}">{{ticketInWaiting}}</div>
+            <div class="queue" [ngClass]="{'next' : ticketInWaiting < 2}" *ngIf="ticketInWaiting > 0">{{ticketInWaiting}}</div>
+            <div class="queue" [ngClass]="{'next' : ticketInWaiting < 2}" *ngIf="ticketInWaiting < 1">Sei il Prossimo</div>
             <div class="info-queue">Persone sono in coda prima di te</div>
 
         </div>
