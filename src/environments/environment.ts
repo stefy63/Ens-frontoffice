@@ -29,5 +29,10 @@ export const environment = {
     // redirect url after logout
     return_url: 'http://www.comunicaens.it',
 
+    //App Title
+    APP_TITLE: "Comunic@Ens",
+
+    //App active service
+    active_service: ["CHAT", "VIDEOCHAT"],
     
 };

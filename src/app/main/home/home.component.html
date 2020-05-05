@@ -8,8 +8,7 @@
             </div>
             <div class="top-header">
                 <div class="title">
-                    Comunica. Come vuoi, Dove vuoi.<br>
-                    Tutto su Comunic@ens.
+                    Comunica. Come vuoi, Dove vuoi.
                 </div>
                 <div class="col-md-8">
                     <button type="button" class="btn btn-light col-md-5"  (click)="edit_profile()">Modifica profilo</button>
@@ -33,7 +32,7 @@
 
             </div>
             <div class="row row-bottom col-md-12" *ngIf="userPrivacyAccepted">
-                <div class="col-md-6 mb-20">
+                <div class="col-md-6 mb-20" *ngIf="serviceActive('CHAT')">
                     <div class="card chat">
                         <div class="card-header">
                             <div *ngIf="isOpen('CHAT'); else chatElseBlock" class="is-open">Aperto</div>
@@ -51,7 +50,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 mb-20">
+                <div class="col-md-6 mb-20" *ngIf="serviceActive('VIDEOCHAT')">
                     <div class="card videochat">
                         <div class="card-header">
                                 <div *ngIf="isOpen('VIDEOCHAT'); else videochatElseBlock" class="is-open">Aperto</div>

@@ -18,6 +18,8 @@ import { locale as navigationTurkish } from 'app/navigation/i18n/tr';
 import { AlertToasterOptions } from './class/alert-toaster-options';
 import { AuthService } from './services/auth/auth.service';
 import { LocalStorageService } from './services/local-storage/local-storage.service';
+import { Title }     from '@angular/platform-browser';
+import { environment } from '../environments/environment';
 
 @Component({
     selector: 'app',
@@ -56,9 +58,11 @@ export class AppComponent implements OnInit, OnDestroy {
         private _platform: Platform,
         private authService: AuthService,
         private storage: LocalStorageService,
-        private router: Router
+        private router: Router,
+        private title: Title
     ) {
        
+        this.title.setTitle( environment.APP_TITLE );
 
         // Get default navigation
         this.navigation = navigation;

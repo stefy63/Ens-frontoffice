@@ -8,17 +8,18 @@
             <div class="card-title" [ngStyle]="setMyStyles()">
                 <mat-icon *ngIf="service === 'CHAT'">forum</mat-icon>
                 <mat-icon *ngIf="service === 'VIDEOCHAT'">videocam</mat-icon>
-                <span>{{service | titlecase}}</span> 
+                <span>{{service | titlecase}}</span>
             </div>
         </div>
         <div class="card-body">
-            <div class="queue" [ngClass]="{'next' : ticketInWaiting < 2}">{{ticketInWaiting}}</div>
+            <div class="queue" [ngClass]="{'next' : ticketInWaiting < 2}" *ngIf="ticketInWaiting > 0">{{ticketInWaiting}}</div>
+            <div class="queue" [ngClass]="{'next' : ticketInWaiting < 2}" *ngIf="ticketInWaiting < 1">Sei il Prossimo</div>
             <div class="info-queue">Persone sono in coda prima di te</div>
-            
+
         </div>
         <div class="card-footer" >
             <mat-icon>alarm</mat-icon>
-            <div *ngIf="ticketInWaiting > 1">
+            <div>
                 {{operatorOnline}} Operatori attivi
             </div>
             <div *ngIf="ticketInWaiting < 2">

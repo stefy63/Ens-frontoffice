@@ -38,6 +38,7 @@ export class NavbarComponent implements OnInit, OnDestroy
     selectedLanguage: any;
     userStatusOptions: any[];
     public userLogged: boolean;
+    public titleNavBar: string;
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -64,9 +65,10 @@ export class NavbarComponent implements OnInit, OnDestroy
         private domSanitizer: DomSanitizer
     )
     {
+        this.titleNavBar = environment.APP_TITLE;
         this.matIconRegistry.addSvgIcon(
-            `icon_ens_logo`,
-            this.domSanitizer.bypassSecurityTrustResourceUrl('assets/images/logos/comunicaens_vettoriale.svg')
+            `icon_logo`,
+            this.domSanitizer.bypassSecurityTrustResourceUrl('assets/images/logos/logo_vettoriale.svg')
           );
 
         this.navigation = navigation;

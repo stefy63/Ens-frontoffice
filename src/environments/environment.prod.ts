@@ -26,5 +26,11 @@ export const environment = {
     videoChat_service_url: 'https://whereby.com/comunicaens_op',
     
     // redirect url after logout
-    return_url: 'http://www.comunicaens.it',
+    return_url: 'http://www.comunicaens.it',  
+    
+    //App Title
+    APP_TITLE: "Comunic@Ens",
+
+    //App active service
+    active_service: ["CHAT", "VIDEOCHAT"],
 };

@@ -31,6 +31,7 @@ import { DialogLogin } from './dialog-component/login/dialog-login.component';
 import { DialogNewTicket } from './dialog-component/new-ticket/dialog-new-ticket.component';
 import { DialogRegistrationComponent } from './dialog-component/registration/regstration.component';
 
+
 @Component({
     selector: 'home',
     templateUrl: './home.component.html',
@@ -43,6 +44,7 @@ export class HomeComponent implements OnInit {
     public options = AlertToasterOptions;
     public userLogged: boolean;
     public userPrivacyAccepted: boolean;
+    public activeService: string[];
 
     private dataModal: any;
     private user: IUser;
@@ -66,6 +68,7 @@ export class HomeComponent implements OnInit {
         if (!this.storage.getItem('user')) {
             this.router.navigate(['/login']);
         }
+        this.activeService = environment.active_service;
     }
 
     ngOnInit(): void {
@@ -167,7 +170,7 @@ export class HomeComponent implements OnInit {
                     this.router.navigate(['/waiting', ticketHistory.id_ticket]);
                 }, (err) => {
                     console.error(err);
-                    this.toast.error('Nuovo Ticket', 'Hai appena richiesto una assistenza, aspetta un minuto prima di richiederne un\'altra');
+                    this.toast.error('Nuovo Ticket', 'Aspetta un minuto prima di chiedere un\'altra richiesta');
                 });
             }
 
@@ -256,6 +259,10 @@ openBrowserInfo() {
     snackBarRef.afterDismissed().subscribe(() => {
         this.storage.setKey('browser-info', true);
     });
+}
+
+serviceActive(service: string) {
+    return this.activeService.indexOf(service) >= 0;
 }
 
 }
