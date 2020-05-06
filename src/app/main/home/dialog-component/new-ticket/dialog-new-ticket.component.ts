@@ -27,11 +27,11 @@ export class DialogNewTicket implements OnInit {
     private storage: LocalStorageService,
     private toast: NotificationsService,
     private googleAnalyticsService: GoogleAnalyticsService
-  ) { 
+  ) {
     this.categories = this.storage.getItem('ticket_category');
     this.formGroup = new FormGroup({
         'phone': new FormControl('', [Validators.required, PhoneValidator.validPhone]),
-        'category': new FormControl(this.categories, [Validators.required]),
+        'category': new FormControl('', [Validators.required]),
         'description': new FormControl('', [Validators.required])
     });
   }
@@ -44,7 +44,7 @@ export class DialogNewTicket implements OnInit {
       const style = {
           color: this.data.color,
       };
-      return style; 
+      return style;
   }
 
 
@@ -60,5 +60,5 @@ export class DialogNewTicket implements OnInit {
       }
   }
 
-  
+
 }
