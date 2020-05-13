@@ -70,7 +70,7 @@ export class DialogRegistrationComponent implements OnInit {
     this.formGroup = new FormGroup({
         'username': new FormControl(''),
         'new_password': new FormControl('', [
-            Validators.required, 
+            Validators.required,
             EmptyInputValidator.whiteSpace,
             PasswordPolicyValidator.policy,
             PasswordValidator.match('confirm_password')
@@ -88,17 +88,16 @@ export class DialogRegistrationComponent implements OnInit {
             AlphabeticOnlyValidator.alphabeticOnly
         ]),
         'email': new FormControl('', [
-            Validators.required, 
+            Validators.required,
             EmailCustomValidator.email_custom
         ]),
         'gender': new FormControl('', [
             Validators.required
             ]),
         'phone': new FormControl('', [
-            Validators.required, 
+            Validators.required,
             NumericOnlyValidator.numericOnly
         ]),
-        'card_number': new FormControl('', []),
         'privacyaccept': new FormControl(''),
         'newsletteraccept': new FormControl(''),
         'becontacted': new FormControl(''),
@@ -117,7 +116,6 @@ export class DialogRegistrationComponent implements OnInit {
             email: this.formGroup.controls.email.value,
             gender: this.formGroup.controls.gender.value,
             phone: this.formGroup.controls.phone.value,
-            card_number: this.formGroup.controls.card_number.value,
             privacyaccept: !!this.formGroup.controls.privacyaccept.value,
             newsletteraccept: !!this.formGroup.controls.newsletteraccept.value,
             becontacted: !!this.formGroup.controls.becontacted.value

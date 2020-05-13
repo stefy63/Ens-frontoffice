@@ -3,7 +3,7 @@
             <button mat-icon-button mat-dialog-close class="button-close--outlined" color="primary">
                 <mat-icon>close</mat-icon>
             </button>
-    </div>  
+    </div>
     <h1 mat-dialog-title class="modal-title">Registrazione</h1>
 </div>
 <form [formGroup]="formGroup" class="mat-dialog-content" (ngSubmit)="onYesClick()">
@@ -32,7 +32,7 @@
                 <mat-error class="error-message" *ngIf="formGroup.controls['confirm_password'].hasError('passwordMatch')">Le password devono corrispondere</mat-error>
               </mat-form-field>
         </div>
-    
+
         <div class="row">
             <mat-form-field class="col-md-6"  >
                 <input matInput  type="text" placeholder="Nome" formControlName="name"  required>
@@ -76,10 +76,7 @@
                 </mat-select>
                 <mat-error class="error-message" *ngIf="formGroup.controls['gender'].hasError('required')">Campo obbligatorio</mat-error>
             </mat-form-field>
-            <mat-form-field class="col-md-6"  >
-                <input matInput  type="text" formControlName="card_number"  placeholder="Numero di Carta ENS">
-                <mat-icon matSuffix>card_membership</mat-icon>
-            </mat-form-field>
+
         </div>
 
         <mat-checkbox formControlName="privacyaccept">
