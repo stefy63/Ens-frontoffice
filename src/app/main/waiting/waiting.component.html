@@ -20,8 +20,8 @@
         <div class="card-footer" >
             <mat-icon>alarm</mat-icon>
             <div class="card-footer__queue">
-                {{operatorFree}}  Operatori liberi <br/>
-                {{operatorBusy}}  Operatori occupati
+                <span class="card-footer__queue__busy"> {{operatorBusy}}  Operatori occupati</span> <br/>
+                <span class="card-footer__queue__free"> {{operatorFree}}  Operatori liberi </span>
             </div>
             <div *ngIf="ticketInWaiting < 2">
                 <span>Grazie per la pazienza.</span>
