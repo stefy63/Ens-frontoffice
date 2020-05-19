@@ -68,6 +68,10 @@
         background-color: white;
         margin-bottom: 15px;
         font-size: 1.2rem;
+        .card-footer__queue {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
 
         mat-icon {
             height: 40px;

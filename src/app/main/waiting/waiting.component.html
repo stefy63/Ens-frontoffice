@@ -12,15 +12,16 @@
             </div>
         </div>
         <div class="card-body">
-            <div class="queue" [ngClass]="{'next' : ticketInWaiting < 2}" *ngIf="ticketInWaiting > 0">{{ticketInWaiting}}</div>
-            <div class="queue" [ngClass]="{'next' : ticketInWaiting < 2}" *ngIf="ticketInWaiting < 1">Sei il Prossimo</div>
+            <div class="queue" [ngClass]="{'next' : ticketInWaiting < 2}" *ngIf="ticketInWaiting > 0">{{ticketInWaiting+1}}</div>
+            <div class="queue" [ngClass]="{'next' : ticketInWaiting < 2}" *ngIf="ticketInWaiting < 1">{{ticketInWaiting+1}}</div>
             <div class="info-queue">Persone sono in coda prima di te</div>
 
         </div>
         <div class="card-footer" >
             <mat-icon>alarm</mat-icon>
-            <div>
-                {{operatorOnline}} Operatori attivi
+            <div class="card-footer__queue">
+                {{operatorFree}}  Operatori liberi <br/>
+                {{operatorBusy}}  Operatori occupati
             </div>
             <div *ngIf="ticketInWaiting < 2">
                 <span>Grazie per la pazienza.</span>
