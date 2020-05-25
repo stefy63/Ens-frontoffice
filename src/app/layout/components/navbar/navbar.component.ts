@@ -42,7 +42,7 @@ export class NavbarComponent implements OnInit, OnDestroy
 
     // Private
     private _unsubscribeAll: Subject<any>;
-    private user: IUser;
+    public user: IUser;
 
     /**
      * Constructor
@@ -169,7 +169,7 @@ export class NavbarComponent implements OnInit, OnDestroy
             }
         });
     }
-    
+
     logout(): void {
         const externalUrl = environment.return_url;
         this.authService.logout().subscribe(() => {
@@ -182,7 +182,7 @@ export class NavbarComponent implements OnInit, OnDestroy
         this.router.navigate(['cookie']);
     }
 
-    privacy() {
+    privacy(): void {
         this.router.navigate(['privacy']);
     }
 

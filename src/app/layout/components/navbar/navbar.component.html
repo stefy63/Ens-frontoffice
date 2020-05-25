@@ -24,13 +24,23 @@
                 </div>
             </button>
             <mat-menu #moreMenu="matMenu" [overlapTrigger]="false">
-                    <button mat-menu-item fxLayout="row" fxLayoutAlign="left center" [routerLink]="['/home']">
-                        <mat-icon svgIcon="icon_logo" class="logo-ens"></mat-icon>
-                        <span>Home</span>
+                <button mat-menu-item fxLayout="row" fxLayoutAlign="left center" [routerLink]="['/home']">
+                    <mat-icon svgIcon="icon_logo" class="logo-ens"></mat-icon>
+                    <span>Home</span>
+                </button>
+                <div *ngIf="userLogged">
+                    <button mat-menu-item fxLayout="row" fxLayoutAlign="left center" (click)="edit_profile()">
+                        <mat-icon>chrome_reader_mode</mat-icon>
+                        <span>Modifica Profilo</span>
                     </button>
+                    <button mat-menu-item fxLayout="row" fxLayoutAlign="left center" (click)="change_password()">
+                        <mat-icon>remove_red_eye</mat-icon>
+                        <span>Cambia Password</span>
+                    </button>
+                </div>
                 <button mat-menu-item fxLayout="row" fxLayoutAlign="left center" (click)="useCondition()">
                     <mat-icon>chrome_reader_mode</mat-icon>
-                    <span>Termini e condizioni d'uso</span>
+                    <span>Regolamento</span>
                 </button>
                 <button mat-menu-item fxLayout="row" fxLayoutAlign="left center" (click)="privacy()">
                     <mat-icon>remove_red_eye</mat-icon>
@@ -43,14 +53,6 @@
                 </button>
 
                 <div *ngIf="userLogged">
-                    <button mat-menu-item fxLayout="row" fxLayoutAlign="left center" (click)="edit_profile()">
-                        <mat-icon>chrome_reader_mode</mat-icon>
-                        <span>Modifica Profilo</span>
-                    </button>
-                    <button mat-menu-item fxLayout="row" fxLayoutAlign="left center" (click)="change_password()">
-                        <mat-icon>remove_red_eye</mat-icon>
-                        <span>Cambia Password</span>
-                    </button>
                     <button mat-menu-item fxLayout="row" fxLayoutAlign="left center" (click)="logout()">
                         <mat-icon>remove_red_eye</mat-icon>
                         <span>Logout</span>
