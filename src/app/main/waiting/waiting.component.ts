@@ -25,6 +25,8 @@ export class WaitingComponent implements OnInit, OnDestroy {
 
     public ticketInWaiting: number;
     public operatorOnline: number;
+    public operatorBusy: number;
+    public operatorFree: number;
 
     public service: string;
     private newTicket: ITicket;
@@ -74,7 +76,9 @@ export class WaitingComponent implements OnInit, OnDestroy {
             })
         ).subscribe(fromApiQueue => {
             this.ticketInWaiting = fromApiQueue.ticketInWaiting;
+            this.operatorBusy = fromApiQueue.operatorBusy;
             this.operatorOnline = fromApiQueue.operatorActive;
+            this.operatorFree = this.operatorOnline - this.operatorBusy;
         });
     }
 

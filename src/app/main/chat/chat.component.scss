@@ -6,9 +6,10 @@
     overflow: hidden;
 
     .timer__container {
-        display: block;
+        display: flex;
         background-color: #F3F4F5;
         padding: 0px 10px;
+        align-items: center;
 
         .chat-header-operator {
             font-size: 1em;
@@ -17,7 +18,9 @@
         }
 
         .timer--count {
-            float:right;
+            font-size: 2em;
+            font-weight: bold;
+            flex-grow: 2;
         }
     }
     .chat-header {
