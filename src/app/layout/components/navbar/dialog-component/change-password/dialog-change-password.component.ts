@@ -50,7 +50,6 @@ export class DialogChangePassword implements OnInit {
         this.dialogRef.close();
     },
     (err) => {
-        console.log(err.error);
         this.formGroup.controls['old_password'].setValue(null);
         if (err.status === 501) {
             this.toast.error('Cambio Password', 'Vecchia password Errata!');
