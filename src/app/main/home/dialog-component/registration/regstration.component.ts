@@ -5,7 +5,6 @@ import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { NotificationsService } from 'angular2-notifications';
 import { AlertToasterOptions } from 'app/class/alert-toaster-options';
-import { IUser } from 'app/interfaces/i-user';
 import { GoogleAnalyticsService } from 'app/services/analytics/google-analitics-service';
 import { ApiItalyGeoService } from 'app/services/api/api-italy-geo.service';
 import { ApiUserService } from 'app/services/api/api-user.service';
@@ -16,6 +15,8 @@ import { NumericOnlyValidator } from 'app/services/MaterialValidator/NumericOnly
 import { PasswordValidator } from 'app/services/MaterialValidator/PasswordValidator';
 import { assign, get } from 'lodash';
 import { PasswordPolicyValidator } from '../../../../services/MaterialValidator/PasswordPolicyValidator';
+import { User } from 'app/interfaces/i-user-user';
+import { IUser } from 'app/interfaces/i-user';
 
 
 export const MY_FORMATS = {
@@ -69,7 +70,7 @@ export class DialogRegistrationComponent implements OnInit {
 
     this.formGroup = new FormGroup({
         'username': new FormControl(''),
-        'new_password': new FormControl('', [
+        'password': new FormControl('', [
             Validators.required,
             EmptyInputValidator.whiteSpace,
             PasswordPolicyValidator.policy,
@@ -77,50 +78,38 @@ export class DialogRegistrationComponent implements OnInit {
         ]),
         'confirm_password':  new FormControl('', [
             Validators.required,
-            PasswordValidator.match('new_password')
+            PasswordValidator.match('password')
         ]),
-        'name': new FormControl('', [
-            Validators.required,
-            AlphabeticOnlyValidator.alphabeticOnly
-        ]),
-        'surname': new FormControl('', [
-            Validators.required,
-            AlphabeticOnlyValidator.alphabeticOnly
-        ]),
-        'email': new FormControl('', [
-            Validators.required,
-            EmailCustomValidator.email_custom
-        ]),
-        'gender': new FormControl('', [
-            Validators.required
+        'userdata': new FormGroup({
+            'name': new FormControl('', [
+                Validators.required,
+                AlphabeticOnlyValidator.alphabeticOnly
             ]),
-        'phone': new FormControl('', [
-            Validators.required,
-            NumericOnlyValidator.numericOnly
-        ]),
-        'privacyaccept': new FormControl(''),
-        'newsletteraccept': new FormControl(''),
-        'becontacted': new FormControl(''),
+            'surname': new FormControl('', [
+                Validators.required,
+                AlphabeticOnlyValidator.alphabeticOnly
+            ]),
+            'email': new FormControl('', [
+                Validators.required,
+                EmailCustomValidator.email_custom
+            ]),
+            'gender': new FormControl('', [
+                Validators.required
+                ]),
+            'phone': new FormControl('', [
+                Validators.required,
+                NumericOnlyValidator.numericOnly
+            ]),
+            'privacyaccept': new FormControl(''),
+            'newsletteraccept': new FormControl(''),
+            'becontacted': new FormControl(''),
+        })
     });
   }
 
   onYesClick(): void {
-    const updatedModalData = assign(this.user, {
-        user: {
-            username: this.formGroup.controls.username.value,
-            password: this.formGroup.controls.new_password.value,
-        },
-        user_data: {
-            name: this.formGroup.controls.name.value,
-            surname: this.formGroup.controls.surname.value,
-            email: this.formGroup.controls.email.value,
-            gender: this.formGroup.controls.gender.value,
-            phone: this.formGroup.controls.phone.value,
-            privacyaccept: !!this.formGroup.controls.privacyaccept.value,
-            newsletteraccept: !!this.formGroup.controls.newsletteraccept.value,
-            becontacted: !!this.formGroup.controls.becontacted.value
-        }
-    });
+    const updatedModalData: User = assign(this.user, this.formGroup.value);
+    updatedModalData.isOperator = false;
 
     this.apiUserService.apiCreateUser(updatedModalData)
         .subscribe(data => {
@@ -131,10 +120,12 @@ export class DialogRegistrationComponent implements OnInit {
                 const errorMessage = get(err, 'error.message', '');
                 if (errorMessage === 'USER_ALREDY_EXIST') {
                     this.googleAnalyticsService.eventEmitter('RegistrationPage', 'Registration Fault (user exist)');
-                    this.toast.error('Attenzione', 'Utente già presente in archivio');
+                    this.toast.error('Attenzione', 'Username già presente in archivio');
                 } else if (errorMessage === 'EMAIL_ALREDY_EXIST') {
                     this.googleAnalyticsService.eventEmitter('RegistrationPage', 'Registration Fault (email exist)');
                     this.toast.error('Attenzione', 'Email già presente in archivio');
+                } else if (errorMessage === 'PHONE_ALREDY_EXIST') {
+                  this.toast.error('Attenzione', 'Telefono già presente in archivio');
                 }
                 else {
                     this.googleAnalyticsService.eventEmitter('RegistrationPage', 'Registration Fault (generic)');

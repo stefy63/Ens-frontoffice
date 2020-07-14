@@ -3,7 +3,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { NotificationsService } from 'angular2-notifications';
-import { IUser } from 'app/interfaces/i-user';
 import { get } from 'lodash';
 import * as moment from 'moment';
 import { GoogleAnalyticsService } from '../../services/analytics/google-analitics-service';
@@ -23,8 +22,6 @@ export class FuseLoginComponent implements OnInit {
 
     public formGroup: FormGroup;
 
-    private user: IUser;
-
   constructor(
     private toast: NotificationsService,
     private storage: LocalStorageService,
@@ -40,11 +37,10 @@ export class FuseLoginComponent implements OnInit {
     this.formGroup = new FormGroup({
       'username': new FormControl('', [Validators.required]),
       'password': new FormControl('', [Validators.required])
-    }); 
-}
+    });
+    }
 
   ngOnInit() {
-
     this.googleAnalyticsService.pageEmitter('LoginPage');
   }
 

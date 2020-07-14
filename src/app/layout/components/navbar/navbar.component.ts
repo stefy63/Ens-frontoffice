@@ -145,7 +145,8 @@ export class NavbarComponent implements OnInit, OnDestroy
             data: {
                 modalData: this.user
             }
-        }).afterClosed().pipe(
+        })
+        .afterClosed().pipe(
                 filter((result) => !!result),
                 flatMap((result) => {
                     this.user.userdata = result;
