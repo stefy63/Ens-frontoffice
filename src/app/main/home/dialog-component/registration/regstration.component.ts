@@ -108,7 +108,7 @@ export class DialogRegistrationComponent implements OnInit {
   }
 
   onYesClick(): void {
-    const updatedModalData: User = assign(this.user, this.formGroup.value);
+    const updatedModalData: User = assign({}, this.formGroup.value, {noSendMail: false});
     updatedModalData.isOperator = false;
 
     this.apiUserService.apiCreateUser(updatedModalData)
