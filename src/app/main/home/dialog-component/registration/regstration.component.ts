@@ -5,6 +5,8 @@ import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { NotificationsService } from 'angular2-notifications';
 import { AlertToasterOptions } from 'app/class/alert-toaster-options';
+import { IUser } from 'app/interfaces/i-user';
+import { User } from 'app/interfaces/i-user-user';
 import { GoogleAnalyticsService } from 'app/services/analytics/google-analitics-service';
 import { ApiItalyGeoService } from 'app/services/api/api-italy-geo.service';
 import { ApiUserService } from 'app/services/api/api-user.service';
@@ -15,8 +17,6 @@ import { NumericOnlyValidator } from 'app/services/MaterialValidator/NumericOnly
 import { PasswordValidator } from 'app/services/MaterialValidator/PasswordValidator';
 import { assign, get } from 'lodash';
 import { PasswordPolicyValidator } from '../../../../services/MaterialValidator/PasswordPolicyValidator';
-import { User } from 'app/interfaces/i-user-user';
-import { IUser } from 'app/interfaces/i-user';
 
 
 export const MY_FORMATS = {
@@ -69,18 +69,20 @@ export class DialogRegistrationComponent implements OnInit {
     this.googleAnalyticsService.pageEmitter('RegistrationPage');
 
     this.formGroup = new FormGroup({
-        'username': new FormControl(''),
-        'password': new FormControl('', [
-            Validators.required,
-            EmptyInputValidator.whiteSpace,
-            PasswordPolicyValidator.policy,
-            PasswordValidator.match('confirm_password')
-        ]),
-        'confirm_password':  new FormControl('', [
-            Validators.required,
-            PasswordValidator.match('password')
-        ]),
-        'userdata': new FormGroup({
+        'user': new FormGroup({
+            'username': new FormControl(''),
+            'password': new FormControl('', [
+                Validators.required,
+                EmptyInputValidator.whiteSpace,
+                PasswordPolicyValidator.policy,
+                PasswordValidator.match('confirm_password')
+            ]),
+            'confirm_password':  new FormControl('', [
+                Validators.required,
+                PasswordValidator.match('password')
+            ]),
+        }),
+        'user_data': new FormGroup({
             'name': new FormControl('', [
                 Validators.required,
                 AlphabeticOnlyValidator.alphabeticOnly
@@ -108,9 +110,7 @@ export class DialogRegistrationComponent implements OnInit {
   }
 
   onYesClick(): void {
-    const updatedModalData: User = assign({}, this.formGroup.value, {noSendMail: false});
-    updatedModalData.isOperator = false;
-
+    const updatedModalData: User = assign(this.formGroup.value, {noSendMail: false, isOperator: false});
     this.apiUserService.apiCreateUser(updatedModalData)
         .subscribe(data => {
                 this.googleAnalyticsService.eventEmitter('RegistrationPage', 'Registration Successfully');
