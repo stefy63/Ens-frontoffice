@@ -5,7 +5,6 @@ import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { NotificationsService } from 'angular2-notifications';
 import { AlertToasterOptions } from 'app/class/alert-toaster-options';
-import { IUser } from 'app/interfaces/i-user';
 import { User } from 'app/interfaces/i-user-user';
 import { GoogleAnalyticsService } from 'app/services/analytics/google-analitics-service';
 import { ApiItalyGeoService } from 'app/services/api/api-italy-geo.service';
@@ -43,7 +42,6 @@ export const MY_FORMATS = {
 export class DialogRegistrationComponent implements OnInit {
 
   public options = AlertToasterOptions;
-  public user: IUser;
   public formGroup: FormGroup;
   public provinces: any[];
   public gender = [
@@ -69,20 +67,18 @@ export class DialogRegistrationComponent implements OnInit {
     this.googleAnalyticsService.pageEmitter('RegistrationPage');
 
     this.formGroup = new FormGroup({
-        'user': new FormGroup({
-            'username': new FormControl(''),
-            'password': new FormControl('', [
-                Validators.required,
-                EmptyInputValidator.whiteSpace,
-                PasswordPolicyValidator.policy,
-                PasswordValidator.match('confirm_password')
-            ]),
-            'confirm_password':  new FormControl('', [
-                Validators.required,
-                PasswordValidator.match('password')
-            ]),
-        }),
-        'user_data': new FormGroup({
+        'username': new FormControl(''),
+        'password': new FormControl('', [
+            Validators.required,
+            EmptyInputValidator.whiteSpace,
+            PasswordPolicyValidator.policy,
+            PasswordValidator.match('confirm_password')
+        ]),
+        'confirm_password':  new FormControl('', [
+            Validators.required,
+            PasswordValidator.match('password')
+        ]),
+        'userdata': new FormGroup({
             'name': new FormControl('', [
                 Validators.required,
                 AlphabeticOnlyValidator.alphabeticOnly
