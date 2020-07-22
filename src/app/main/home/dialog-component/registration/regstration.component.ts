@@ -121,6 +121,7 @@ export class DialogRegistrationComponent implements OnInit {
                     this.googleAnalyticsService.eventEmitter('RegistrationPage', 'Registration Fault (email exist)');
                     this.toast.error('Attenzione', 'Email già presente in archivio');
                 } else if (errorMessage === 'PHONE_ALREDY_EXIST') {
+                  this.googleAnalyticsService.eventEmitter('RegistrationPage', 'Registration Fault (phone exist)');
                   this.toast.error('Attenzione', 'Telefono già presente in archivio');
                 }
                 else {
