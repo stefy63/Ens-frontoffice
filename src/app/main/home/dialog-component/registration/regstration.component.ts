@@ -15,6 +15,7 @@ import { EmptyInputValidator } from 'app/services/MaterialValidator/EmptyInputVa
 import { NumericOnlyValidator } from 'app/services/MaterialValidator/NumericOnlyValidator';
 import { PasswordValidator } from 'app/services/MaterialValidator/PasswordValidator';
 import { assign, get } from 'lodash';
+import { ErrorMessageTranslatorService } from '../../../../ErrorMessageTranslatorService';
 import { PasswordPolicyValidator } from '../../../../services/MaterialValidator/PasswordPolicyValidator';
 
 
@@ -55,7 +56,8 @@ export class DialogRegistrationComponent implements OnInit {
     public toast: NotificationsService,
     private httpItalyGeo: ApiItalyGeoService,
     private apiUserService: ApiUserService,
-    private googleAnalyticsService: GoogleAnalyticsService
+    private googleAnalyticsService: GoogleAnalyticsService,
+    private errorMessageTranslatorService: ErrorMessageTranslatorService
     ) {
       this.httpItalyGeo.apiGetAllProvince()
         .subscribe(provinces => {
@@ -114,20 +116,9 @@ export class DialogRegistrationComponent implements OnInit {
                 this.dialogRef.close();
             }, (err) => {
                 const errorMessage = get(err, 'error.message', '');
-                if (errorMessage === 'USER_ALREDY_EXIST') {
-                    this.googleAnalyticsService.eventEmitter('RegistrationPage', 'Registration Fault (user exist)');
-                    this.toast.error('Attenzione', 'Username già presente in archivio');
-                } else if (errorMessage === 'EMAIL_ALREDY_EXIST') {
-                    this.googleAnalyticsService.eventEmitter('RegistrationPage', 'Registration Fault (email exist)');
-                    this.toast.error('Attenzione', 'Email già presente in archivio');
-                } else if (errorMessage === 'PHONE_ALREDY_EXIST') {
-                  this.googleAnalyticsService.eventEmitter('RegistrationPage', 'Registration Fault (phone exist)');
-                  this.toast.error('Attenzione', 'Telefono già presente in archivio');
-                }
-                else {
-                    this.googleAnalyticsService.eventEmitter('RegistrationPage', 'Registration Fault (generic)');
-                    this.toast.error('Attenzione', 'Creazione nuovo utente fallita');
-                }
+                const errorMessageTranslated = this.errorMessageTranslatorService.translate(get(err, 'error.message', ''));
+                this.googleAnalyticsService.eventEmitter('RegistrationPage', `Registration Fault (${errorMessage} exist)`);
+                this.toast.error('Attenzione', errorMessageTranslated);
             });
     }
 

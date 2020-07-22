@@ -15,6 +15,7 @@ import { environment } from 'environments/environment';
 import * as _ from 'lodash';
 import { Subject } from 'rxjs';
 import { filter, flatMap, takeUntil } from 'rxjs/operators';
+import { ErrorMessageTranslatorService } from '../../../ErrorMessageTranslatorService';
 import { DialogChangePassword } from './dialog-component/change-password/dialog-change-password.component';
 import { DialogConditionComponent } from './dialog-component/condition/condition.component';
 import { DialogProfileComponent } from './dialog-component/profile/profile.component';
@@ -62,7 +63,8 @@ export class NavbarComponent implements OnInit, OnDestroy
         private toast: NotificationsService,
         private apiUserService: ApiUserService,
         private matIconRegistry: MatIconRegistry,
-        private domSanitizer: DomSanitizer
+        private domSanitizer: DomSanitizer,
+        private errorMessageTranslatorService: ErrorMessageTranslatorService
     )
     {
         this.titleNavBar = environment.APP_TITLE;
@@ -158,7 +160,9 @@ export class NavbarComponent implements OnInit, OnDestroy
                 this.toast.success('Aggiornamento Profilo', 'Profilo modificato con successo');
             },
             (err) => {
-                this.toast.error('Aggiornamento Profilo', 'Modifica Profilo fallita');
+                const errorMessage = _.get(err, 'error.message', '');
+                const errorMessageTranslated = this.errorMessageTranslatorService.translate(errorMessage);
+                this.toast.error('Aggiornamento Profilo', errorMessageTranslated);
             }
             );
     }
