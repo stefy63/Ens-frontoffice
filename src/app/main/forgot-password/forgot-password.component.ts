@@ -33,7 +33,7 @@ export class ForgotPasswordComponent implements OnInit {
             .subscribe(data => {
                 this.validKey = true;
             });
-        
+
         this.formGroup = new FormGroup({
             'new_password':  new FormControl('', [Validators.required, EmptyInputValidator.whiteSpace, PasswordPolicyValidator.policy, PasswordValidator.match('confirm_password')]),
             'confirm_password':  new FormControl('', [Validators.required, PasswordValidator.match('new_password')])
@@ -54,7 +54,6 @@ export class ForgotPasswordComponent implements OnInit {
             this.route.navigate(['/']);
         },
         (err) => {
-            console.log(err.error);
             this.googleAnalyticsService.eventEmitter('EndForgotPasswordPage', 'New Password fault (generic)');
             const errorMessage = err.error === 'USER_OR_EMAIL_NOT_FOUND' ? 'Utente o Email non trovati' : 'Operazione non riuscita';
             this.toast.error('Attenzione', errorMessage);

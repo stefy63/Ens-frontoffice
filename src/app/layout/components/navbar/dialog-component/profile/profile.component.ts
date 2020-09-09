@@ -1,16 +1,16 @@
-import { GoogleAnalyticsService } from './../../../../../services/analytics/google-analitics-service';
-import { Component, OnInit, Inject } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { AlertToasterOptions } from 'app/class/alert-toaster-options';
+import { IUserData } from 'app/interfaces/i-userdata';
 import { ApiItalyGeoService } from 'app/services/api/api-italy-geo.service';
 import { AlphabeticOnlyValidator } from 'app/services/MaterialValidator/AlphabeticOnlyValidator';
 import { EmailCustomValidator } from 'app/services/MaterialValidator/EmailCustomValidator';
 import { NumericOnlyValidator } from 'app/services/MaterialValidator/NumericOnlyValidator';
-import { IUserData } from 'app/interfaces/i-userdata';
-import { map, assign } from 'lodash';
+import { assign } from 'lodash';
+import { GoogleAnalyticsService } from './../../../../../services/analytics/google-analitics-service';
 
 
 export const MY_FORMATS = {
@@ -85,7 +85,7 @@ export class DialogProfileComponent implements OnInit {
   }
 
   onYesClick(): void {
-    const updatedModalData = assign({}, this.modalData, ...map(this.formGroup.controls, (control, key) => ({[key] : control.value})));
+    const updatedModalData = assign({}, this.modalData, this.formGroup.value);
     this.dialogRef.close(updatedModalData);
   }
 

@@ -35,7 +35,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
     public activeSpinner = false;
     public opName: number;
     public timer: string;
-  
+
     private isTyping = false;
     private replyInput: any;
     public showReplyMessage = false;
@@ -49,7 +49,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
     private updateScrollbar: Subject<void>;
     private updateScrollbarSubscription: Subscription;
     private sysConnected = false;
-  
+
     @ViewChild(NgScrollbar) directiveScroll: NgScrollbar;
     @ViewChildren('replyInput') replyInputField;
     @ViewChild('replyForm') replyForm: NgForm;
@@ -59,7 +59,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
     doSomething() {
         this.sendUserSessionActivity(false);
     }
-  
+
     constructor(
       private cd: ChangeDetectorRef,
       private chatService: ChatService,
@@ -73,7 +73,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
       private ticketService: ApiTicketService,
       private googleAnalyticsService: GoogleAnalyticsService
     ) {  }
-  
+
     ngOnInit(): void {
       this.googleAnalyticsService.pageEmitter('ChatPage');
       this.ticketID = +this.activeRoute.snapshot.paramMap.get('id');
@@ -81,7 +81,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
 
       this.updateScrollbar = new Subject<void>();
       this.keyTimerLocalStore = `utcChat__${this.ticketID}`;
-      
+
       this.ticketSubscription = merge(
           this.ticketService.getFromId(this.ticketID),
           this.socketService.getMessage('onTicketHistoryCreate'),
@@ -121,7 +121,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
                     }
                 }
             }, (err) => {
-            console.log(err.error);
+                console.log(err.error);
         });
 
       this.updateScrollbarSubscription = this.updateScrollbar
@@ -132,7 +132,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
         setTimeout(() => this.directiveScroll.scrollToBottom(1000), 200);
       });
 
-  
+
       this.replyEventSubscription = this.socketService.getMessage('onUserWriting').subscribe((data: any) => {
         if (!this.activeSpinner && this.ticket && data.idTicket === this.ticket.id) {
           this.activeSpinner = true;
@@ -144,7 +144,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       });
     }
-  
+
     ngOnDestroy(): void {
       if (this.ticketSubscription) {
         this.ticketSubscription.unsubscribe();
@@ -161,18 +161,18 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
       this.sendUserSessionActivity(false);
       this.googleAnalyticsService.eventEmitter('ChatPage', 'exit on chat');
     }
-  
+
     ngAfterViewInit(): void {
       this.replyInput = this.replyInputField.first.nativeElement;
       this.cd.detectChanges();
       this.resetForm();
       this.onWritingMsg.nativeElement.style.display = 'none';
     }
-  
+
     focusReplyInput(): void {
       this.replyInput.focus();
     }
-      
+
     reply(event): void {
       if (this.replyForm.form.value.message && this.replyForm.form.value.message.trim()) {
         this.sendMessage(this.replyForm.form.value.message.trim(), true);
@@ -181,13 +181,13 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
         this.resetForm();
       }
     }
-  
+
     private resetForm(): void {
       if (this.replyForm) {
         this.replyForm.reset();
       }
     }
-  
+
     sendMessage(msgToSend: string, resetForm: boolean): void {
       if (this.ticket) {
         const message: ITicketHistory = {
@@ -197,7 +197,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
           action: msgToSend,
           readed: 0
         };
-  
+
         this.spinner.show();
         this.chatService.sendMessage(message).subscribe((data) => {
           this.spinner.hide();
@@ -205,10 +205,10 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
             this.resetForm();
           }
         });
-  
+
       }
     }
-  
+
     public typing(evt): void {
       if (!this.isTyping && this.ticket.id_service === TicketServices.CHAT) {
         if (this.timeoutFunction) {
@@ -225,7 +225,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
         });
       }
     }
-  
+
     exit(): void {
         this.dialog.open(DialogConfirm, {
             data: {
@@ -269,8 +269,8 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
     private sendHistorySystem(msg: string): void {
         const sysHistory = {
             id: null,
-            id_type: HistoryTypes.SYSTEM, 
-            action: msg, 
+            id_type: HistoryTypes.SYSTEM,
+            action: msg,
             id_ticket: this.ticketID,
             readed: 0
         };

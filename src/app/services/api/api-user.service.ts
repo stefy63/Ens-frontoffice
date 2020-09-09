@@ -5,6 +5,7 @@ import { GetBaseUrl } from 'app/helper/getBaseUrl';
 import { IChangePassword } from 'app/interfaces/i-change-password';
 import { IUser } from 'app/interfaces/i-user';
 import { map } from 'rxjs/operators';
+import { User } from 'app/interfaces/i-user-user';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -27,7 +28,7 @@ export class ApiUserService {
     return this.http.put(this.baseUrl + '/user', user);
   }
 
-  public apiCreateUser(user: IUser): Observable<any> {
+  public apiCreateUser(user: User): Observable<any> {
     return this.http.post(this.baseUrl + '/user', user);
   }
 
