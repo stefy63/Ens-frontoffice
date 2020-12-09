@@ -17,8 +17,6 @@
             <mat-icon matSuffix>local_phone</mat-icon>
             <mat-error class="error-message" *ngIf="formGroup.controls['phone'].hasError('required')">Campo obbligatorio
             </mat-error>
-            <mat-error class="error-message" *ngIf="formGroup.controls['phone'].hasError('PhoneValidator')">Solo numeri
-            </mat-error>
         </mat-form-field>
 
         <mat-form-field>
