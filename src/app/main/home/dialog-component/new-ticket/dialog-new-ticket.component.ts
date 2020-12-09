@@ -1,11 +1,9 @@
-import { GoogleAnalyticsService } from 'app/services/analytics/google-analitics-service';
 import { Component, Inject, OnInit } from '@angular/core';
-import * as _ from 'lodash';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { NotificationsService } from 'angular2-notifications';
 import { ITicketCategory } from 'app/interfaces/i-ticket-category';
-import { PhoneValidator } from 'app/services/MaterialValidator/CustomNumericValidator.service';
+import { GoogleAnalyticsService } from 'app/services/analytics/google-analitics-service';
 import { LocalStorageService } from 'app/services/local-storage/local-storage.service';
 import { assign } from 'lodash';
 
@@ -30,7 +28,7 @@ export class DialogNewTicket implements OnInit {
   ) {
     this.categories = this.storage.getItem('ticket_category');
     this.formGroup = new FormGroup({
-        'phone': new FormControl('', [Validators.required, PhoneValidator.validPhone]),
+        'phone': new FormControl('', [Validators.required]),
         'category': new FormControl('', [Validators.required]),
         'description': new FormControl('', [Validators.required])
     });
